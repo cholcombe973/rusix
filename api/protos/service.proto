@@ -3,9 +3,62 @@ option optimize_for = SPEED;
 
 package rusix;
 
+enum Fop {
+	IPC          = 0;
+	LOOKUP       = 1;
+	MKNOD        = 2;
+	CREATE       = 3;
+
+	OPEN         = 4;
+	STATFS       = 5;
+	OPENDIR      = 6;
+	READDIR      = 7;
+	READDIRP     = 8;
+	FSYNCDIR     = 9;
+	SYMLINK      = 10;
+	UNLINK       = 11;
+	LINK         = 12;
+	MKDIR        = 13;
+	RMDIR        = 14;
+	RENAME       = 15;
+	ENTRYLK      = 16;
+	FENTRYLK     = 17;
+
+	/* Inode read operations */
+	STAT         = 18;
+	FSTAT        = 19;
+	ACCESS       = 20;
+	READLINK     = 21;
+	GETXATTR     = 22;
+	FGETXATTR    = 23;
+	READV        = 24;
+	FLUSH        = 25;
+	FSYNC        = 26;
+	INODELK      = 27;
+	FINODELK     = 28;
+	LK           = 29;
+	LEASE        = 30;
+
+	/* Inode write operations */
+	FREMOVEXATTR = 31;
+	REMOVEXATTR  = 32;
+	SETXATTR     = 33;
+	FSETXATTR    = 34;
+	TRUNCATE     = 35;
+	FTRUNCATE    = 36;
+	WRITEV       = 37;
+	XATTROP      = 38;
+	FXATTROP     = 39;
+	SETATTR      = 40;
+	FSETATTR     = 41;
+	FALLOCATE    = 42;
+	DISCARD      = 43;
+	ZEROFILL     = 44;
+}
+
 message Operation {
-    required string name = 1;
-    optional bytes data = 2;
-  }
+	required string name = 1;
+	optional bytes data = 2;
+}
   
   

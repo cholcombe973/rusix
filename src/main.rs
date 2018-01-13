@@ -2,6 +2,11 @@
 #[macro_use]
 extern crate log;
 extern crate simplelog;
+#[macro_use]
+extern crate serde_derive;
+
+mod lib;
+mod pipeline;
 
 use simplelog::{Config, TermLogger};
 

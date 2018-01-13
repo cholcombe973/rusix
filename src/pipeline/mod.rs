@@ -1,5 +1,3 @@
-#[macro_use]
-extern crate log;
 extern crate nix;
 
 mod cluster;
@@ -7,12 +5,12 @@ mod features;
 mod performance;
 mod protocols;
 
-use cluster::{distribute, replicate};
+use self::cluster::{distribute, replicate};
 
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-use nix::Errno;
+use self::nix::Errno;
 
 /*
 Each rusix process is made of 'plugins' (PipelinePlugin) stacked on 

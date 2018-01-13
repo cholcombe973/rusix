@@ -27,10 +27,9 @@ hashring = "*"
 init-daemon = "*" 
 json = "*" 
 libatasmart = "*" 
-lib = { path = "lib" }
 libc = "*" 
 log = "*" 
-pipeline = { path = "pipeline" } #  Data pipeline plugins
+nix = "*"
 protobuf = "*" 
 rusqlite = "*" 
 serde = "*" 
@@ -40,6 +39,7 @@ simplelog = "*"
 slack-hook = "*" 
 tempdir = "*" 
 time = "*" 
+toml = "*"
 uname = "*" 
 uuid = { version="*", features = ["v4"]}
 zmq = {version="~0.8"}
