@@ -1,0 +1,11 @@
+syntax = "proto2";
+option optimize_for = SPEED;
+
+package rusix;
+
+message Operation {
+    required string name = 1;
+    optional bytes data = 2;
+  }
+  
+  

@@ -1,0 +1,45 @@
+[package]
+name = "rusix"
+version = "0.1.0"
+authors = ["Chris Holcombe <xfactor973@gmail.com>"]
+description = "Rust Distributed Posix Cluster"
+license = "Apache-2.0"
+readme = "README.md"
+
+[package.metadata.deb]
+depends = "$auto"
+section = "utility"
+assets = [ 
+    ["target/release/cli", "usr/bin/", "755"],
+    ["target/release/rusixd", "usr/sbin/", "755"],
+    ["README.md", "usr/share/doc/rusix/README", "644"],
+]
+
+[workspace]
+
+[dependencies]
+api = { path = "api" }
+block-utils = {git = "https://github.com/cholcombe973/block-utils"}
+clap = "*" 
+dmi = {git = "https://github.com/cholcombe973/dmi"}
+fstab = "*" 
+hashring = "*"
+init-daemon = "*" 
+json = "*" 
+libatasmart = "*" 
+lib = { path = "lib" }
+libc = "*" 
+log = "*" 
+pipeline = { path = "pipeline" } #  Data pipeline plugins
+protobuf = "*" 
+rusqlite = "*" 
+serde = "*" 
+serde_derive = "*" 
+serde_json = "*" 
+simplelog = "*" 
+slack-hook = "*" 
+tempdir = "*" 
+time = "*" 
+uname = "*" 
+uuid = { version="*", features = ["v4"]}
+zmq = {version="~0.8"}

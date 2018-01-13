@@ -1,0 +1,8 @@
+[package]
+name = "lib"
+version = "0.1.0"
+authors = ["Chris Holcombe <xfactor973@gmail.com>"]
+
+[dependencies]
+api = { path = "../api", version = "*"}
+log = "*"
