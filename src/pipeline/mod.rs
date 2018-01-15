@@ -5,7 +5,7 @@ mod features;
 mod performance;
 mod protocols;
 
-use self::cluster::{distribute, replicate};
+//use self::cluster::{distribute, replicate};
 
 use std::collections::HashMap;
 use std::fmt::Debug;

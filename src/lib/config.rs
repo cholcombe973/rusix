@@ -1,30 +1,50 @@
 extern crate toml;
+extern crate uuid;
 
 use std::fs::File;
-use std::io::{Read, Result};
+use std::io::{Error, ErrorKind, Read, Result, Write};
+use std::path::Path;
 
-#[derive(Debug, Deserialize)]
-struct Config {
-    global: Option<Global>,
-    peers: Option<Vec<PeerConfig>>,
+use self::uuid::Uuid;
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Config {
+    pub global: Option<Global>,
+    pub peers: Option<Vec<Peer>>,
 }
 
-#[derive(Debug, Deserialize)]
-struct Global {
-    fsid: Uuid,
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Global {
+    pub fsid: String, // Uuid Serialize and Deserialize isn't implemented for Uuid
 }
 
-#[derive(Debug, Deserialize)]
-struct Peer {
-    ip: String,
-    port: Option<u16>,
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Peer {
+    pub ip: String,
+    pub port: Option<u16>,
 }
 
-pub fn load_config(p: &Path)-> Result<Config>{
-    let f = File::open(p)?;
-    let mut toml_str = String::new();
-    f.read_to_string(&mut toml_str)?;
+impl Config {
+    pub fn new(&self) -> Self {
+        Config{
+            global: None,
+            peers: None,
+        }
+    }
+    pub fn load_config(&self, p: &Path)-> Result<Self>{
+        let mut f = File::open(p)?;
+        let mut toml_str = String::new();
+        f.read_to_string(&mut toml_str)?;
 
-    let decoded: Config = toml::from_str(toml_str)?;
-    Ok(decoded)
+        let decoded: Config = toml::de::from_str(&toml_str).map_err(|e| Error::new(ErrorKind::Other, e))?;
+        Ok(decoded)
+    }
+
+    pub fn write_config(&self, p: &Path) -> Result<()> {
+        let mut f = File::create(p)?;    
+        let toml_str = toml::ser::to_string(self).map_err(|e| Error::new(ErrorKind::Other, e))?;
+        f.write_all(&toml_str.as_bytes())?;
+
+        Ok(())
+    }
 }

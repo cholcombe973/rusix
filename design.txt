@@ -1,0 +1,29 @@
+Using the 0mq router and dealer pattern this can allow
+rusix to have a frontend network and a backend replication
+network.  
+
+Frontend connects REQ -> Router on a port
+On the backend Dealer -> REP on a different port and possibly network
+
+Dealer should be where the consistent hashing happens
+
+Clients would connect to any server in the cluster and that
+Router socket would then route the clients request to a Rep
+via a Dealer socket?
+
+The upside to having clients connect to any server and
+then using a dealer to route requests to their final location
+is the client sees full bandwidth being used because storage
+servers usually are pretty well outfitted with network bandwidth.
+The downside is extra network hops.  If the client had knowledge
+of the hashing then it could make 1 hop directly to the final
+data location unless that data has moved.
+
+Figure 38 in the 0mq book has a good example picture:
+http://zguide.zeromq.org/page:all#The-Asynchronous-Client-Server-Pattern
+
+Dealer -> Rep socket combination.  Dealer is an async socket 
+that can talk to any number of Rep sockets.
+
+Router is an async server that can talk to any number of Req
+sockets.
