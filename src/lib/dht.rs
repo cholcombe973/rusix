@@ -25,29 +25,3 @@ impl Dht {
     }
 
 }
-
-#[derive(Debug, Copy, Clone)]
-struct Node {
-    id: usize,
-    addr: SocketAddr,
-}
-
-impl Node {
-    fn new(ip: &str, port: u16, id: usize) -> Self {
-        let addr = SocketAddr::new(IpAddr::from_str(&ip).unwrap(), port);
-        Node { id: id, addr: addr }
-    }
-}
-
-impl ToString for Node {
-    fn to_string(&self) -> String {
-        format!("{}|{}", self.addr, self.id)
-    }
-}
-
-impl PartialEq for Node {
-    fn eq(&self, other: &Node) -> bool {
-        self.id == other.id && self.addr == other.addr
-    }
-}
-
