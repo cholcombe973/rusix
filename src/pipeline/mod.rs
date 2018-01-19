@@ -1,3 +1,4 @@
+extern crate api;
 extern crate nix;
 
 mod cluster;
@@ -5,11 +6,10 @@ mod features;
 mod performance;
 mod protocols;
 
-//use self::cluster::{distribute, replicate};
-
 use std::collections::HashMap;
 use std::fmt::Debug;
 
+use self::api::service::Fop;
 use self::nix::Errno;
 
 /*
@@ -59,7 +59,7 @@ pub trait PipelinePlugin {
     fn init(&self, options: HashMap<String,Value>, subvolumes: Vec<String>);
 
     /// Process data and make available for the next plugin
-    fn process(&self, name: &str, data: &mut [u8]) -> Result<(&str, &mut [u8]), String>;
+    fn process(&self, fop: &Fop, name: &str, data: &mut [u8]) -> Result<(&str, &mut [u8]), String>;
 
     /// Stop
     fn stop(&self);
