@@ -2,6 +2,7 @@ syntax = "proto2";
 option optimize_for = SPEED;
 
 package rusix;
+import "protos/err.proto";
 
 enum Fop {
 	IPC          = 1;
@@ -183,28 +184,6 @@ enum SeekWhat {
 	SEEK_HOLE = 2;
 }
 
-enum UpcallFlags {
-	UPCALL_NULL = 1;
-	UPCALL_CI_STAT = 3;
-	UPCALL_CI_XATTR = 4;
-	UPCALL_CI_RENAME = 5;
-	UPCALL_CI_NLINK = 6;
-	UPCALL_CI_FORGET = 7;
-	UPCALL_LEASE_RECALL = 8;
-	UPCALL_FLAGS_MAXVALU = 9;
-}
-
-enum dict_data_type_t {
-	DATA_TYPE_UNKNOWN = 1;
-	DATA_TYPE_INT = 2;
-	DATA_TYPE_UINT = 3;
-	DATA_TYPE_DOUBLE = 4;
-	DATA_TYPE_STR = 5;
-	DATA_TYPE_PTR = 6;
-	DATA_TYPE_GFUUID = 7;
-	DATA_TYPE_IATT = 8;
-	DATA_TYPE_MAX = 9;
-}
 
 enum ResultType{
 	OK = 1;
@@ -224,7 +203,7 @@ message Dict {
 message OpResult {
 	required ResultType result = 1;
 	// error_msg is set if ERR
-	optional int32 errno = 2;
+	optional RusixErrno errno = 2;
 	optional string error_msg = 3;
 }
 
@@ -433,52 +412,52 @@ message LinkResponse {
 	optional bytes extra_data = 5;
 }
 
-message   truncateRequest {
+message   TruncateRequest {
 	required string gfid = 1;
 	required uint64 offset = 2;
 	optional bytes extra_data = 3;
 }
 
-message   truncateResponse {
+message   TruncateResponse {
 	required OpResult result = 1;
 	optional Iatt prestat = 2;
 	optional Iatt poststat = 3;
 	optional bytes extra_data = 4;
 }
 
-message   OpenRequest {
+message OpenRequest {
 	required string gfid = 1;
 	required uint32 flags = 2;
 	optional bytes extra_data = 3;
 }
 
-message   OpenResponse {
+message OpenResponse {
 	required OpResult result = 1;
 	optional uint64 fd = 2;
 	optional bytes extra_data = 3;
 }
 
- message   ReadRequest {
+ message ReadRequest {
 	required string gfid = 1;
-	required uint64  fd = 2;
+	required uint64 fd = 2;
 	required uint64 offset = 3;
 	required uint32 size = 4;
 	required uint32 flag = 5;
 	optional bytes extra_data = 6;
 }
 
-message  ReadResponse {
+message ReadResponse {
 	required OpResult result = 1;
 	optional Iatt stat = 2;
-	optional uint32 size = 3;
-	optional bytes extra_data = 4;
+	// We can ask the data vec for the read size
+	optional bytes data = 4;
 }
 
 message LookupRequest {
 	required string gfid = 1;
 	required bytes  pargfid = 2;
 	required uint32 flags = 3;
-	required string     bname = 4;
+	required string bname = 4;
 	optional bytes extra_data = 5;
 }
 
@@ -491,11 +470,11 @@ message LookupResponse {
 
 message WriteRequest {
 	required string gfid = 1;
-	required uint64  fd = 2;
+	required uint64 fd = 2;
 	required uint64 offset = 3;
-	required uint32 size = 4;
 	required uint32 flag = 5;
-	optional bytes extra_data = 6;
+	// We can ask the data vec for the write size
+	required bytes  data = 6;
 }
 
 message WriteResponse {
@@ -568,20 +547,19 @@ message FinodelkRequest {
 	optional bytes extra_data = 7;
 } 
 
-
- message FlushRequest {
+message FlushRequest {
 	required string gfid = 1;
 	required uint64  fd = 2;
 	optional bytes extra_data = 3;
 }  
 
- message FsyncRequest {
+message FsyncRequest {
 	required string gfid = 1;
 	required uint64  fd = 2;
 	required uint32 data = 3;
 	optional bytes extra_data = 4;
 }  
- message FsyncResponse {
+message FsyncResponse {
 	required OpResult result = 1;
 	optional Iatt prestat = 2;
 	optional Iatt poststat = 3;
@@ -589,7 +567,7 @@ message FinodelkRequest {
 }  
 
 
- message SetxattrRequest {
+message SetxattrRequest {
 	required string gfid = 1;
 	required uint32 flags = 2;
 	required Dict dict = 3;
@@ -992,7 +970,7 @@ message DirPList {
 	repeated DirPListEntry entry = 1;
 }
 
-message readdirpResponse {
+message ReaddirpResponse {
 	required OpResult result = 1;
 	optional DirPList reply = 2;
 	optional bytes extra_data = 3;
@@ -1028,7 +1006,7 @@ message GetSnapNameUuidResponse {
 	optional Dict dict = 2;
 }
 
-message compoundRequest {
+message CompoundRequest {
 	required int32 compound_version = 1;
 	repeated Fop requests = 2;
 	optional bytes extra_data = 3;
@@ -1071,8 +1049,10 @@ message SetactivelkRequest {
 	optional bytes extra_data = 3;
 }
 
-message Request {
+message FileOperation {
 	required Fop fop_req = 1;
+
+	/* Requests */
 	optional StatRequest stat_req = 2;
 	optional ReadlinkRequest  readlink_req = 3;
 	optional MknodRequest mknod_req = 4;
@@ -1082,7 +1062,7 @@ message Request {
 	optional SymlinkRequest  symlink_req = 8;
 	optional RenameRequest  rename_req = 9;
 	optional LinkRequest  link_req = 10;
-	optional truncateRequest  truncate_req = 11;
+	optional TruncateRequest  truncate_req = 11;
 	optional OpenRequest  open_req = 12;
 	optional ReadRequest  read_req = 13;
 	optional LookupRequest  lookup_req = 14;
@@ -1132,59 +1112,57 @@ message Request {
 	optional Set_lk_verRequest  set_lock_vers_req = 58;
 	optional EventNotifyRequest  event_notify_req = 59;
 	optional GetSnapNameUuidRequest  getsnapname_req = 60;
-	optional compoundRequest  compound_req = 61;
+	optional CompoundRequest  compound_req = 61;
 	optional GetactivelkRequest  getactive_lock_req = 62;
 	optional SetactivelkRequest  setactive_lock_req = 63;
-}
 
-message Response {
-	required Fop fop_rsp = 1;
-	optional StatResponse  stat_rsp = 2;
-	optional ReadlinkResponse readlink_rsp = 3;
-	optional MknodResponse  mknod_rsp = 4;
-	optional MkdirResponse  mkdir_rsp = 5;
-	optional UnlinkResponse  unlink_rsp = 6;
-	optional RmdirResponse  rmdir_rsp = 9;
-	optional SymlinkResponse  symlink_rsp = 10;
-	optional RenameResponse  rename_rsp = 11;
-	optional LinkResponse  link_rsp = 12;
-	optional truncateResponse  truncate_rsp = 13;
-	optional OpenResponse  open_rsp = 14;
-	optional ReadResponse  read_rsp = 15;
-	optional LookupResponse  lookup_rsp = 16;
-	optional WriteResponse  write_rsp = 17;
-	optional StatfsResponse  statfs_rsp = 18;
-	optional LockResponse  lock_rsp = 19;
-	optional LeaseResponse  lease_rsp = 20;
-	optional FsyncResponse  fsync_rsp = 21;
-	optional XattropResponse   xattrop_rsp = 22;
-	optional FxattropResponse   fxattrop_rsp = 23;
-	optional GetxattrResponse  getxattr_rsp = 24;
-	optional FgetxattrResponse  fgetxattr_rsp = 25;
-	optional OpendirResponse  opendir_rsp = 26;
-	optional CreateResponse  create_rsp = 27;
-	optional FtruncateResponse  ftruncate_rsp = 28;
-	optional FstatResponse fstat_rsp = 29;
-	optional SetattrResponse  setattr_rsp = 30;
-	optional FsetattrResponse  fsetattr_rsp = 31;
-	optional FallocateResponse  fallocate_rsp = 32;
-	optional DiscardResponse  discard_rsp = 33;
-	optional ZerofillResponse  zerofill_rsp = 34;
-	optional RchecksumResponse  rchecksum_rsp = 35;
-	optional IpcResponse  ipc_rsp = 36;
-	optional SeekResponse  seek_rsp = 37;
-	optional SetVolumeResponse  set_volume_rsp = 38;
-	optional GetSpecResponse  get_spec_rsp = 39;
-	optional GetVolumeInfoResponse  get_volume_info_rsp = 40;
-	optional MgmtHndskResponse  mgmt_handshake_rsp = 41;
-	optional NotifyResponse  notify_rsp = 42;
-	optional ReaddirResponse  readdir_rsp = 43;
-	optional readdirpResponse  readdirp_rsp = 44;
-	optional Set_lk_verResponse  set_lock_vers_rsp = 45;
-	optional EventNotifyResponse  event_notify_rsp = 46;
-	optional GetSnapNameUuidResponse  get_snap_name_uuid_rsp = 47;
-	optional CompoundResponse  compound_rsp = 48;
-	optional GetactivelkResponse  get_active_lock_rsp = 49;
-	optional SetactivelkResponse  set_active_lock_rsp = 50;
+	/* Responses */
+	optional StatResponse  stat_rsp = 64;
+	optional ReadlinkResponse readlink_rsp = 65;
+	optional MknodResponse  mknod_rsp = 66;
+	optional MkdirResponse  mkdir_rsp = 67;
+	optional UnlinkResponse  unlink_rsp = 68;
+	optional RmdirResponse  rmdir_rsp = 69;
+	optional SymlinkResponse  symlink_rsp = 70;
+	optional RenameResponse  rename_rsp = 71;
+	optional LinkResponse  link_rsp = 72;
+	optional TruncateResponse  truncate_rsp = 73;
+	optional OpenResponse  open_rsp = 74;
+	optional ReadResponse  read_rsp = 75;
+	optional LookupResponse  lookup_rsp = 76;
+	optional WriteResponse  write_rsp = 77;
+	optional StatfsResponse  statfs_rsp = 78;
+	optional LockResponse  lock_rsp = 79;
+	optional LeaseResponse  lease_rsp = 80;
+	optional FsyncResponse  fsync_rsp = 81;
+	optional XattropResponse   xattrop_rsp = 82;
+	optional FxattropResponse   fxattrop_rsp = 83;
+	optional GetxattrResponse  getxattr_rsp = 84;
+	optional FgetxattrResponse  fgetxattr_rsp = 85;
+	optional OpendirResponse  opendir_rsp = 86;
+	optional CreateResponse  create_rsp = 87;
+	optional FtruncateResponse  ftruncate_rsp = 88;
+	optional FstatResponse fstat_rsp = 89;
+	optional SetattrResponse  setattr_rsp = 90;
+	optional FsetattrResponse  fsetattr_rsp = 91;
+	optional FallocateResponse  fallocate_rsp = 92;
+	optional DiscardResponse  discard_rsp = 93;
+	optional ZerofillResponse  zerofill_rsp = 94;
+	optional RchecksumResponse  rchecksum_rsp = 95;
+	optional IpcResponse  ipc_rsp = 96;
+	optional SeekResponse  seek_rsp = 97;
+	optional SetVolumeResponse  set_volume_rsp = 98;
+	optional GetSpecResponse  get_spec_rsp = 99;
+	optional GetVolumeInfoResponse  get_volume_info_rsp = 100;
+	optional MgmtHndskResponse  mgmt_handshake_rsp = 101;
+	optional NotifyResponse  notify_rsp = 102;
+	optional ReaddirResponse  readdir_rsp = 103;
+	optional ReaddirpResponse  readdirp_rsp = 104;
+	optional Set_lk_verResponse  set_lock_vers_rsp = 105;
+	optional EventNotifyResponse  event_notify_rsp = 106;
+	optional GetSnapNameUuidResponse  get_snap_name_uuid_rsp = 107;
+	optional CompoundResponse  compound_rsp = 108;
+	optional GetactivelkResponse  get_active_lock_rsp = 109;
+	optional SetactivelkResponse  set_active_lock_rsp = 110;
 }
 
