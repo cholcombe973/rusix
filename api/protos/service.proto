@@ -437,19 +437,17 @@ message OpenResponse {
 	optional bytes extra_data = 3;
 }
 
- message ReadRequest {
+message ReadRequest {
 	required string gfid = 1;
 	required uint64 fd = 2;
 	required uint64 offset = 3;
 	required uint32 size = 4;
 	required uint32 flag = 5;
-	optional bytes extra_data = 6;
 }
 
 message ReadResponse {
 	required OpResult result = 1;
 	optional Iatt stat = 2;
-	// We can ask the data vec for the read size
 	optional bytes data = 4;
 }
 

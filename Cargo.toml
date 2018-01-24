@@ -23,6 +23,8 @@ block-utils = {git = "https://github.com/cholcombe973/block-utils"}
 clap = "*" 
 dmi = {git = "https://github.com/cholcombe973/dmi"}
 fstab = "*" 
+futures = "*"
+futures-cpupool = "*"
 init-daemon = "*" 
 json = "*" 
 libatasmart = "*" 

@@ -9,7 +9,7 @@ mod protocols;
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-use self::api::service::Fop;
+use self::api::service::*;
 use self::nix::Errno;
 
 /*
@@ -56,23 +56,37 @@ pub trait PipelinePlugin {
     fn name(&self) -> &str;
 
     /// Initialize
-    fn init(&self, options: HashMap<String,Value>, subvolumes: Vec<String>);
+    fn init(&self, options: HashMap<String, Value>, subvolumes: Vec<String>);
 
     /// Process data and make available for the next plugin
-    fn process(&self, fop: &Fop, name: &str, data: &mut [u8]) -> Result<(&str, &mut [u8]), String>;
+    fn process(
+        &self,
+        io_type: &Fop,
+        data: &mut FileOperation,
+    ) -> Result<(&Fop, &mut FileOperation), String>;
 
     /// Stop
     fn stop(&self);
 }
 
-pub fn process_pipeline<T>(name: &str, mut data: &mut [u8], pipeline: &Vec<T>) -> Result<(), String>
+pub fn process_pipeline<T>(
+    io_type: &Fop,
+    data: &mut FileOperation,
+    pipeline: &Vec<T>,
+) -> Result<(), String>
 where
     T: Debug + PipelinePlugin,
 {
-    for p in pipeline {
-        debug!("Processing data with {:?}", p);
-        p.process(name, &mut data)?;
-    }
-
+    // Processing can transform the FileOperation as needed
+    // All PipelinePlugins are ephemeral and will be
+    // cleaned up by Rust once they go out of scope
+    // Client and Server are separate structs that run
+    // in their own threads to maintain connections
+    // TODO: Remove this expect() for a Result
+    let sum = pipeline.iter().fold((io_type, data), |data, ref plugin| {
+        plugin
+            .process(data.0, data.1)
+            .expect(&format!("plugin {} failed", plugin.name()))
+    });
     Ok(())
 }
