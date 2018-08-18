@@ -23,17 +23,17 @@ impl Server {
     // send the result back to the client.
     fn process_fop(&self, io_type: &Fop, data: &mut FileOperation) -> Result<(), String> {
         let context = zmq::Context::new();
-        let frontend = context.socket(zmq::ROUTER).unwrap();
+        let mut frontend = context.socket(zmq::ROUTER).unwrap();
         frontend
             .bind("tcp://*:5570")
             .expect("server failed binding frontend");
-        let backend = context.socket(zmq::DEALER).unwrap();
+        let mut backend = context.socket(zmq::DEALER).unwrap();
         backend
             .bind("inproc://backend")
             .expect("server failed binding backend");
         for _ in 0..5 {
             let ctx = context.clone();
-            thread::spawn(move || server_worker(&ctx));
+            //thread::spawn(move || server_worker(&ctx));
         }
         zmq::proxy(&mut frontend, &mut backend).expect("server failed proxying");
         Ok(())

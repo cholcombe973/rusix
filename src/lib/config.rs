@@ -19,7 +19,7 @@ pub struct Global {
     pub fsid: String, // Uuid Serialize and Deserialize isn't implemented for Uuid
 }
 
-#[derive(Debug, Deserialize, Eq, Hash, PartialEq, PartialOrd, Ord, Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, PartialOrd, Ord, Serialize)]
 pub struct Peer {
     pub ip: IpAddr,
     pub port: u16,

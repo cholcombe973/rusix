@@ -5,6 +5,8 @@ extern crate zmq;
 
 use std::collections::HashMap;
 use std::path::PathBuf;
+use std::thread;
+use std::thread::JoinHandle;
 
 use self::api::service::*;
 use self::futures::Future;
@@ -32,39 +34,30 @@ impl Client {
         // Client is the end of the pipeline.
         // send the Fop over to the server(s)
         let context = zmq::Context::new();
-        let client = context.socket(zmq::DEALER).unwrap();
-        client
-            .set_identity(self.peer_name.as_bytes())
-            .expect("failed setting client id");
 
+        let mut handles: Vec<JoinHandle<()>> = Vec::new();
         for entry in layout {
-            client
-                .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
-                .expect("failed connecting client");
-
-            let request = format!("request #{}", request_nbr);
-            client
-                .send(&request, 0)
-                .expect("client failed sending request");
+            // TODO: Change over to cpupool?
+            /*
+            let t = thread::spawn(|| {
+                let client = context.socket(zmq::REQ).expect("socket creation failed");
+                client
+                    .set_identity(self.peer_name.as_bytes())
+                    .expect("failed setting client id");
+                client
+                    .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
+                    .expect("failed connecting client");
+                client.send(&vec![], 0).map_err(|e| e.to_string()).expect("request failed");
+            });
+            handles.push(t);
+            */
         }
-
-        loop {
-            for _ in 0..100 {
-                if client.poll(zmq::POLLIN, 10).expect("client failed polling") > 0 {
-                    let msg = client
-                        .recv_multipart(0)
-                        .expect("client failed receivng response");
-                    println!("{}", str::from_utf8(&msg[msg.len() - 1]).unwrap());
-                }
-            }
-            request_nbr = request_nbr + 1;
-            let request = format!("request #{}", request_nbr);
-            client
-                .send(&request, 0)
-                .expect("client failed sending request");
+        // Wait for completion
+        for h in handles {
+            h.join();
         }
         // Packet sent
-        //Ok(())
+        Ok(())
     }
 
     fn stop(&self) {}

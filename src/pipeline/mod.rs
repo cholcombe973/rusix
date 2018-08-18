@@ -13,6 +13,13 @@ use self::api::service::*;
 use self::nix::Errno;
 
 /*
+How do streaming operations work?
+Could the Actix framework help make some of this work easier?
+Delegation is handled by the actors and this could handle the hashing
+and sockets.
+*/
+
+/*
 Each rusix process is made of 'plugins' (PipelinePlugin) stacked on 
 top of each other in a particular fashion to form a 'graph'.
 1. A PipelinePlugin can be present on the client side or server side or both.

@@ -9,6 +9,7 @@ use super::super::config::Peer;
 
 /// Store files across servers and backend paths.  There is no data redundancy
 /// when using this
+#[derive(Clone, Debug)]
 pub struct Distribute {
     entry: (Peer, PathBuf),
 }
@@ -28,11 +29,10 @@ impl Node for Distribute {
     }
 }
 
-
 #[test]
 fn test_distribute() {
-    use std::net::{IpAddr, Ipv4Addr};
     use self::rendezvous_hash::RendezvousNodes;
+    use std::net::{IpAddr, Ipv4Addr};
 
     let e1 = Distribute {
         entry: (
@@ -53,15 +53,19 @@ fn test_distribute() {
         ),
     };
     let mut nodes = RendezvousNodes::default();
-    nodes.insert(e1);
-    nodes.insert(e2);
+    nodes.insert(e1.clone());
+    nodes.insert(e2.clone());
 
+    // FIX ME This is not a perfect distribution
     // This should correspond to replica set e1
-    let r1 = nodes.calc_candidates(&"hello").next().unwrap();
+    {
+        let r1 = &nodes.calc_candidates(&"hello").next().unwrap();
+        assert_eq!(&r1.entry, &e2.entry);
+    }
 
     // This should correspond to replica set e2
-    let r2 = nodes.calc_candidates(&"key_foo").next().unwrap();
-
-    assert_eq!(r1.entry, &e1.entry);
-    assert_eq!(r2.entry, &e2.entry);
+    {
+        let r2 = nodes.calc_candidates(&"key_foo").next().unwrap();
+        assert_eq!(&r2.entry, &e2.entry);
+    }
 }

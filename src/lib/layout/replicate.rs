@@ -8,7 +8,7 @@ use super::super::config::Peer;
 
 /// Store files across a set of servers and paths.  Replicate will copy
 /// a file X number of times to ensure data redundancy.
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Replicate {
     entry: Vec<(Peer, PathBuf)>,
 }
@@ -31,8 +31,8 @@ impl Node for Replicate {
 
 #[test]
 fn test_replicate() {
-    use std::net::{IpAddr, Ipv4Addr};
     use self::rendezvous_hash::RendezvousNodes;
+    use std::net::{IpAddr, Ipv4Addr};
     // One 2x replica set
     let e1 = Replicate {
         entry: vec![
@@ -85,21 +85,33 @@ fn test_replicate() {
         ],
     };
     let mut nodes = RendezvousNodes::default();
-    nodes.insert(e1);
-    nodes.insert(e2);
+    nodes.insert(e1.clone());
+    nodes.insert(e2.clone());
 
     // This should correspond to replica set e1
-    let replica_set_1 = nodes.calc_candidates(&"hello").next().unwrap();
+    {
+        let replica_set_1 = &nodes.calc_candidates(&"hello").next().unwrap();
+        assert_eq!(
+            replica_set_1.entry,
+            vec![
+                e1.entry[0].clone(),
+                e1.entry[1].clone(),
+                e1.entry[2].clone()
+            ],
+        );
+    }
 
     // This should correspond to replica set e2
-    let replica_set_2 = nodes.calc_candidates(&"key_foo").next().unwrap();
+    {
+        let replica_set_2 = &nodes.calc_candidates(&"key_foo").next().unwrap();
 
-    assert_eq!(
-        replica_set_1.entry,
-        vec![&e1.entry[0], &e1.entry[1], &e1.entry[2]],
-    );
-    assert_eq!(
-        replica_set_2.entry,
-        vec![&e2.entry[0], &e2.entry[1], &e2.entry[2]],
-    );
+        assert_eq!(
+            replica_set_2.entry,
+            vec![
+                e2.entry[0].clone(),
+                e2.entry[1].clone(),
+                e2.entry[2].clone()
+            ],
+        );
+    }
 }

@@ -760,6 +760,8 @@ dependencies = [
  "clap 2.29.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "dmi 0.1.0 (git+https://github.com/cholcombe973/dmi)",
  "fstab 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-cpupool 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "init-daemon 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "json 0.11.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "libatasmart 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
