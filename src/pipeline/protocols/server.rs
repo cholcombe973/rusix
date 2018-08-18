@@ -31,10 +31,10 @@ impl Server {
         backend
             .bind("inproc://backend")
             .expect("server failed binding backend");
-        for _ in 0..5 {
-            let ctx = context.clone();
+        //for _ in 0..5 {
+            //let ctx = context.clone();
             //thread::spawn(move || server_worker(&ctx));
-        }
+        //}
         zmq::proxy(&mut frontend, &mut backend).expect("server failed proxying");
         Ok(())
     }

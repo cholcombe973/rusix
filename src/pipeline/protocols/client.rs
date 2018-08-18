@@ -1,6 +1,7 @@
 extern crate api;
 extern crate futures;
 extern crate futures_cpupool;
+extern crate rayon;
 extern crate zmq;
 
 use std::collections::HashMap;
@@ -11,6 +12,7 @@ use std::thread::JoinHandle;
 use self::api::service::*;
 use self::futures::Future;
 use self::futures_cpupool::CpuPool;
+use self::rayon::prelude::*;
 use super::super::Value;
 use lib::config::Peer;
 
@@ -40,27 +42,18 @@ impl Client {
         // send the Fop over to the server(s)
         let context = zmq::Context::new();
 
-        let mut handles: Vec<JoinHandle<()>> = Vec::new();
-        for entry in layout {
-            // TODO: Change over to cpupool?
-            /*
-            let t = thread::spawn(|| {
-                let client = context.socket(zmq::REQ).expect("socket creation failed");
-                client
-                    .set_identity(self.peer_name.as_bytes())
-                    .expect("failed setting client id");
-                client
-                    .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
-                    .expect("failed connecting client");
-                client.send(&vec![], 0).map_err(|e| e.to_string()).expect("request failed");
-            });
-            handles.push(t);
-            */
-        }
-        // Wait for completion
-        for h in handles {
-            h.join();
-        }
+        // TODO: Change over to cpupool?
+        layout.par_iter().for_each(|entry| {
+            let client = context.socket(zmq::REQ).expect("socket creation failed");
+            client
+                .set_identity(self.peer_name.as_bytes())
+                .expect("failed setting client id");
+            client
+                .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
+                .expect("failed connecting client");
+            client.send(&vec![], 0).map_err(|e| e.to_string()).expect("request failed");
+        });
+        
         // Packet sent
         Ok(())
     }
