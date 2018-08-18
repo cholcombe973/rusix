@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use self::rendezvous_hash::{Node, NodeHasher};
 use super::super::config::Peer;
 
-/// Store files across a set of servers and paths.  Disperse 
+/// Store files across a set of servers and paths.  Disperse
 /// will erasure code a file and distribute it across X Peers
 /// and Paths while also storing redundancy pieces of the file
 /// on X Peers and Paths

@@ -11,7 +11,7 @@ use self::futures::Future;
 use self::futures_cpupool::CpuPool;
 use super::super::Value;
 
-pub struct Server{
+pub struct Server {
     // Worker pool
     pool: CpuPool,
 }

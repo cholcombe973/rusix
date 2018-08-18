@@ -1,4 +1,4 @@
-extern crate rendezvous_hash; 
+extern crate rendezvous_hash;
 
 use self::rendezvous_hash::Node;
 

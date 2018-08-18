@@ -23,5 +23,4 @@ impl Dht {
             hasher: RendezvousNodes::default(),
         }
     }
-
 }

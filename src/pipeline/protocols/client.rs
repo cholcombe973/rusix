@@ -11,8 +11,8 @@ use std::thread::JoinHandle;
 use self::api::service::*;
 use self::futures::Future;
 use self::futures_cpupool::CpuPool;
-use lib::config::Peer;
 use super::super::Value;
+use lib::config::Peer;
 
 pub struct Client {
     pub peer_name: String,
@@ -21,16 +21,21 @@ pub struct Client {
 
 // Client sends an RPC request to one or more servers
 impl Client {
-    fn new(&self, name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Client{
+    fn new(&self, name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Client {
         let pool = CpuPool::new_num_cpus();
         Client {
-            peer_name: name.to_string(), 
+            peer_name: name.to_string(),
             pool: pool,
         }
     }
 
     // The FOP should be processed before being sent by the client
-    fn process_fop(&self, layout: Vec<(Peer, PathBuf)>, io_type: &Fop, data: &mut FileOperation) -> Result<(), String> {
+    fn process_fop(
+        &self,
+        layout: Vec<(Peer, PathBuf)>,
+        io_type: &Fop,
+        data: &mut FileOperation,
+    ) -> Result<(), String> {
         // Client is the end of the pipeline.
         // send the Fop over to the server(s)
         let context = zmq::Context::new();

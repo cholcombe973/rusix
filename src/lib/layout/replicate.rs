@@ -96,7 +96,7 @@ fn test_replicate() {
             vec![
                 e1.entry[0].clone(),
                 e1.entry[1].clone(),
-                e1.entry[2].clone()
+                e1.entry[2].clone(),
             ],
         );
     }
@@ -110,7 +110,7 @@ fn test_replicate() {
             vec![
                 e2.entry[0].clone(),
                 e2.entry[1].clone(),
-                e2.entry[2].clone()
+                e2.entry[2].clone(),
             ],
         );
     }
