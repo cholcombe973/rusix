@@ -1,10 +1,10 @@
 extern crate api;
 extern crate nix;
 
-mod cluster;
-mod features;
-mod performance;
-mod protocols;
+pub mod cluster;
+pub mod features;
+pub mod performance;
+pub mod protocols;
 
 use std::collections::HashMap;
 use std::fmt::Debug;

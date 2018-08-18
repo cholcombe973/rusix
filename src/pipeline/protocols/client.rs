@@ -1,6 +1,7 @@
 extern crate api;
 extern crate futures;
 extern crate futures_cpupool;
+extern crate protobuf;
 extern crate rayon;
 extern crate zmq;
 
@@ -12,6 +13,7 @@ use std::thread::JoinHandle;
 use self::api::service::*;
 use self::futures::Future;
 use self::futures_cpupool::CpuPool;
+use self::protobuf::core::Message;
 use self::rayon::prelude::*;
 use super::super::Value;
 use lib::config::Peer;
@@ -23,7 +25,7 @@ pub struct Client {
 
 // Client sends an RPC request to one or more servers
 impl Client {
-    fn new(&self, name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Client {
+    pub fn new(&self, name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Self {
         let pool = CpuPool::new_num_cpus();
         Client {
             peer_name: name.to_string(),
@@ -32,7 +34,7 @@ impl Client {
     }
 
     // The FOP should be processed before being sent by the client
-    fn process_fop(
+    pub fn process_fop(
         &self,
         layout: Vec<(Peer, PathBuf)>,
         io_type: &Fop,
@@ -42,8 +44,9 @@ impl Client {
         // send the Fop over to the server(s)
         let context = zmq::Context::new();
 
-        // TODO: Change over to cpupool?
         layout.par_iter().for_each(|entry| {
+            // This is likely inefficient because it writes to the heap first
+            let payload = data.write_to_bytes().expect("Message serialization failed");
             let client = context.socket(zmq::REQ).expect("socket creation failed");
             client
                 .set_identity(self.peer_name.as_bytes())
@@ -51,12 +54,12 @@ impl Client {
             client
                 .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
                 .expect("failed connecting client");
-            client.send(&vec![], 0).map_err(|e| e.to_string()).expect("request failed");
+            client.send(&payload, 0).map_err(|e| e.to_string()).expect("request failed");
         });
         
         // Packet sent
         Ok(())
     }
 
-    fn stop(&self) {}
+    pub fn stop(&self) {}
 }

@@ -13,15 +13,13 @@ use super::super::Value;
 
 pub struct Server {
     // Worker pool
-    pool: CpuPool,
+    // pool: CpuPool,
 }
 
 // Server receives an RPC request and responds
 impl Server {
-    fn init(&self, options: &HashMap<String, Value>, subvolumes: Vec<String>) {}
-    // This should process the Fop down to posix and then
-    // send the result back to the client.
-    fn process_fop(&self, io_type: &Fop, data: &mut FileOperation) -> Result<(), String> {
+    // Start the server
+    pub fn new(options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Self {
         let context = zmq::Context::new();
         let mut frontend = context.socket(zmq::ROUTER).unwrap();
         frontend
@@ -31,13 +29,16 @@ impl Server {
         backend
             .bind("inproc://backend")
             .expect("server failed binding backend");
-        //for _ in 0..5 {
-            //let ctx = context.clone();
-            //thread::spawn(move || server_worker(&ctx));
-        //}
         zmq::proxy(&mut frontend, &mut backend).expect("server failed proxying");
+        Server{}
+    }
+
+    // This should process the Fop down to posix and then
+    // send the result back to the client.
+    pub fn process_fop(&self, io_type: &Fop, data: &mut FileOperation) -> Result<(), String> {
+        debug!("fop: {:?}", io_type);
         Ok(())
     }
 
-    fn stop(&self) {}
+    pub fn stop(&self) {}
 }
