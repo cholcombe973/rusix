@@ -13,7 +13,7 @@ use std::thread::JoinHandle;
 use self::api::service::*;
 use self::futures::Future;
 use self::futures_cpupool::CpuPool;
-use self::protobuf::core::Message;
+use self::protobuf::Message;
 use self::rayon::prelude::*;
 use super::super::Value;
 use lib::config::Peer;
@@ -25,7 +25,7 @@ pub struct Client {
 
 // Client sends an RPC request to one or more servers
 impl Client {
-    pub fn new(&self, name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Self {
+    pub fn new(name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Self {
         let pool = CpuPool::new_num_cpus();
         Client {
             peer_name: name.to_string(),

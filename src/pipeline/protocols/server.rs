@@ -4,7 +4,7 @@ extern crate futures_cpupool;
 extern crate zmq;
 
 use std::collections::HashMap;
-use std::thread;
+//use std::thread;
 
 use self::api::service::*;
 use self::futures::Future;

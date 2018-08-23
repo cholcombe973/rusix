@@ -1,9 +1,18 @@
-extern crate protoc_rust;
+extern crate capnpc;
+extern crate protobuf_codegen_pure;
 
-fn main(){
-    protoc_rust::run(protoc_rust::Args {
+fn main() {
+    protobuf_codegen_pure::run(protobuf_codegen_pure::Args {
         out_dir: "src",
         input: &["protos/err.proto", "protos/service.proto"],
-        includes: &[],
+        includes: &["protos"],
+        customize: protobuf_codegen_pure::Customize {
+            ..Default::default()
+        },
     }).expect("protoc");
+
+    ::capnpc::CompilerCommand::new()
+        .file("protos/service.capnp")
+        .run()
+        .expect("compiling schema");
 }

@@ -9,12 +9,20 @@ mod lib;
 mod pipeline;
 
 use std::collections::HashMap;
+use std::thread;
 
-use pipeline::{protocols::server::Server, Value};
+use pipeline::{protocols::client::Client, protocols::server::Server, Value};
 use simplelog::{Config, TermLogger};
 
 fn main() {
-    TermLogger::init(simplelog::LogLevelFilter::Debug, Config::default()).unwrap();
+    TermLogger::init(simplelog::LevelFilter::Debug, Config::default()).unwrap();
+    let j = thread::spawn(|| {
+        let h: HashMap<String, Value> = HashMap::new();
+        let s = Server::new(&h, vec![]);
+    });
     let h: HashMap<String, Value> = HashMap::new();
-    let s = Server::new(&h, vec![]);
+
+    let c = Client::new("", &h, vec![]);
+
+    j.join();
 }

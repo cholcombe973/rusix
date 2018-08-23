@@ -2,7 +2,7 @@ syntax = "proto2";
 option optimize_for = SPEED;
 
 package rusix;
-import "protos/err.proto";
+import "err.proto";
 
 enum Fop {
 	IPC          = 1;

@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use std::fmt::Debug;
 
 use self::api::service::*;
-use self::nix::Errno;
+use self::nix::errno::Errno;
 
 /*
 How do streaming operations work?
