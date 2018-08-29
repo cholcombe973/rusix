@@ -9,6 +9,7 @@ Use your best judgment, and feel free to propose changes to this document in a p
 #### Table Of Contents
 
 [How Can I Contribute?](#how-can-i-contribute)
+  * [Quick Questions](#irc-channel)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Your First Code Contribution](#your-first-code-contribution)
@@ -16,6 +17,10 @@ Use your best judgment, and feel free to propose changes to this document in a p
   
 [Contributor License Agreement](#contributor-license-agreement)
 ## How Can I Contribute?
+
+### Quick Questions
+
+There is an irc channel: irc.mozilla.org: #rusix
 
 ### Reporting Bugs
 
