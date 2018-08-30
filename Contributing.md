@@ -10,6 +10,7 @@ Use your best judgment, and feel free to propose changes to this document in a p
 
 [How Can I Contribute?](#how-can-i-contribute)
   * [Quick Questions](#quick-questions)
+  * [System Requirements](#system-requirements)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Your First Code Contribution](#your-first-code-contribution)
@@ -17,6 +18,21 @@ Use your best judgment, and feel free to propose changes to this document in a p
   
 [Contributor License Agreement](#contributor-license-agreement)
 ## How Can I Contribute?
+
+### System Requirements
+
+rusix is targeted at the modern linux platform. Various dependencies,
+primarily libudev, require this. If you want to contribute to code/test
+rusix, you will need a modern linux system with the following packages
+installed:
+
+sudo yum install libudev-devel openssl-devel zeromq-devel capnproto-devel \
+    capnproto
+
+before you try to build or test any software.
+
+If you spot any other missing packages, please let us know by filing an
+[issue](https://github.com/cholcombe973/rusix/issues).
 
 ### Quick Questions
 
