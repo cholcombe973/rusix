@@ -9,8 +9,8 @@ Use your best judgment, and feel free to propose changes to this document in a p
 #### Table Of Contents
 
 [How Can I Contribute?](#how-can-i-contribute)
-  * [Quick Questions](#quick-questions)
   * [System Requirements](#system-requirements)
+  * [Quick Questions](#quick-questions)
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Your First Code Contribution](#your-first-code-contribution)
