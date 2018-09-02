@@ -1,0 +1,55 @@
+// Copyright 2018 The Rusix Project Developers. See the COPYRIGHT
+// file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+enum ResultType: byte {
+	Ok = 0,
+	Err
+}
+
+table OpResult {
+	result:ResultType;
+	// error_msg is set if ERR
+	errno:int;
+	errorMsg:string;
+}
+
+struct Iatt {
+	iaGfid:String;
+	iaIno:ulong;
+	iaDev:ulong;
+	mode:uint;
+	iaNlink:uint;
+	iaUid:uint;
+	iaGid:uint;
+	iaRdev:ulong;
+	iaSize:ulong;
+	iaBlksize:uint;
+	iaBlocks:ulong;
+	iaAtime:uint;
+	iaAtimeNsec:uint;
+	iaMtime:uint;
+	iaMtimeNsec:uint;
+	iaCtime:uint;
+	iaCtimeNsec:uint;
+}
+
+table StatRequest {
+	gfid:String;
+	extraData:[byte];
+}
+
+table StatResponse {
+	result:OpResult;
+	stat:Iatt;
+	extraData:[byte];
+}
+
+rpc_service Rpc {
+	Stat(StatRequest):StatResponse;
+}
