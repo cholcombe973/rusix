@@ -1,3 +1,4 @@
+api/src/err.rs
 api/src/service.rs
 /target/
 **/*.rs.bk
