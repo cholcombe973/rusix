@@ -108,6 +108,7 @@ Unsure where to begin contributing to Rusix? You can start by looking through th
 * [Beginner issues][beginner] - issues which should only require a few lines of code, and a test or two.
 * [Help wanted issues][help-wanted] - issues which should be a bit more involved than `beginner` issues.
 
+Please ensure that every new source file starts with the un-modified contents of prototypes/license.rs.
 
 #### Local development
 
