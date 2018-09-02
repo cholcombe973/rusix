@@ -1,5 +1,5 @@
 // CLI server interaction
 
-fn main(){
+fn main() {
     println!("hello");
 }

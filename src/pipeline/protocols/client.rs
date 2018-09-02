@@ -54,9 +54,12 @@ impl Client {
             client
                 .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
                 .expect("failed connecting client");
-            client.send(&payload, 0).map_err(|e| e.to_string()).expect("request failed");
+            client
+                .send(&payload, 0)
+                .map_err(|e| e.to_string())
+                .expect("request failed");
         });
-        
+
         // Packet sent
         Ok(())
     }

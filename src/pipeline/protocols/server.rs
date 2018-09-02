@@ -13,7 +13,7 @@ use super::super::Value;
 
 pub struct Server {
     // Worker pool
-    // pool: CpuPool,
+// pool: CpuPool,
 }
 
 // Server receives an RPC request and responds
@@ -30,7 +30,7 @@ impl Server {
             .bind("inproc://backend")
             .expect("server failed binding backend");
         zmq::proxy(&mut frontend, &mut backend).expect("server failed proxying");
-        Server{}
+        Server {}
     }
 
     // This should process the Fop down to posix and then

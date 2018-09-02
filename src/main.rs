@@ -16,6 +16,7 @@ use simplelog::{Config, TermLogger};
 
 fn main() {
     TermLogger::init(simplelog::LevelFilter::Debug, Config::default()).unwrap();
+    info!("rusixd starting");
     let j = thread::spawn(|| {
         let h: HashMap<String, Value> = HashMap::new();
         let s = Server::new(&h, vec![]);

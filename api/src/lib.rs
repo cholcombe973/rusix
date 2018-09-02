@@ -12,9 +12,9 @@ pub mod service_capnp;
 
 #[cfg(test)]
 mod tests {
-    use capnp::{message, serialize, message::ReaderOptions, Word};
+    use capnp::{message, message::ReaderOptions, serialize, Word};
 
-    use protobuf::{Message, parse_from_bytes};
+    use protobuf::{parse_from_bytes, Message};
     use service::*;
     use service_capnp::stat_request;
     use test::{black_box, Bencher};
@@ -30,7 +30,7 @@ mod tests {
         parse_from_bytes::<StatRequest>(&bytes).unwrap();
     }
 
-    fn read_cap_stat_request(words: &Vec<Word>){
+    fn read_cap_stat_request(words: &Vec<Word>) {
         serialize::read_message_from_words(&words, ReaderOptions::new());
     }
 
