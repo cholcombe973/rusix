@@ -20,8 +20,10 @@ assets = [
 [dependencies]
 api = { path = "api" }
 block-utils = {git = "https://github.com/cholcombe973/block-utils"}
+capnp = "*"
 clap = "*" 
 dmi = {git = "https://github.com/cholcombe973/dmi"}
+flatbuffers = "*"
 fstab = "*" 
 futures = "*"
 futures-cpupool = "*"
@@ -31,6 +33,7 @@ libatasmart = "*"
 libc = "*" 
 log = "~0" 
 nix = "*"
+petgraph = "*"
 protobuf = "*" 
 rayon = "*"
 rendezvous_hash = "*"
@@ -39,7 +42,7 @@ serde = "*"
 serde_derive = "*" 
 serde_json = "*" 
 simplelog = "*" 
-slack-hook = "*" 
+# slack-hook = "*" 
 tempdir = "*" 
 time = "*" 
 toml = "*"

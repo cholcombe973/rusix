@@ -10,19 +10,14 @@
 extern crate api;
 extern crate futures;
 extern crate futures_cpupool;
-extern crate protobuf;
 extern crate rayon;
 extern crate zmq;
 
 use std::collections::HashMap;
 use std::path::PathBuf;
-use std::thread;
-use std::thread::JoinHandle;
 
-use self::api::service::*;
-use self::futures::Future;
+use self::api::service_generated::*;
 use self::futures_cpupool::CpuPool;
-use self::protobuf::Message;
 use self::rayon::prelude::*;
 use super::super::Value;
 use lib::config::Peer;
@@ -46,7 +41,7 @@ impl Client {
     pub fn process_fop(
         &self,
         layout: Vec<(Peer, PathBuf)>,
-        data: &mut FileOperation,
+        data: &[u8],
     ) -> Result<(), String> {
         // Client is the end of the pipeline.
         // send the Fop over to the server(s)
@@ -54,16 +49,13 @@ impl Client {
 
         layout.par_iter().for_each(|entry| {
             // This is likely inefficient because it writes to the heap first
-            let payload = data.write_to_bytes().expect("Message serialization failed");
             let client = context.socket(zmq::REQ).expect("socket creation failed");
-            client
-                .set_identity(self.peer_name.as_bytes())
-                .expect("failed setting client id");
             client
                 .connect(&format!("tcp://{}:{}", entry.0.ip, entry.0.port))
                 .expect("failed connecting client");
+            debug!("Sending: {:?} len: {}", data, data.len());
             client
-                .send(&payload, 0)
+                .send(data, 0)
                 .map_err(|e| e.to_string())
                 .expect("request failed");
         });

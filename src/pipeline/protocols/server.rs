@@ -8,62 +8,65 @@
 // except according to those terms.
 
 extern crate api;
+//extern crate capnp;
+extern crate flatbuffers;
 extern crate futures;
 extern crate futures_cpupool;
 extern crate zmq;
 
 use std::collections::HashMap;
-//use std::thread;
+use std::io::Cursor;
+use std::time::Instant;
 
-use self::api::service::*;
-use self::futures::Future;
-use self::futures_cpupool::CpuPool;
-use self::zmq::{Context, POLLIN, Result as ZmqResult, Socket, DONTWAIT};
+use api::{service_generated::*};
+use self::zmq::{Context, Result as ZmqResult, Socket};
 use super::super::Value;
 
 pub struct Server {
     // Worker pool
     // pool: CpuPool,
-    frontend: Socket,
-    backend: Socket,
+    //frontend: Socket,
+    //backend: Socket,
 }
 
 // Server receives an RPC request and responds
 impl Server {
     // Start the server
     pub fn new(options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Self {
+        Server {}
+    }
+
+    pub fn start(&mut self) -> ZmqResult<()> {
+        // Preallocate a receiving buffer
         let context = Context::new();
-        let mut frontend = context.socket(zmq::ROUTER).unwrap();
-        let mut backend = context.socket(zmq::DEALER).unwrap();
+        let mut frontend = context.socket(zmq::REP).unwrap();
         frontend
             .bind("tcp://*:5570")
             .expect("server failed binding frontend");
-        backend
-            .bind("inproc://backend")
-            .expect("server failed binding backend");
-        //zmq::proxy(&mut frontend, &mut backend).expect("server failed proxying");
-
-        Server {frontend: frontend, backend: backend}
-    }
-
-    pub fn start(&self) -> ZmqResult<()> {
         loop {
-            let poll_events = POLLIN;
             // Block until we have events to process
-            let res = self.frontend.poll(poll_events, -1)?;
-            if res > 0 {
-                // Stuff to do
-                let msg = self.frontend.recv_msg(DONTWAIT);
-                debug!("msg: {:?}", msg);
-                // Process File operation
-            }
+            debug!("waiting for packet");
+            let msg = frontend.recv_bytes(0)?;
+            self.process_fop(&msg);
+            frontend.send(b"thanks", 0)?;
         }
     }
 
     // This should process the Fop down to posix and then
     // send the result back to the client.
-    fn process_fop(&self, io_type: &Fop, data: &mut FileOperation) -> Result<(), String> {
-        debug!("fop: {:?}", io_type);
+    fn process_fop(&self, data: &[u8]) -> Result<(), String> {
+        let start = Instant::now();
+        let fop = get_root_as_operation(&data);
+        let elapsed = start.elapsed();
+        if fop.stat().is_some(){
+            debug!("fop: {:?}", fop.stat().unwrap().gfid().unwrap());
+        }
+        debug!(
+            "flatbuffers load msg took: {} nanosecs",
+            //elapsed.as_secs(),
+            //elapsed.subsec_millis()
+            elapsed.subsec_nanos()
+        );
         Ok(())
     }
 

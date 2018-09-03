@@ -19,8 +19,8 @@ table OpResult {
 	errorMsg:string;
 }
 
-struct Iatt {
-	iaGfid:String;
+table Iatt {
+	iaGfid:string;
 	iaIno:ulong;
 	iaDev:ulong;
 	mode:uint;
@@ -40,8 +40,8 @@ struct Iatt {
 }
 
 table StatRequest {
-	gfid:String;
-	extraData:[byte];
+	gfid:string;
+	//extraData:[byte];
 }
 
 table StatResponse {
@@ -50,6 +50,8 @@ table StatResponse {
 	extraData:[byte];
 }
 
-rpc_service Rpc {
-	Stat(StatRequest):StatResponse;
+table Operation {
+	stat:StatRequest;
 }
+
+root_type Operation;

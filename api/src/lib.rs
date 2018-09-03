@@ -13,11 +13,13 @@
 extern crate test;
 
 extern crate capnp;
+extern crate flatbuffers;
 extern crate protobuf;
 
 pub mod err;
 pub mod service;
 pub mod service_capnp;
+pub mod service_generated;
 
 #[cfg(test)]
 mod tests {

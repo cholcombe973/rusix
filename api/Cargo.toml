@@ -9,6 +9,7 @@ capnpc = "*"
 protobuf-codegen-pure = "~2"
 
 [dependencies]
+flatbuffers = "*"
 protobuf = "*" 
 capnp = "*"
 

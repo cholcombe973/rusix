@@ -11,6 +11,7 @@
 extern crate api;
 #[macro_use]
 extern crate clap;
+extern crate flatbuffers;
 #[macro_use]
 extern crate log;
 extern crate simplelog;
@@ -25,7 +26,9 @@ use std::fs::File;
 use std::net::IpAddr;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
+use std::time::Instant;
 
+use api::service_generated::*;
 use clap::{App, Arg};
 use lib::config::Peer;
 use pipeline::{protocols::client::Client, protocols::server::Server, Value};
@@ -42,7 +45,8 @@ fn main() {
                 .long("client")
                 .takes_value(false)
                 .required(false),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("configfile")
                 .default_value("/etc/rusix/config.json")
                 .help("The config file")
@@ -50,7 +54,8 @@ fn main() {
                 .short("c")
                 .takes_value(true)
                 .required(false),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("logfile")
                 .default_value("/var/log/rusix")
                 .help("File to log to")
@@ -58,12 +63,14 @@ fn main() {
                 .short("l")
                 .takes_value(true)
                 .required(false),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("v")
                 .short("v")
                 .multiple(true)
                 .help("Sets the level of verbosity"),
-        ).get_matches();
+        )
+        .get_matches();
     let level = match matches.occurrences_of("v") {
         0 => simplelog::LevelFilter::Info, //default
         1 => simplelog::LevelFilter::Debug,
@@ -88,22 +95,44 @@ fn main() {
         }
     };
     */
-    if matches.is_present("client"){
+    if matches.is_present("client") {
         info!("rusixc starting");
         let h: HashMap<String, Value> = HashMap::new();
         let c = Client::new("client1", &h, vec![]);
         // Tell the client about the server layout
         // and create a sample io operation to send
-        let peer = Peer{ip: IpAddr::from_str("127.0.0.1").unwrap(), port: 5570};
+        let peer = Peer {
+            ip: IpAddr::from_str("127.0.0.1").unwrap(),
+            port: 5570,
+        };
         let layout = vec![(peer, PathBuf::from("/"))];
-        let mut data = api::service::FileOperation::new();
-        data.set_fop_req(api::service::Fop::STATFS);
-        c.process_fop(layout, &mut data);
-    }else {
+
+        let start = Instant::now();
+        let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+        let gfid = builder.create_string("gfid");
+        let stat = StatRequest::create(
+            &mut builder,
+            &StatRequestArgs {
+                gfid: Some(gfid),
+            },
+        );
+        let operation = Operation::create(&mut builder, &OperationArgs { stat: Some(stat) });
+        builder.finish_minimal(operation);
+        let buf = builder.finished_data();
+        let elapsed = start.elapsed();
+        debug!(
+            "create flatbuffer took {} nanosecs",
+            //elapsed.as_secs(),
+            //elapsed.subsec_millis()
+            elapsed.subsec_nanos()
+        );
+
+        c.process_fop(layout, &buf);
+    } else {
         info!("rusixd starting");
         let h: HashMap<String, Value> = HashMap::new();
 
-        let s = Server::new(&h, vec![]);
+        let mut s = Server::new(&h, vec![]);
         s.start();
     }
 }
