@@ -46,7 +46,6 @@ impl Client {
     pub fn process_fop(
         &self,
         layout: Vec<(Peer, PathBuf)>,
-        io_type: &Fop,
         data: &mut FileOperation,
     ) -> Result<(), String> {
         // Client is the end of the pipeline.
