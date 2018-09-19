@@ -7,10 +7,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate rendezvous_hash;
-
-use self::rendezvous_hash::Node;
-
 pub mod disperse;
 pub mod distribute;
 pub mod replicate;

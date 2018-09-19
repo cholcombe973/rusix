@@ -1,4 +1,3 @@
-
 /*
     Hierarchical cluster map: devices in buckets in a tree where devices are always leaves
     Input to algorithm: x = a file name

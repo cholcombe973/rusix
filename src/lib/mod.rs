@@ -8,6 +8,7 @@
 // except according to those terms.
 
 pub mod config;
+pub mod dht;
 pub mod layout;
 pub mod peer;
 pub mod placement;
