@@ -1,5 +1,4 @@
 api/src/err.rs
 api/src/service.rs
-api/src/service_generated.rs
 /target/
 **/*.rs.bk

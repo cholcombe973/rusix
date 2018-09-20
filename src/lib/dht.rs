@@ -22,6 +22,7 @@ use std::hash::Hasher;
 use std::net::{IpAddr, SocketAddr};
 use std::path::Path;
 use std::str::FromStr;
+use std::time::Instant;
 
 use self::twox_hash::XxHash;
 
@@ -108,6 +109,7 @@ impl Dht {
 
     /// Find the node that should contain the file
     pub fn locate(&self, f: &Path) -> Option<Bucket> {
+        let start = Instant::now();
         if self.buckets.len() == 0 {
             return None;
         }
@@ -132,6 +134,11 @@ impl Dht {
                 Ordering::Less
             }
         });
+        let elapsed = start.elapsed();
+        println!(
+            "dht locate took {} nanosecs",
+            elapsed.subsec_nanos()
+        );
         match res {
             Ok(idx) => Some(self.buckets[idx]),
             Err(idx) => {
