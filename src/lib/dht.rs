@@ -67,7 +67,7 @@ impl Dht {
             //    but have an imbalance resulting from that.
 
             // This will do a partial reshuffle on all nodes
-            let segment_length  = u64::max_value() / (self.buckets.len() as u64 + 1);
+            let segment_length = u64::max_value() / (self.buckets.len() as u64 + 1);
 
             // Start it out with blank values
             self.buckets.push(Bucket {
@@ -76,13 +76,18 @@ impl Dht {
                 end_range: 0,
                 weight,
             });
-                
+
             // Change all the segment lengths which frees up room
             let mut i = 0;
             for bucket in &mut self.buckets {
-                bucket.start_range = segment_length * i as u64;
-                bucket.end_range = segment_length * (i as u64 + 1);
-                i+=1;
+                if i == 0 {
+                    bucket.start_range = segment_length * i as u64;
+                    bucket.end_range = segment_length * (i as u64 + 1);
+                } else {
+                    bucket.start_range = (segment_length * i) + 1 as u64;
+                    bucket.end_range = segment_length * (i as u64 + 1);
+                }
+                i += 1;
             }
         }
 
@@ -113,14 +118,18 @@ impl Dht {
         // erasure coded m+n count
         h.write_u8(3);
         let hash = h.finish();
+        debug!("hash: {}", hash);
         // Search for the containing bucket
-        None
-        /*
-        let res = self.buckets.binary_search_by_key(&hash, |&b| {
-            if hash > b.start_range {
-                a
+        let res = self.buckets.binary_search_by(|bucket| {
+            if hash < bucket.start_range {
+                debug!("{} > {}", bucket.start_range, hash);
+                Ordering::Greater
+            } else if hash >= bucket.start_range && hash <= bucket.end_range {
+                debug!("{} == {}", bucket.start_range, hash);
+                Ordering::Equal
             } else {
-                b
+                debug!("{} < {}", bucket.start_range, hash);
+                Ordering::Less
             }
         });
         match res {
@@ -134,7 +143,6 @@ impl Dht {
                 None
             }
         }
-        */
     }
 }
 
@@ -147,4 +155,15 @@ fn test_dht() {
     println!("dht: {:#?}", dht);
     dht.add_node(IpAddr::from_str("192.168.1.2").unwrap(), 1);
     println!("dht: {:#?}", dht);
+    let bucket = dht.locate(&Path::new("/etc/hello/world")).unwrap();
+    println!("{:#?}", bucket);
+    assert_eq!(
+        bucket,
+        Bucket {
+            ip: IpAddr::from_str("192.168.1.3").unwrap(),
+            start_range: 6148914691236517206,
+            end_range: 12297829382473034410,
+            weight: 1
+        }
+    );
 }
