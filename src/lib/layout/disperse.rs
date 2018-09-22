@@ -10,6 +10,7 @@
 use std::hash::Hash;
 use std::path::PathBuf;
 
+use super::super::dht;
 use super::super::config::Peer;
 
 /// Store files across a set of servers and paths.  Disperse

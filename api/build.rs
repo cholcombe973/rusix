@@ -7,7 +7,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate capnpc;
 extern crate protobuf_codegen_pure;
 
 fn main() {
@@ -20,8 +19,4 @@ fn main() {
         },
     }).expect("protoc");
 
-    ::capnpc::CompilerCommand::new()
-        .file("protos/service.capnp")
-        .run()
-        .expect("compiling schema");
 }

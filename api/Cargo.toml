@@ -5,13 +5,11 @@ authors = ["Chris Holcombe <xfactor973@gmail.com>"]
 build = "build.rs"
 
 [build-dependencies]
-capnpc = "*"
 protobuf-codegen-pure = "~2"
 
 [dependencies]
 flatbuffers = "*"
 protobuf = "*" 
-capnp = "*"
 
 [features]
 with-bench = []

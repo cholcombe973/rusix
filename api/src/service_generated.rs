@@ -6,7 +6,7 @@
 extern crate flatbuffers;
 
 #[allow(non_camel_case_types)]
-#[repr(i8)]
+#[repr(u8)]
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum ResultType {
   Ok = 0,
@@ -14,8 +14,8 @@ pub enum ResultType {
 
 }
 
-const ENUM_MIN_RESULT_TYPE: i8 = 0;
-const ENUM_MAX_RESULT_TYPE: i8 = 1;
+const ENUM_MIN_RESULT_TYPE: u8 = 0;
+const ENUM_MAX_RESULT_TYPE: u8 = 1;
 
 impl<'a> flatbuffers::Follow<'a> for ResultType {
   type Inner = Self;
@@ -28,14 +28,14 @@ impl<'a> flatbuffers::Follow<'a> for ResultType {
 impl flatbuffers::EndianScalar for ResultType {
   #[inline]
   fn to_little_endian(self) -> Self {
-    let n = i8::to_le(self as i8);
-    let p = &n as *const i8 as *const ResultType;
+    let n = u8::to_le(self as u8);
+    let p = &n as *const u8 as *const ResultType;
     unsafe { *p }
   }
   #[inline]
   fn from_little_endian(self) -> Self {
-    let n = i8::from_le(self as i8);
-    let p = &n as *const i8 as *const ResultType;
+    let n = u8::from_le(self as u8);
+    let p = &n as *const u8 as *const ResultType;
     unsafe { *p }
   }
 }
@@ -63,6 +63,195 @@ const ENUM_NAMES_RESULT_TYPE:[&'static str; 2] = [
 pub fn enum_name_result_type(e: ResultType) -> &'static str {
   let index: usize = e as usize;
   ENUM_NAMES_RESULT_TYPE[index]
+}
+
+#[allow(non_camel_case_types)]
+#[repr(u8)]
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Fop {
+  IPC = 0,
+  LOOKUP = 1,
+  MKNOD = 2,
+  CREATE = 3,
+  OPEN = 4,
+  STATFS = 5,
+  OPENDIR = 6,
+  READDIR = 7,
+  READDIRP = 8,
+  FSYNCDIR = 9,
+  SYMLINK = 10,
+  UNLINK = 11,
+  LINK = 12,
+  MKDIR = 13,
+  RMDIR = 14,
+  RENAME = 15,
+  ENTRYLK = 16,
+  FENTRYLK = 17,
+  STAT = 18,
+  FSTAT = 19,
+  ACCESS = 20,
+  READLINK = 21,
+  GETXATTR = 22,
+  FGETXATTR = 23,
+  READV = 24,
+  FLUSH = 25,
+  FSYNC = 26,
+  INODELK = 27,
+  FINODELK = 28,
+  LK = 29,
+  LEASE = 30,
+  FREMOVEXATTR = 31,
+  REMOVEXATTR = 32,
+  SETXATTR = 33,
+  FSETXATTR = 34,
+  TRUNCATE = 35,
+  FTRUNCATE = 36,
+  WRITEV = 37,
+  XATTROP = 38,
+  FXATTROP = 39,
+  SETATTR = 40,
+  FSETATTR = 41,
+  FALLOCATE = 42,
+  DISCARD = 43,
+  ZEROFILL = 44,
+
+}
+
+const ENUM_MIN_FOP: u8 = 0;
+const ENUM_MAX_FOP: u8 = 44;
+
+impl<'a> flatbuffers::Follow<'a> for Fop {
+  type Inner = Self;
+  #[inline]
+  fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+    flatbuffers::read_scalar_at::<Self>(buf, loc)
+  }
+}
+
+impl flatbuffers::EndianScalar for Fop {
+  #[inline]
+  fn to_little_endian(self) -> Self {
+    let n = u8::to_le(self as u8);
+    let p = &n as *const u8 as *const Fop;
+    unsafe { *p }
+  }
+  #[inline]
+  fn from_little_endian(self) -> Self {
+    let n = u8::from_le(self as u8);
+    let p = &n as *const u8 as *const Fop;
+    unsafe { *p }
+  }
+}
+
+impl flatbuffers::Push for Fop {
+    type Output = Fop;
+    #[inline]
+    fn push(&self, dst: &mut [u8], _rest: &[u8]) {
+        flatbuffers::emplace_scalar::<Fop>(dst, *self);
+    }
+}
+
+#[allow(non_camel_case_types)]
+const ENUM_VALUES_FOP:[Fop; 45] = [
+  Fop::IPC,
+  Fop::LOOKUP,
+  Fop::MKNOD,
+  Fop::CREATE,
+  Fop::OPEN,
+  Fop::STATFS,
+  Fop::OPENDIR,
+  Fop::READDIR,
+  Fop::READDIRP,
+  Fop::FSYNCDIR,
+  Fop::SYMLINK,
+  Fop::UNLINK,
+  Fop::LINK,
+  Fop::MKDIR,
+  Fop::RMDIR,
+  Fop::RENAME,
+  Fop::ENTRYLK,
+  Fop::FENTRYLK,
+  Fop::STAT,
+  Fop::FSTAT,
+  Fop::ACCESS,
+  Fop::READLINK,
+  Fop::GETXATTR,
+  Fop::FGETXATTR,
+  Fop::READV,
+  Fop::FLUSH,
+  Fop::FSYNC,
+  Fop::INODELK,
+  Fop::FINODELK,
+  Fop::LK,
+  Fop::LEASE,
+  Fop::FREMOVEXATTR,
+  Fop::REMOVEXATTR,
+  Fop::SETXATTR,
+  Fop::FSETXATTR,
+  Fop::TRUNCATE,
+  Fop::FTRUNCATE,
+  Fop::WRITEV,
+  Fop::XATTROP,
+  Fop::FXATTROP,
+  Fop::SETATTR,
+  Fop::FSETATTR,
+  Fop::FALLOCATE,
+  Fop::DISCARD,
+  Fop::ZEROFILL
+];
+
+#[allow(non_camel_case_types)]
+const ENUM_NAMES_FOP:[&'static str; 45] = [
+    "IPC",
+    "LOOKUP",
+    "MKNOD",
+    "CREATE",
+    "OPEN",
+    "STATFS",
+    "OPENDIR",
+    "READDIR",
+    "READDIRP",
+    "FSYNCDIR",
+    "SYMLINK",
+    "UNLINK",
+    "LINK",
+    "MKDIR",
+    "RMDIR",
+    "RENAME",
+    "ENTRYLK",
+    "FENTRYLK",
+    "STAT",
+    "FSTAT",
+    "ACCESS",
+    "READLINK",
+    "GETXATTR",
+    "FGETXATTR",
+    "READV",
+    "FLUSH",
+    "FSYNC",
+    "INODELK",
+    "FINODELK",
+    "LK",
+    "LEASE",
+    "FREMOVEXATTR",
+    "REMOVEXATTR",
+    "SETXATTR",
+    "FSETXATTR",
+    "TRUNCATE",
+    "FTRUNCATE",
+    "WRITEV",
+    "XATTROP",
+    "FXATTROP",
+    "SETATTR",
+    "FSETATTR",
+    "FALLOCATE",
+    "DISCARD",
+    "ZEROFILL"
+];
+
+pub fn enum_name_fop(e: Fop) -> &'static str {
+  let index: usize = e as usize;
+  ENUM_NAMES_FOP[index]
 }
 
 pub enum OpResultOffset {}
@@ -165,6 +354,562 @@ impl<'a: 'b, 'b> OpResultBuilder<'a, 'b> {
   }
 }
 
+pub enum RfidOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Rfid<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Rfid<'a> {
+    type Inner = Rfid<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Rfid<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Rfid {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RfidArgs<'args>) -> flatbuffers::WIPOffset<Rfid<'bldr>> {
+      let mut builder = RfidBuilder::new(_fbb);
+      if let Some(x) = args.d4 { builder.add_d4(x); }
+      builder.add_d1(args.d1);
+      builder.add_d3(args.d3);
+      builder.add_d2(args.d2);
+      builder.finish()
+    }
+
+    pub const VT_D1: flatbuffers::VOffsetT = 4;
+    pub const VT_D2: flatbuffers::VOffsetT = 6;
+    pub const VT_D3: flatbuffers::VOffsetT = 8;
+    pub const VT_D4: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn d1(&'a self) -> u32 {
+    self._tab.get::<u32>(Rfid::VT_D1, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d2(&'a self) -> u16 {
+    self._tab.get::<u16>(Rfid::VT_D2, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d3(&'a self) -> u16 {
+    self._tab.get::<u16>(Rfid::VT_D3, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d4(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(Rfid::VT_D4, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RfidArgs<'a> {
+    pub d1: u32,
+    pub d2: u16,
+    pub d3: u16,
+    pub d4: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RfidArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RfidArgs {
+            d1: 0,
+            d2: 0,
+            d3: 0,
+            d4: None,
+        }
+    }
+}
+pub struct RfidBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RfidBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_d1(&mut self, d1: u32) {
+    self.fbb_.push_slot::<u32>(Rfid::VT_D1, d1, 0);
+  }
+  #[inline]
+  pub fn add_d2(&mut self, d2: u16) {
+    self.fbb_.push_slot::<u16>(Rfid::VT_D2, d2, 0);
+  }
+  #[inline]
+  pub fn add_d3(&mut self, d3: u16) {
+    self.fbb_.push_slot::<u16>(Rfid::VT_D3, d3, 0);
+  }
+  #[inline]
+  pub fn add_d4(&mut self, d4: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Rfid::VT_D4, d4);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RfidBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RfidBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Rfid<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum StatfsOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Statfs<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Statfs<'a> {
+    type Inner = Statfs<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Statfs<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Statfs {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args StatfsArgs) -> flatbuffers::WIPOffset<Statfs<'bldr>> {
+      let mut builder = StatfsBuilder::new(_fbb);
+      builder.add_namemax(args.namemax);
+      builder.add_flag(args.flag);
+      builder.add_fsid(args.fsid);
+      builder.add_favail(args.favail);
+      builder.add_ffree(args.ffree);
+      builder.add_files(args.files);
+      builder.add_bavail(args.bavail);
+      builder.add_bfree(args.bfree);
+      builder.add_blocks(args.blocks);
+      builder.add_frsize(args.frsize);
+      builder.add_bsize(args.bsize);
+      builder.finish()
+    }
+
+    pub const VT_BSIZE: flatbuffers::VOffsetT = 4;
+    pub const VT_FRSIZE: flatbuffers::VOffsetT = 6;
+    pub const VT_BLOCKS: flatbuffers::VOffsetT = 8;
+    pub const VT_BFREE: flatbuffers::VOffsetT = 10;
+    pub const VT_BAVAIL: flatbuffers::VOffsetT = 12;
+    pub const VT_FILES: flatbuffers::VOffsetT = 14;
+    pub const VT_FFREE: flatbuffers::VOffsetT = 16;
+    pub const VT_FAVAIL: flatbuffers::VOffsetT = 18;
+    pub const VT_FSID: flatbuffers::VOffsetT = 20;
+    pub const VT_FLAG: flatbuffers::VOffsetT = 22;
+    pub const VT_NAMEMAX: flatbuffers::VOffsetT = 24;
+
+  #[inline]
+  pub fn bsize(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_BSIZE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn frsize(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_FRSIZE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn blocks(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_BLOCKS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn bfree(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_BFREE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn bavail(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_BAVAIL, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn files(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_FILES, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn ffree(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_FFREE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn favail(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_FAVAIL, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn fsid(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_FSID, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flag(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_FLAG, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn namemax(&'a self) -> u64 {
+    self._tab.get::<u64>(Statfs::VT_NAMEMAX, Some(0)).unwrap()
+  }
+}
+
+pub struct StatfsArgs {
+    pub bsize: u64,
+    pub frsize: u64,
+    pub blocks: u64,
+    pub bfree: u64,
+    pub bavail: u64,
+    pub files: u64,
+    pub ffree: u64,
+    pub favail: u64,
+    pub fsid: u64,
+    pub flag: u64,
+    pub namemax: u64,
+}
+impl<'a> Default for StatfsArgs {
+    #[inline]
+    fn default() -> Self {
+        StatfsArgs {
+            bsize: 0,
+            frsize: 0,
+            blocks: 0,
+            bfree: 0,
+            bavail: 0,
+            files: 0,
+            ffree: 0,
+            favail: 0,
+            fsid: 0,
+            flag: 0,
+            namemax: 0,
+        }
+    }
+}
+pub struct StatfsBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> StatfsBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_bsize(&mut self, bsize: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_BSIZE, bsize, 0);
+  }
+  #[inline]
+  pub fn add_frsize(&mut self, frsize: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_FRSIZE, frsize, 0);
+  }
+  #[inline]
+  pub fn add_blocks(&mut self, blocks: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_BLOCKS, blocks, 0);
+  }
+  #[inline]
+  pub fn add_bfree(&mut self, bfree: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_BFREE, bfree, 0);
+  }
+  #[inline]
+  pub fn add_bavail(&mut self, bavail: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_BAVAIL, bavail, 0);
+  }
+  #[inline]
+  pub fn add_files(&mut self, files: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_FILES, files, 0);
+  }
+  #[inline]
+  pub fn add_ffree(&mut self, ffree: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_FFREE, ffree, 0);
+  }
+  #[inline]
+  pub fn add_favail(&mut self, favail: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_FAVAIL, favail, 0);
+  }
+  #[inline]
+  pub fn add_fsid(&mut self, fsid: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_FSID, fsid, 0);
+  }
+  #[inline]
+  pub fn add_flag(&mut self, flag: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_FLAG, flag, 0);
+  }
+  #[inline]
+  pub fn add_namemax(&mut self, namemax: u64) {
+    self.fbb_.push_slot::<u64>(Statfs::VT_NAMEMAX, namemax, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatfsBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    StatfsBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Statfs<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ProtoFlockOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ProtoFlock<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ProtoFlock<'a> {
+    type Inner = ProtoFlock<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ProtoFlock<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ProtoFlock {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ProtoFlockArgs<'args>) -> flatbuffers::WIPOffset<ProtoFlock<'bldr>> {
+      let mut builder = ProtoFlockBuilder::new(_fbb);
+      builder.add_len(args.len);
+      builder.add_start(args.start);
+      if let Some(x) = args.lk_owner { builder.add_lk_owner(x); }
+      builder.add_pid(args.pid);
+      builder.add_whence(args.whence);
+      builder.add_type_(args.type_);
+      builder.finish()
+    }
+
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 4;
+    pub const VT_WHENCE: flatbuffers::VOffsetT = 6;
+    pub const VT_START: flatbuffers::VOffsetT = 8;
+    pub const VT_LEN: flatbuffers::VOffsetT = 10;
+    pub const VT_PID: flatbuffers::VOffsetT = 12;
+    pub const VT_LK_OWNER: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn type_(&'a self) -> u32 {
+    self._tab.get::<u32>(ProtoFlock::VT_TYPE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn whence(&'a self) -> u32 {
+    self._tab.get::<u32>(ProtoFlock::VT_WHENCE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn start(&'a self) -> u64 {
+    self._tab.get::<u64>(ProtoFlock::VT_START, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn len(&'a self) -> u64 {
+    self._tab.get::<u64>(ProtoFlock::VT_LEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn pid(&'a self) -> u32 {
+    self._tab.get::<u32>(ProtoFlock::VT_PID, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn lk_owner(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtoFlock::VT_LK_OWNER, None)
+  }
+}
+
+pub struct ProtoFlockArgs<'a> {
+    pub type_: u32,
+    pub whence: u32,
+    pub start: u64,
+    pub len: u64,
+    pub pid: u32,
+    pub lk_owner: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for ProtoFlockArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ProtoFlockArgs {
+            type_: 0,
+            whence: 0,
+            start: 0,
+            len: 0,
+            pid: 0,
+            lk_owner: None,
+        }
+    }
+}
+pub struct ProtoFlockBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ProtoFlockBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_type_(&mut self, type_: u32) {
+    self.fbb_.push_slot::<u32>(ProtoFlock::VT_TYPE_, type_, 0);
+  }
+  #[inline]
+  pub fn add_whence(&mut self, whence: u32) {
+    self.fbb_.push_slot::<u32>(ProtoFlock::VT_WHENCE, whence, 0);
+  }
+  #[inline]
+  pub fn add_start(&mut self, start: u64) {
+    self.fbb_.push_slot::<u64>(ProtoFlock::VT_START, start, 0);
+  }
+  #[inline]
+  pub fn add_len(&mut self, len: u64) {
+    self.fbb_.push_slot::<u64>(ProtoFlock::VT_LEN, len, 0);
+  }
+  #[inline]
+  pub fn add_pid(&mut self, pid: u32) {
+    self.fbb_.push_slot::<u32>(ProtoFlock::VT_PID, pid, 0);
+  }
+  #[inline]
+  pub fn add_lk_owner(&mut self, lk_owner: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtoFlock::VT_LK_OWNER, lk_owner);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ProtoFlockBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ProtoFlockBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ProtoFlock<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ProtoLeaseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ProtoLease<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ProtoLease<'a> {
+    type Inner = ProtoLease<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ProtoLease<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ProtoLease {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ProtoLeaseArgs<'args>) -> flatbuffers::WIPOffset<ProtoLease<'bldr>> {
+      let mut builder = ProtoLeaseBuilder::new(_fbb);
+      builder.add_lease_flags(args.lease_flags);
+      if let Some(x) = args.lease_id { builder.add_lease_id(x); }
+      builder.add_lease_type(args.lease_type);
+      builder.add_cmd(args.cmd);
+      builder.finish()
+    }
+
+    pub const VT_CMD: flatbuffers::VOffsetT = 4;
+    pub const VT_LEASE_TYPE: flatbuffers::VOffsetT = 6;
+    pub const VT_LEASE_ID: flatbuffers::VOffsetT = 8;
+    pub const VT_LEASE_FLAGS: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn cmd(&'a self) -> u32 {
+    self._tab.get::<u32>(ProtoLease::VT_CMD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn lease_type(&'a self) -> u32 {
+    self._tab.get::<u32>(ProtoLease::VT_LEASE_TYPE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn lease_id(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtoLease::VT_LEASE_ID, None)
+  }
+  #[inline]
+  pub fn lease_flags(&'a self) -> u32 {
+    self._tab.get::<u32>(ProtoLease::VT_LEASE_FLAGS, Some(0)).unwrap()
+  }
+}
+
+pub struct ProtoLeaseArgs<'a> {
+    pub cmd: u32,
+    pub lease_type: u32,
+    pub lease_id: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub lease_flags: u32,
+}
+impl<'a> Default for ProtoLeaseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ProtoLeaseArgs {
+            cmd: 0,
+            lease_type: 0,
+            lease_id: None,
+            lease_flags: 0,
+        }
+    }
+}
+pub struct ProtoLeaseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ProtoLeaseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_cmd(&mut self, cmd: u32) {
+    self.fbb_.push_slot::<u32>(ProtoLease::VT_CMD, cmd, 0);
+  }
+  #[inline]
+  pub fn add_lease_type(&mut self, lease_type: u32) {
+    self.fbb_.push_slot::<u32>(ProtoLease::VT_LEASE_TYPE, lease_type, 0);
+  }
+  #[inline]
+  pub fn add_lease_id(&mut self, lease_id: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ProtoLease::VT_LEASE_ID, lease_id);
+  }
+  #[inline]
+  pub fn add_lease_flags(&mut self, lease_flags: u32) {
+    self.fbb_.push_slot::<u32>(ProtoLease::VT_LEASE_FLAGS, lease_flags, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ProtoLeaseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ProtoLeaseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ProtoLease<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
 pub enum IattOffset {}
 #[derive(Copy, Clone, Debug, PartialEq)]
 
@@ -194,154 +939,154 @@ impl<'a> Iatt<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args IattArgs<'args>) -> flatbuffers::WIPOffset<Iatt<'bldr>> {
       let mut builder = IattBuilder::new(_fbb);
-      builder.add_iaBlocks(args.iaBlocks);
-      builder.add_iaSize(args.iaSize);
-      builder.add_iaRdev(args.iaRdev);
-      builder.add_iaDev(args.iaDev);
-      builder.add_iaIno(args.iaIno);
-      builder.add_iaCtimeNsec(args.iaCtimeNsec);
-      builder.add_iaCtime(args.iaCtime);
-      builder.add_iaMtimeNsec(args.iaMtimeNsec);
-      builder.add_iaMtime(args.iaMtime);
-      builder.add_iaAtimeNsec(args.iaAtimeNsec);
-      builder.add_iaAtime(args.iaAtime);
-      builder.add_iaBlksize(args.iaBlksize);
-      builder.add_iaGid(args.iaGid);
-      builder.add_iaUid(args.iaUid);
-      builder.add_iaNlink(args.iaNlink);
+      builder.add_ia_blocks(args.ia_blocks);
+      builder.add_ia_size(args.ia_size);
+      builder.add_ia_rdev(args.ia_rdev);
+      builder.add_ia_dev(args.ia_dev);
+      builder.add_ia_ino(args.ia_ino);
+      builder.add_ia_ctime_nsec(args.ia_ctime_nsec);
+      builder.add_ia_ctime(args.ia_ctime);
+      builder.add_ia_mtime_nsec(args.ia_mtime_nsec);
+      builder.add_ia_mtime(args.ia_mtime);
+      builder.add_ia_atime_nsec(args.ia_atime_nsec);
+      builder.add_ia_atime(args.ia_atime);
+      builder.add_ia_blksize(args.ia_blksize);
+      builder.add_ia_gid(args.ia_gid);
+      builder.add_ia_uid(args.ia_uid);
+      builder.add_ia_nlink(args.ia_nlink);
       builder.add_mode(args.mode);
-      if let Some(x) = args.iaGfid { builder.add_iaGfid(x); }
+      if let Some(x) = args.ia_rfid { builder.add_ia_rfid(x); }
       builder.finish()
     }
 
-    pub const VT_IAGFID: flatbuffers::VOffsetT = 4;
-    pub const VT_IAINO: flatbuffers::VOffsetT = 6;
-    pub const VT_IADEV: flatbuffers::VOffsetT = 8;
+    pub const VT_IA_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_IA_INO: flatbuffers::VOffsetT = 6;
+    pub const VT_IA_DEV: flatbuffers::VOffsetT = 8;
     pub const VT_MODE: flatbuffers::VOffsetT = 10;
-    pub const VT_IANLINK: flatbuffers::VOffsetT = 12;
-    pub const VT_IAUID: flatbuffers::VOffsetT = 14;
-    pub const VT_IAGID: flatbuffers::VOffsetT = 16;
-    pub const VT_IARDEV: flatbuffers::VOffsetT = 18;
-    pub const VT_IASIZE: flatbuffers::VOffsetT = 20;
-    pub const VT_IABLKSIZE: flatbuffers::VOffsetT = 22;
-    pub const VT_IABLOCKS: flatbuffers::VOffsetT = 24;
-    pub const VT_IAATIME: flatbuffers::VOffsetT = 26;
-    pub const VT_IAATIMENSEC: flatbuffers::VOffsetT = 28;
-    pub const VT_IAMTIME: flatbuffers::VOffsetT = 30;
-    pub const VT_IAMTIMENSEC: flatbuffers::VOffsetT = 32;
-    pub const VT_IACTIME: flatbuffers::VOffsetT = 34;
-    pub const VT_IACTIMENSEC: flatbuffers::VOffsetT = 36;
+    pub const VT_IA_NLINK: flatbuffers::VOffsetT = 12;
+    pub const VT_IA_UID: flatbuffers::VOffsetT = 14;
+    pub const VT_IA_GID: flatbuffers::VOffsetT = 16;
+    pub const VT_IA_RDEV: flatbuffers::VOffsetT = 18;
+    pub const VT_IA_SIZE: flatbuffers::VOffsetT = 20;
+    pub const VT_IA_BLKSIZE: flatbuffers::VOffsetT = 22;
+    pub const VT_IA_BLOCKS: flatbuffers::VOffsetT = 24;
+    pub const VT_IA_ATIME: flatbuffers::VOffsetT = 26;
+    pub const VT_IA_ATIME_NSEC: flatbuffers::VOffsetT = 28;
+    pub const VT_IA_MTIME: flatbuffers::VOffsetT = 30;
+    pub const VT_IA_MTIME_NSEC: flatbuffers::VOffsetT = 32;
+    pub const VT_IA_CTIME: flatbuffers::VOffsetT = 34;
+    pub const VT_IA_CTIME_NSEC: flatbuffers::VOffsetT = 36;
 
   #[inline]
-  pub fn iaGfid(&'a self) -> Option<&'a str> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Iatt::VT_IAGFID, None)
+  pub fn ia_rfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Iatt::VT_IA_RFID, None)
   }
   #[inline]
-  pub fn iaIno(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IAINO, Some(0)).unwrap()
+  pub fn ia_ino(&'a self) -> u64 {
+    self._tab.get::<u64>(Iatt::VT_IA_INO, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaDev(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IADEV, Some(0)).unwrap()
+  pub fn ia_dev(&'a self) -> u64 {
+    self._tab.get::<u64>(Iatt::VT_IA_DEV, Some(0)).unwrap()
   }
   #[inline]
   pub fn mode(&'a self) -> u32 {
     self._tab.get::<u32>(Iatt::VT_MODE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaNlink(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IANLINK, Some(0)).unwrap()
+  pub fn ia_nlink(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_NLINK, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaUid(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IAUID, Some(0)).unwrap()
+  pub fn ia_uid(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_UID, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaGid(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IAGID, Some(0)).unwrap()
+  pub fn ia_gid(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_GID, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaRdev(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IARDEV, Some(0)).unwrap()
+  pub fn ia_rdev(&'a self) -> u64 {
+    self._tab.get::<u64>(Iatt::VT_IA_RDEV, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaSize(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IASIZE, Some(0)).unwrap()
+  pub fn ia_size(&'a self) -> u64 {
+    self._tab.get::<u64>(Iatt::VT_IA_SIZE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaBlksize(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IABLKSIZE, Some(0)).unwrap()
+  pub fn ia_blksize(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_BLKSIZE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaBlocks(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IABLOCKS, Some(0)).unwrap()
+  pub fn ia_blocks(&'a self) -> u64 {
+    self._tab.get::<u64>(Iatt::VT_IA_BLOCKS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaAtime(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IAATIME, Some(0)).unwrap()
+  pub fn ia_atime(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_ATIME, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaAtimeNsec(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IAATIMENSEC, Some(0)).unwrap()
+  pub fn ia_atime_nsec(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_ATIME_NSEC, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaMtime(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IAMTIME, Some(0)).unwrap()
+  pub fn ia_mtime(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_MTIME, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaMtimeNsec(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IAMTIMENSEC, Some(0)).unwrap()
+  pub fn ia_mtime_nsec(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_MTIME_NSEC, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaCtime(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IACTIME, Some(0)).unwrap()
+  pub fn ia_ctime(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_CTIME, Some(0)).unwrap()
   }
   #[inline]
-  pub fn iaCtimeNsec(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IACTIMENSEC, Some(0)).unwrap()
+  pub fn ia_ctime_nsec(&'a self) -> u32 {
+    self._tab.get::<u32>(Iatt::VT_IA_CTIME_NSEC, Some(0)).unwrap()
   }
 }
 
 pub struct IattArgs<'a> {
-    pub iaGfid: Option<flatbuffers::WIPOffset<&'a  str>>,
-    pub iaIno: u64,
-    pub iaDev: u64,
+    pub ia_rfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub ia_ino: u64,
+    pub ia_dev: u64,
     pub mode: u32,
-    pub iaNlink: u32,
-    pub iaUid: u32,
-    pub iaGid: u32,
-    pub iaRdev: u64,
-    pub iaSize: u64,
-    pub iaBlksize: u32,
-    pub iaBlocks: u64,
-    pub iaAtime: u32,
-    pub iaAtimeNsec: u32,
-    pub iaMtime: u32,
-    pub iaMtimeNsec: u32,
-    pub iaCtime: u32,
-    pub iaCtimeNsec: u32,
+    pub ia_nlink: u32,
+    pub ia_uid: u32,
+    pub ia_gid: u32,
+    pub ia_rdev: u64,
+    pub ia_size: u64,
+    pub ia_blksize: u32,
+    pub ia_blocks: u64,
+    pub ia_atime: u32,
+    pub ia_atime_nsec: u32,
+    pub ia_mtime: u32,
+    pub ia_mtime_nsec: u32,
+    pub ia_ctime: u32,
+    pub ia_ctime_nsec: u32,
 }
 impl<'a> Default for IattArgs<'a> {
     #[inline]
     fn default() -> Self {
         IattArgs {
-            iaGfid: None,
-            iaIno: 0,
-            iaDev: 0,
+            ia_rfid: None,
+            ia_ino: 0,
+            ia_dev: 0,
             mode: 0,
-            iaNlink: 0,
-            iaUid: 0,
-            iaGid: 0,
-            iaRdev: 0,
-            iaSize: 0,
-            iaBlksize: 0,
-            iaBlocks: 0,
-            iaAtime: 0,
-            iaAtimeNsec: 0,
-            iaMtime: 0,
-            iaMtimeNsec: 0,
-            iaCtime: 0,
-            iaCtimeNsec: 0,
+            ia_nlink: 0,
+            ia_uid: 0,
+            ia_gid: 0,
+            ia_rdev: 0,
+            ia_size: 0,
+            ia_blksize: 0,
+            ia_blocks: 0,
+            ia_atime: 0,
+            ia_atime_nsec: 0,
+            ia_mtime: 0,
+            ia_mtime_nsec: 0,
+            ia_ctime: 0,
+            ia_ctime_nsec: 0,
         }
     }
 }
@@ -351,72 +1096,72 @@ pub struct IattBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> IattBuilder<'a, 'b> {
   #[inline]
-  pub fn add_iaGfid(&mut self, iaGfid: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Iatt::VT_IAGFID, iaGfid);
+  pub fn add_ia_rfid(&mut self, ia_rfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Iatt::VT_IA_RFID, ia_rfid);
   }
   #[inline]
-  pub fn add_iaIno(&mut self, iaIno: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IAINO, iaIno, 0);
+  pub fn add_ia_ino(&mut self, ia_ino: u64) {
+    self.fbb_.push_slot::<u64>(Iatt::VT_IA_INO, ia_ino, 0);
   }
   #[inline]
-  pub fn add_iaDev(&mut self, iaDev: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IADEV, iaDev, 0);
+  pub fn add_ia_dev(&mut self, ia_dev: u64) {
+    self.fbb_.push_slot::<u64>(Iatt::VT_IA_DEV, ia_dev, 0);
   }
   #[inline]
   pub fn add_mode(&mut self, mode: u32) {
     self.fbb_.push_slot::<u32>(Iatt::VT_MODE, mode, 0);
   }
   #[inline]
-  pub fn add_iaNlink(&mut self, iaNlink: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IANLINK, iaNlink, 0);
+  pub fn add_ia_nlink(&mut self, ia_nlink: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_NLINK, ia_nlink, 0);
   }
   #[inline]
-  pub fn add_iaUid(&mut self, iaUid: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IAUID, iaUid, 0);
+  pub fn add_ia_uid(&mut self, ia_uid: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_UID, ia_uid, 0);
   }
   #[inline]
-  pub fn add_iaGid(&mut self, iaGid: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IAGID, iaGid, 0);
+  pub fn add_ia_gid(&mut self, ia_gid: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_GID, ia_gid, 0);
   }
   #[inline]
-  pub fn add_iaRdev(&mut self, iaRdev: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IARDEV, iaRdev, 0);
+  pub fn add_ia_rdev(&mut self, ia_rdev: u64) {
+    self.fbb_.push_slot::<u64>(Iatt::VT_IA_RDEV, ia_rdev, 0);
   }
   #[inline]
-  pub fn add_iaSize(&mut self, iaSize: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IASIZE, iaSize, 0);
+  pub fn add_ia_size(&mut self, ia_size: u64) {
+    self.fbb_.push_slot::<u64>(Iatt::VT_IA_SIZE, ia_size, 0);
   }
   #[inline]
-  pub fn add_iaBlksize(&mut self, iaBlksize: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IABLKSIZE, iaBlksize, 0);
+  pub fn add_ia_blksize(&mut self, ia_blksize: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_BLKSIZE, ia_blksize, 0);
   }
   #[inline]
-  pub fn add_iaBlocks(&mut self, iaBlocks: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IABLOCKS, iaBlocks, 0);
+  pub fn add_ia_blocks(&mut self, ia_blocks: u64) {
+    self.fbb_.push_slot::<u64>(Iatt::VT_IA_BLOCKS, ia_blocks, 0);
   }
   #[inline]
-  pub fn add_iaAtime(&mut self, iaAtime: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IAATIME, iaAtime, 0);
+  pub fn add_ia_atime(&mut self, ia_atime: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_ATIME, ia_atime, 0);
   }
   #[inline]
-  pub fn add_iaAtimeNsec(&mut self, iaAtimeNsec: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IAATIMENSEC, iaAtimeNsec, 0);
+  pub fn add_ia_atime_nsec(&mut self, ia_atime_nsec: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_ATIME_NSEC, ia_atime_nsec, 0);
   }
   #[inline]
-  pub fn add_iaMtime(&mut self, iaMtime: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IAMTIME, iaMtime, 0);
+  pub fn add_ia_mtime(&mut self, ia_mtime: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_MTIME, ia_mtime, 0);
   }
   #[inline]
-  pub fn add_iaMtimeNsec(&mut self, iaMtimeNsec: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IAMTIMENSEC, iaMtimeNsec, 0);
+  pub fn add_ia_mtime_nsec(&mut self, ia_mtime_nsec: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_MTIME_NSEC, ia_mtime_nsec, 0);
   }
   #[inline]
-  pub fn add_iaCtime(&mut self, iaCtime: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IACTIME, iaCtime, 0);
+  pub fn add_ia_ctime(&mut self, ia_ctime: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_CTIME, ia_ctime, 0);
   }
   #[inline]
-  pub fn add_iaCtimeNsec(&mut self, iaCtimeNsec: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IACTIMENSEC, iaCtimeNsec, 0);
+  pub fn add_ia_ctime_nsec(&mut self, ia_ctime_nsec: u32) {
+    self.fbb_.push_slot::<u32>(Iatt::VT_IA_CTIME_NSEC, ia_ctime_nsec, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> IattBuilder<'a, 'b> {
@@ -428,6 +1173,166 @@ impl<'a: 'b, 'b> IattBuilder<'a, 'b> {
   }
   #[inline]
   pub fn finish(self) -> flatbuffers::WIPOffset<Iatt<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum CacheInvalidationRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct CacheInvalidationRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for CacheInvalidationRequest<'a> {
+    type Inner = CacheInvalidationRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> CacheInvalidationRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        CacheInvalidationRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args CacheInvalidationRequestArgs<'args>) -> flatbuffers::WIPOffset<CacheInvalidationRequest<'bldr>> {
+      let mut builder = CacheInvalidationRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.oldparent_stat { builder.add_oldparent_stat(x); }
+      if let Some(x) = args.parent_stat { builder.add_parent_stat(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      builder.add_expire_time_attr(args.expire_time_attr);
+      builder.add_flags(args.flags);
+      builder.add_event_type(args.event_type);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_EVENT_TYPE: flatbuffers::VOffsetT = 6;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
+    pub const VT_EXPIRE_TIME_ATTR: flatbuffers::VOffsetT = 10;
+    pub const VT_STAT: flatbuffers::VOffsetT = 12;
+    pub const VT_PARENT_STAT: flatbuffers::VOffsetT = 14;
+    pub const VT_OLDPARENT_STAT: flatbuffers::VOffsetT = 16;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 18;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(CacheInvalidationRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn event_type(&'a self) -> u32 {
+    self._tab.get::<u32>(CacheInvalidationRequest::VT_EVENT_TYPE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(CacheInvalidationRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn expire_time_attr(&'a self) -> u32 {
+    self._tab.get::<u32>(CacheInvalidationRequest::VT_EXPIRE_TIME_ATTR, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CacheInvalidationRequest::VT_STAT, None)
+  }
+  #[inline]
+  pub fn parent_stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CacheInvalidationRequest::VT_PARENT_STAT, None)
+  }
+  #[inline]
+  pub fn oldparent_stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CacheInvalidationRequest::VT_OLDPARENT_STAT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(CacheInvalidationRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct CacheInvalidationRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub event_type: u32,
+    pub flags: u32,
+    pub expire_time_attr: u32,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub parent_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub oldparent_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for CacheInvalidationRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        CacheInvalidationRequestArgs {
+            rfid: None,
+            event_type: 0,
+            flags: 0,
+            expire_time_attr: 0,
+            stat: None,
+            parent_stat: None,
+            oldparent_stat: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct CacheInvalidationRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> CacheInvalidationRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(CacheInvalidationRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_event_type(&mut self, event_type: u32) {
+    self.fbb_.push_slot::<u32>(CacheInvalidationRequest::VT_EVENT_TYPE, event_type, 0);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(CacheInvalidationRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_expire_time_attr(&mut self, expire_time_attr: u32) {
+    self.fbb_.push_slot::<u32>(CacheInvalidationRequest::VT_EXPIRE_TIME_ATTR, expire_time_attr, 0);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CacheInvalidationRequest::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_parent_stat(&mut self, parent_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CacheInvalidationRequest::VT_PARENT_STAT, parent_stat);
+  }
+  #[inline]
+  pub fn add_oldparent_stat(&mut self, oldparent_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CacheInvalidationRequest::VT_OLDPARENT_STAT, oldparent_stat);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CacheInvalidationRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CacheInvalidationRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    CacheInvalidationRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<CacheInvalidationRequest<'a>> {
     let o = self.fbb_.end_table(self.start_);
     flatbuffers::WIPOffset::new(o.value())
   }
@@ -462,26 +1367,34 @@ impl<'a> StatRequest<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args StatRequestArgs<'args>) -> flatbuffers::WIPOffset<StatRequest<'bldr>> {
       let mut builder = StatRequestBuilder::new(_fbb);
-      if let Some(x) = args.gfid { builder.add_gfid(x); }
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
       builder.finish()
     }
 
-    pub const VT_GFID: flatbuffers::VOffsetT = 4;
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn gfid(&'a self) -> Option<&'a str> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(StatRequest::VT_GFID, None)
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(StatRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(StatRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
   }
 }
 
 pub struct StatRequestArgs<'a> {
-    pub gfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
 }
 impl<'a> Default for StatRequestArgs<'a> {
     #[inline]
     fn default() -> Self {
         StatRequestArgs {
-            gfid: None,
+            rfid: None,
+            extra_data: None,
         }
     }
 }
@@ -491,8 +1404,12 @@ pub struct StatRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> StatRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_gfid(&mut self, gfid: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatRequest::VT_GFID, gfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(StatRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatRequest::VT_EXTRA_DATA, extra_data);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatRequestBuilder<'a, 'b> {
@@ -538,7 +1455,7 @@ impl<'a> StatResponse<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args StatResponseArgs<'args>) -> flatbuffers::WIPOffset<StatResponse<'bldr>> {
       let mut builder = StatResponseBuilder::new(_fbb);
-      if let Some(x) = args.extraData { builder.add_extraData(x); }
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
       if let Some(x) = args.stat { builder.add_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
@@ -546,7 +1463,7 @@ impl<'a> StatResponse<'a> {
 
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
     pub const VT_STAT: flatbuffers::VOffsetT = 6;
-    pub const VT_EXTRADATA: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
 
   #[inline]
   pub fn result(&'a self) -> Option<OpResult<'a>> {
@@ -557,15 +1474,15 @@ impl<'a> StatResponse<'a> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(StatResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn extraData(&'a self) -> Option<&'a [i8]> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(StatResponse::VT_EXTRADATA, None).map(|v| v.safe_slice())
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(StatResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
   }
 }
 
 pub struct StatResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
     pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
-    pub extraData: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
 }
 impl<'a> Default for StatResponseArgs<'a> {
     #[inline]
@@ -573,7 +1490,7 @@ impl<'a> Default for StatResponseArgs<'a> {
         StatResponseArgs {
             result: None,
             stat: None,
-            extraData: None,
+            extra_data: None,
         }
     }
 }
@@ -591,8 +1508,8 @@ impl<'a: 'b, 'b> StatResponseBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(StatResponse::VT_STAT, stat);
   }
   #[inline]
-  pub fn add_extraData(&mut self, extraData: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatResponse::VT_EXTRADATA, extraData);
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatResponse::VT_EXTRA_DATA, extra_data);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatResponseBuilder<'a, 'b> {
@@ -604,6 +1521,11851 @@ impl<'a: 'b, 'b> StatResponseBuilder<'a, 'b> {
   }
   #[inline]
   pub fn finish(self) -> flatbuffers::WIPOffset<StatResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReadlinkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReadlinkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReadlinkRequest<'a> {
+    type Inner = ReadlinkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReadlinkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReadlinkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReadlinkRequestArgs<'args>) -> flatbuffers::WIPOffset<ReadlinkRequest<'bldr>> {
+      let mut builder = ReadlinkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_size_(args.size_);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReadlinkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u32 {
+    self._tab.get::<u32>(ReadlinkRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReadlinkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReadlinkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub size_: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReadlinkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReadlinkRequestArgs {
+            rfid: None,
+            size_: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReadlinkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReadlinkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReadlinkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u32) {
+    self.fbb_.push_slot::<u32>(ReadlinkRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReadlinkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReadlinkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReadlinkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReadlinkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReadlinkResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReadlinkResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReadlinkResponse<'a> {
+    type Inner = ReadlinkResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReadlinkResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReadlinkResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReadlinkResponseArgs<'args>) -> flatbuffers::WIPOffset<ReadlinkResponse<'bldr>> {
+      let mut builder = ReadlinkResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.path { builder.add_path(x); }
+      if let Some(x) = args.buf { builder.add_buf(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_BUF: flatbuffers::VOffsetT = 6;
+    pub const VT_PATH: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReadlinkResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn buf(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ReadlinkResponse::VT_BUF, None)
+  }
+  #[inline]
+  pub fn path(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ReadlinkResponse::VT_PATH, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReadlinkResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReadlinkResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub buf: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub path: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReadlinkResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReadlinkResponseArgs {
+            result: None,
+            buf: None,
+            path: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReadlinkResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReadlinkResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(ReadlinkResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_buf(&mut self, buf: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(ReadlinkResponse::VT_BUF, buf);
+  }
+  #[inline]
+  pub fn add_path(&mut self, path: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReadlinkResponse::VT_PATH, path);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReadlinkResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReadlinkResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReadlinkResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReadlinkResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum MknodRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct MknodRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for MknodRequest<'a> {
+    type Inner = MknodRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> MknodRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        MknodRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args MknodRequestArgs<'args>) -> flatbuffers::WIPOffset<MknodRequest<'bldr>> {
+      let mut builder = MknodRequestBuilder::new(_fbb);
+      builder.add_dev(args.dev);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.bname { builder.add_bname(x); }
+      builder.add_umask(args.umask);
+      builder.add_mode(args.mode);
+      if let Some(x) = args.parrfid { builder.add_parrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_PARRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_DEV: flatbuffers::VOffsetT = 6;
+    pub const VT_MODE: flatbuffers::VOffsetT = 8;
+    pub const VT_UMASK: flatbuffers::VOffsetT = 10;
+    pub const VT_BNAME: flatbuffers::VOffsetT = 12;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn parrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MknodRequest::VT_PARRFID, None)
+  }
+  #[inline]
+  pub fn dev(&'a self) -> u64 {
+    self._tab.get::<u64>(MknodRequest::VT_DEV, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn mode(&'a self) -> u32 {
+    self._tab.get::<u32>(MknodRequest::VT_MODE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn umask(&'a self) -> u32 {
+    self._tab.get::<u32>(MknodRequest::VT_UMASK, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn bname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MknodRequest::VT_BNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(MknodRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct MknodRequestArgs<'a> {
+    pub parrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub dev: u64,
+    pub mode: u32,
+    pub umask: u32,
+    pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for MknodRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        MknodRequestArgs {
+            parrfid: None,
+            dev: 0,
+            mode: 0,
+            umask: 0,
+            bname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct MknodRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> MknodRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_parrfid(&mut self, parrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MknodRequest::VT_PARRFID, parrfid);
+  }
+  #[inline]
+  pub fn add_dev(&mut self, dev: u64) {
+    self.fbb_.push_slot::<u64>(MknodRequest::VT_DEV, dev, 0);
+  }
+  #[inline]
+  pub fn add_mode(&mut self, mode: u32) {
+    self.fbb_.push_slot::<u32>(MknodRequest::VT_MODE, mode, 0);
+  }
+  #[inline]
+  pub fn add_umask(&mut self, umask: u32) {
+    self.fbb_.push_slot::<u32>(MknodRequest::VT_UMASK, umask, 0);
+  }
+  #[inline]
+  pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MknodRequest::VT_BNAME, bname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MknodRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> MknodRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    MknodRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<MknodRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum MknodResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct MknodResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for MknodResponse<'a> {
+    type Inner = MknodResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> MknodResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        MknodResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args MknodResponseArgs<'args>) -> flatbuffers::WIPOffset<MknodResponse<'bldr>> {
+      let mut builder = MknodResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(MknodResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MknodResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MknodResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MknodResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(MknodResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct MknodResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for MknodResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        MknodResponseArgs {
+            result: None,
+            stat: None,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct MknodResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> MknodResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(MknodResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(MknodResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(MknodResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(MknodResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MknodResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> MknodResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    MknodResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<MknodResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum MkdirRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct MkdirRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for MkdirRequest<'a> {
+    type Inner = MkdirRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> MkdirRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        MkdirRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args MkdirRequestArgs<'args>) -> flatbuffers::WIPOffset<MkdirRequest<'bldr>> {
+      let mut builder = MkdirRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.bname { builder.add_bname(x); }
+      builder.add_umask(args.umask);
+      builder.add_mode(args.mode);
+      if let Some(x) = args.parrfid { builder.add_parrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_PARRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_MODE: flatbuffers::VOffsetT = 6;
+    pub const VT_UMASK: flatbuffers::VOffsetT = 8;
+    pub const VT_BNAME: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn parrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MkdirRequest::VT_PARRFID, None)
+  }
+  #[inline]
+  pub fn mode(&'a self) -> u32 {
+    self._tab.get::<u32>(MkdirRequest::VT_MODE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn umask(&'a self) -> u32 {
+    self._tab.get::<u32>(MkdirRequest::VT_UMASK, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn bname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MkdirRequest::VT_BNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(MkdirRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct MkdirRequestArgs<'a> {
+    pub parrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub mode: u32,
+    pub umask: u32,
+    pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for MkdirRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        MkdirRequestArgs {
+            parrfid: None,
+            mode: 0,
+            umask: 0,
+            bname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct MkdirRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> MkdirRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_parrfid(&mut self, parrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MkdirRequest::VT_PARRFID, parrfid);
+  }
+  #[inline]
+  pub fn add_mode(&mut self, mode: u32) {
+    self.fbb_.push_slot::<u32>(MkdirRequest::VT_MODE, mode, 0);
+  }
+  #[inline]
+  pub fn add_umask(&mut self, umask: u32) {
+    self.fbb_.push_slot::<u32>(MkdirRequest::VT_UMASK, umask, 0);
+  }
+  #[inline]
+  pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MkdirRequest::VT_BNAME, bname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MkdirRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> MkdirRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    MkdirRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<MkdirRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum MkdirResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct MkdirResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for MkdirResponse<'a> {
+    type Inner = MkdirResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> MkdirResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        MkdirResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args MkdirResponseArgs<'args>) -> flatbuffers::WIPOffset<MkdirResponse<'bldr>> {
+      let mut builder = MkdirResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(MkdirResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MkdirResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MkdirResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MkdirResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(MkdirResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct MkdirResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for MkdirResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        MkdirResponseArgs {
+            result: None,
+            stat: None,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct MkdirResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> MkdirResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(MkdirResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(MkdirResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(MkdirResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(MkdirResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MkdirResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> MkdirResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    MkdirResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<MkdirResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum UnlinkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct UnlinkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for UnlinkRequest<'a> {
+    type Inner = UnlinkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> UnlinkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        UnlinkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args UnlinkRequestArgs<'args>) -> flatbuffers::WIPOffset<UnlinkRequest<'bldr>> {
+      let mut builder = UnlinkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_xflags(args.xflags);
+      if let Some(x) = args.bname { builder.add_bname(x); }
+      if let Some(x) = args.parrfid { builder.add_parrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_PARRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_BNAME: flatbuffers::VOffsetT = 6;
+    pub const VT_XFLAGS: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn parrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnlinkRequest::VT_PARRFID, None)
+  }
+  #[inline]
+  pub fn bname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnlinkRequest::VT_BNAME, None)
+  }
+  #[inline]
+  pub fn xflags(&'a self) -> u32 {
+    self._tab.get::<u32>(UnlinkRequest::VT_XFLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(UnlinkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct UnlinkRequestArgs<'a> {
+    pub parrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub xflags: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for UnlinkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        UnlinkRequestArgs {
+            parrfid: None,
+            bname: None,
+            xflags: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct UnlinkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> UnlinkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_parrfid(&mut self, parrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnlinkRequest::VT_PARRFID, parrfid);
+  }
+  #[inline]
+  pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnlinkRequest::VT_BNAME, bname);
+  }
+  #[inline]
+  pub fn add_xflags(&mut self, xflags: u32) {
+    self.fbb_.push_slot::<u32>(UnlinkRequest::VT_XFLAGS, xflags, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnlinkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> UnlinkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    UnlinkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<UnlinkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum UnlinkResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct UnlinkResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for UnlinkResponse<'a> {
+    type Inner = UnlinkResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> UnlinkResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        UnlinkResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args UnlinkResponseArgs<'args>) -> flatbuffers::WIPOffset<UnlinkResponse<'bldr>> {
+      let mut builder = UnlinkResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(UnlinkResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(UnlinkResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(UnlinkResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(UnlinkResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct UnlinkResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for UnlinkResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        UnlinkResponseArgs {
+            result: None,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct UnlinkResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> UnlinkResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(UnlinkResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(UnlinkResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(UnlinkResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(UnlinkResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> UnlinkResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    UnlinkResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<UnlinkResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RmdirRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RmdirRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RmdirRequest<'a> {
+    type Inner = RmdirRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RmdirRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RmdirRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RmdirRequestArgs<'args>) -> flatbuffers::WIPOffset<RmdirRequest<'bldr>> {
+      let mut builder = RmdirRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.bname { builder.add_bname(x); }
+      builder.add_xflags(args.xflags);
+      if let Some(x) = args.parrfid { builder.add_parrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_PARRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_XFLAGS: flatbuffers::VOffsetT = 6;
+    pub const VT_BNAME: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn parrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RmdirRequest::VT_PARRFID, None)
+  }
+  #[inline]
+  pub fn xflags(&'a self) -> i32 {
+    self._tab.get::<i32>(RmdirRequest::VT_XFLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn bname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RmdirRequest::VT_BNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RmdirRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RmdirRequestArgs<'a> {
+    pub parrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub xflags: i32,
+    pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RmdirRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RmdirRequestArgs {
+            parrfid: None,
+            xflags: 0,
+            bname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RmdirRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RmdirRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_parrfid(&mut self, parrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RmdirRequest::VT_PARRFID, parrfid);
+  }
+  #[inline]
+  pub fn add_xflags(&mut self, xflags: i32) {
+    self.fbb_.push_slot::<i32>(RmdirRequest::VT_XFLAGS, xflags, 0);
+  }
+  #[inline]
+  pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RmdirRequest::VT_BNAME, bname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RmdirRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RmdirRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RmdirRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RmdirRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RmdirResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RmdirResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RmdirResponse<'a> {
+    type Inner = RmdirResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RmdirResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RmdirResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RmdirResponseArgs<'args>) -> flatbuffers::WIPOffset<RmdirResponse<'bldr>> {
+      let mut builder = RmdirResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(RmdirResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RmdirResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RmdirResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RmdirResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RmdirResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RmdirResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RmdirResponseArgs {
+            result: None,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RmdirResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RmdirResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(RmdirResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RmdirResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RmdirResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RmdirResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RmdirResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RmdirResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RmdirResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SymlinkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SymlinkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SymlinkRequest<'a> {
+    type Inner = SymlinkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SymlinkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SymlinkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SymlinkRequestArgs<'args>) -> flatbuffers::WIPOffset<SymlinkRequest<'bldr>> {
+      let mut builder = SymlinkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.linkname { builder.add_linkname(x); }
+      builder.add_umask(args.umask);
+      if let Some(x) = args.bname { builder.add_bname(x); }
+      if let Some(x) = args.parrfid { builder.add_parrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_PARRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_BNAME: flatbuffers::VOffsetT = 6;
+    pub const VT_UMASK: flatbuffers::VOffsetT = 8;
+    pub const VT_LINKNAME: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn parrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SymlinkRequest::VT_PARRFID, None)
+  }
+  #[inline]
+  pub fn bname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SymlinkRequest::VT_BNAME, None)
+  }
+  #[inline]
+  pub fn umask(&'a self) -> u32 {
+    self._tab.get::<u32>(SymlinkRequest::VT_UMASK, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn linkname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SymlinkRequest::VT_LINKNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SymlinkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SymlinkRequestArgs<'a> {
+    pub parrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub umask: u32,
+    pub linkname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SymlinkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SymlinkRequestArgs {
+            parrfid: None,
+            bname: None,
+            umask: 0,
+            linkname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct SymlinkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SymlinkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_parrfid(&mut self, parrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SymlinkRequest::VT_PARRFID, parrfid);
+  }
+  #[inline]
+  pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SymlinkRequest::VT_BNAME, bname);
+  }
+  #[inline]
+  pub fn add_umask(&mut self, umask: u32) {
+    self.fbb_.push_slot::<u32>(SymlinkRequest::VT_UMASK, umask, 0);
+  }
+  #[inline]
+  pub fn add_linkname(&mut self, linkname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SymlinkRequest::VT_LINKNAME, linkname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SymlinkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SymlinkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SymlinkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SymlinkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SymlinkResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SymlinkResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SymlinkResponse<'a> {
+    type Inner = SymlinkResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SymlinkResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SymlinkResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SymlinkResponseArgs<'args>) -> flatbuffers::WIPOffset<SymlinkResponse<'bldr>> {
+      let mut builder = SymlinkResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SymlinkResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SymlinkResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SymlinkResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SymlinkResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SymlinkResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SymlinkResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SymlinkResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SymlinkResponseArgs {
+            result: None,
+            stat: None,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct SymlinkResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SymlinkResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(SymlinkResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(SymlinkResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(SymlinkResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(SymlinkResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SymlinkResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SymlinkResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SymlinkResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SymlinkResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RenameRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RenameRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RenameRequest<'a> {
+    type Inner = RenameRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RenameRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RenameRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RenameRequestArgs<'args>) -> flatbuffers::WIPOffset<RenameRequest<'bldr>> {
+      let mut builder = RenameRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.newbname { builder.add_newbname(x); }
+      if let Some(x) = args.oldbname { builder.add_oldbname(x); }
+      if let Some(x) = args.newrfid { builder.add_newrfid(x); }
+      if let Some(x) = args.oldrfid { builder.add_oldrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_OLDRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_NEWRFID: flatbuffers::VOffsetT = 6;
+    pub const VT_OLDBNAME: flatbuffers::VOffsetT = 8;
+    pub const VT_NEWBNAME: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn oldrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RenameRequest::VT_OLDRFID, None)
+  }
+  #[inline]
+  pub fn newrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RenameRequest::VT_NEWRFID, None)
+  }
+  #[inline]
+  pub fn oldbname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RenameRequest::VT_OLDBNAME, None)
+  }
+  #[inline]
+  pub fn newbname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RenameRequest::VT_NEWBNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RenameRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RenameRequestArgs<'a> {
+    pub oldrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub newrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub oldbname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub newbname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RenameRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RenameRequestArgs {
+            oldrfid: None,
+            newrfid: None,
+            oldbname: None,
+            newbname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RenameRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RenameRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_oldrfid(&mut self, oldrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RenameRequest::VT_OLDRFID, oldrfid);
+  }
+  #[inline]
+  pub fn add_newrfid(&mut self, newrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RenameRequest::VT_NEWRFID, newrfid);
+  }
+  #[inline]
+  pub fn add_oldbname(&mut self, oldbname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RenameRequest::VT_OLDBNAME, oldbname);
+  }
+  #[inline]
+  pub fn add_newbname(&mut self, newbname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RenameRequest::VT_NEWBNAME, newbname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RenameRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RenameRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RenameRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RenameRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RenameResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RenameResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RenameResponse<'a> {
+    type Inner = RenameResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RenameResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RenameResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RenameResponseArgs<'args>) -> flatbuffers::WIPOffset<RenameResponse<'bldr>> {
+      let mut builder = RenameResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postnewparent { builder.add_postnewparent(x); }
+      if let Some(x) = args.prenewparent { builder.add_prenewparent(x); }
+      if let Some(x) = args.postoldparent { builder.add_postoldparent(x); }
+      if let Some(x) = args.preoldparent { builder.add_preoldparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_PREOLDPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_POSTOLDPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_PRENEWPARENT: flatbuffers::VOffsetT = 12;
+    pub const VT_POSTNEWPARENT: flatbuffers::VOffsetT = 14;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 16;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(RenameResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn preoldparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_PREOLDPARENT, None)
+  }
+  #[inline]
+  pub fn postoldparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_POSTOLDPARENT, None)
+  }
+  #[inline]
+  pub fn prenewparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_PRENEWPARENT, None)
+  }
+  #[inline]
+  pub fn postnewparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_POSTNEWPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RenameResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RenameResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub preoldparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postoldparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub prenewparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postnewparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RenameResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RenameResponseArgs {
+            result: None,
+            stat: None,
+            preoldparent: None,
+            postoldparent: None,
+            prenewparent: None,
+            postnewparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RenameResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RenameResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(RenameResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RenameResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_preoldparent(&mut self, preoldparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RenameResponse::VT_PREOLDPARENT, preoldparent);
+  }
+  #[inline]
+  pub fn add_postoldparent(&mut self, postoldparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RenameResponse::VT_POSTOLDPARENT, postoldparent);
+  }
+  #[inline]
+  pub fn add_prenewparent(&mut self, prenewparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RenameResponse::VT_PRENEWPARENT, prenewparent);
+  }
+  #[inline]
+  pub fn add_postnewparent(&mut self, postnewparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(RenameResponse::VT_POSTNEWPARENT, postnewparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RenameResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RenameResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RenameResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RenameResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LinkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LinkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LinkRequest<'a> {
+    type Inner = LinkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LinkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LinkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LinkRequestArgs<'args>) -> flatbuffers::WIPOffset<LinkRequest<'bldr>> {
+      let mut builder = LinkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.newbname { builder.add_newbname(x); }
+      if let Some(x) = args.newrfid { builder.add_newrfid(x); }
+      if let Some(x) = args.oldrfid { builder.add_oldrfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_OLDRFID: flatbuffers::VOffsetT = 4;
+    pub const VT_NEWRFID: flatbuffers::VOffsetT = 6;
+    pub const VT_NEWBNAME: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn oldrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LinkRequest::VT_OLDRFID, None)
+  }
+  #[inline]
+  pub fn newrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LinkRequest::VT_NEWRFID, None)
+  }
+  #[inline]
+  pub fn newbname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LinkRequest::VT_NEWBNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LinkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LinkRequestArgs<'a> {
+    pub oldrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub newrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub newbname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LinkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LinkRequestArgs {
+            oldrfid: None,
+            newrfid: None,
+            newbname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LinkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LinkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_oldrfid(&mut self, oldrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LinkRequest::VT_OLDRFID, oldrfid);
+  }
+  #[inline]
+  pub fn add_newrfid(&mut self, newrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LinkRequest::VT_NEWRFID, newrfid);
+  }
+  #[inline]
+  pub fn add_newbname(&mut self, newbname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LinkRequest::VT_NEWBNAME, newbname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LinkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LinkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LinkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LinkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LinkResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LinkResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LinkResponse<'a> {
+    type Inner = LinkResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LinkResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LinkResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LinkResponseArgs<'args>) -> flatbuffers::WIPOffset<LinkResponse<'bldr>> {
+      let mut builder = LinkResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LinkResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LinkResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LinkResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LinkResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LinkResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LinkResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LinkResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LinkResponseArgs {
+            result: None,
+            stat: None,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LinkResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LinkResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(LinkResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(LinkResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(LinkResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(LinkResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LinkResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LinkResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LinkResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LinkResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum TruncateRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct TruncateRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for TruncateRequest<'a> {
+    type Inner = TruncateRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> TruncateRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        TruncateRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args TruncateRequestArgs<'args>) -> flatbuffers::WIPOffset<TruncateRequest<'bldr>> {
+      let mut builder = TruncateRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(TruncateRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(TruncateRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(TruncateRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct TruncateRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub offset: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for TruncateRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        TruncateRequestArgs {
+            rfid: None,
+            offset: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct TruncateRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> TruncateRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(TruncateRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(TruncateRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TruncateRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> TruncateRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    TruncateRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<TruncateRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum TruncateResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct TruncateResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for TruncateResponse<'a> {
+    type Inner = TruncateResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> TruncateResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        TruncateResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args TruncateResponseArgs<'args>) -> flatbuffers::WIPOffset<TruncateResponse<'bldr>> {
+      let mut builder = TruncateResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.poststat { builder.add_poststat(x); }
+      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(TruncateResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(TruncateResponse::VT_PRESTAT, None)
+  }
+  #[inline]
+  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(TruncateResponse::VT_POSTSTAT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(TruncateResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct TruncateResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for TruncateResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        TruncateResponseArgs {
+            result: None,
+            prestat: None,
+            poststat: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct TruncateResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> TruncateResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(TruncateResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(TruncateResponse::VT_PRESTAT, prestat);
+  }
+  #[inline]
+  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(TruncateResponse::VT_POSTSTAT, poststat);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(TruncateResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> TruncateResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    TruncateResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<TruncateResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum OpenRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct OpenRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for OpenRequest<'a> {
+    type Inner = OpenRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> OpenRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        OpenRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args OpenRequestArgs<'args>) -> flatbuffers::WIPOffset<OpenRequest<'bldr>> {
+      let mut builder = OpenRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(OpenRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(OpenRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(OpenRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct OpenRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub flags: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for OpenRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        OpenRequestArgs {
+            rfid: None,
+            flags: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct OpenRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> OpenRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(OpenRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(OpenRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(OpenRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> OpenRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    OpenRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<OpenRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum OpenResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct OpenResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for OpenResponse<'a> {
+    type Inner = OpenResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> OpenResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        OpenResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args OpenResponseArgs<'args>) -> flatbuffers::WIPOffset<OpenResponse<'bldr>> {
+      let mut builder = OpenResponseBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(OpenResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(OpenResponse::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(OpenResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct OpenResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for OpenResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        OpenResponseArgs {
+            result: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct OpenResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> OpenResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(OpenResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(OpenResponse::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(OpenResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> OpenResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    OpenResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<OpenResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReadRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReadRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReadRequest<'a> {
+    type Inner = ReadRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReadRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReadRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReadRequestArgs<'args>) -> flatbuffers::WIPOffset<ReadRequest<'bldr>> {
+      let mut builder = ReadRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      builder.add_flag(args.flag);
+      builder.add_size_(args.size_);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
+    pub const VT_FLAG: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReadRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(ReadRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(ReadRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u32 {
+    self._tab.get::<u32>(ReadRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flag(&'a self) -> u32 {
+    self._tab.get::<u32>(ReadRequest::VT_FLAG, Some(0)).unwrap()
+  }
+}
+
+pub struct ReadRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub size_: u32,
+    pub flag: u32,
+}
+impl<'a> Default for ReadRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReadRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            size_: 0,
+            flag: 0,
+        }
+    }
+}
+pub struct ReadRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReadRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReadRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(ReadRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(ReadRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u32) {
+    self.fbb_.push_slot::<u32>(ReadRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn add_flag(&mut self, flag: u32) {
+    self.fbb_.push_slot::<u32>(ReadRequest::VT_FLAG, flag, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReadRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReadRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReadRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReadResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReadResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReadResponse<'a> {
+    type Inner = ReadResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReadResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReadResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReadResponseArgs<'args>) -> flatbuffers::WIPOffset<ReadResponse<'bldr>> {
+      let mut builder = ReadResponseBuilder::new(_fbb);
+      if let Some(x) = args.data { builder.add_data(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReadResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ReadResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn data(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ReadResponse::VT_DATA, None)
+  }
+}
+
+pub struct ReadResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub data: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for ReadResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReadResponseArgs {
+            result: None,
+            stat: None,
+            data: None,
+        }
+    }
+}
+pub struct ReadResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReadResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(ReadResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(ReadResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_data(&mut self, data: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReadResponse::VT_DATA, data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReadResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReadResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReadResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LookupRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LookupRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LookupRequest<'a> {
+    type Inner = LookupRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LookupRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LookupRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LookupRequestArgs<'args>) -> flatbuffers::WIPOffset<LookupRequest<'bldr>> {
+      let mut builder = LookupRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.bname { builder.add_bname(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.parrfid { builder.add_parrfid(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_PARRFID: flatbuffers::VOffsetT = 6;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
+    pub const VT_BNAME: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LookupRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn parrfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LookupRequest::VT_PARRFID, None)
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(LookupRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn bname(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LookupRequest::VT_BNAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LookupRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LookupRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parrfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub flags: u32,
+    pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LookupRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LookupRequestArgs {
+            rfid: None,
+            parrfid: None,
+            flags: 0,
+            bname: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LookupRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LookupRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LookupRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_parrfid(&mut self, parrfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LookupRequest::VT_PARRFID, parrfid);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(LookupRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LookupRequest::VT_BNAME, bname);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LookupRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LookupRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LookupRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LookupRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LookupResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LookupResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LookupResponse<'a> {
+    type Inner = LookupResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LookupResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LookupResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LookupResponseArgs<'args>) -> flatbuffers::WIPOffset<LookupResponse<'bldr>> {
+      let mut builder = LookupResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LookupResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LookupResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LookupResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LookupResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LookupResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LookupResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LookupResponseArgs {
+            result: None,
+            stat: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LookupResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LookupResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(LookupResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(LookupResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(LookupResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LookupResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LookupResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LookupResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LookupResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum WriteRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct WriteRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for WriteRequest<'a> {
+    type Inner = WriteRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> WriteRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        WriteRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args WriteRequestArgs<'args>) -> flatbuffers::WIPOffset<WriteRequest<'bldr>> {
+      let mut builder = WriteRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.data { builder.add_data(x); }
+      builder.add_flag(args.flag);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_FLAG: flatbuffers::VOffsetT = 10;
+    pub const VT_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(WriteRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(WriteRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(WriteRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flag(&'a self) -> u32 {
+    self._tab.get::<u32>(WriteRequest::VT_FLAG, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn data(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(WriteRequest::VT_DATA, None)
+  }
+}
+
+pub struct WriteRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub flag: u32,
+    pub data: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for WriteRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        WriteRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            flag: 0,
+            data: None,
+        }
+    }
+}
+pub struct WriteRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> WriteRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(WriteRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(WriteRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(WriteRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_flag(&mut self, flag: u32) {
+    self.fbb_.push_slot::<u32>(WriteRequest::VT_FLAG, flag, 0);
+  }
+  #[inline]
+  pub fn add_data(&mut self, data: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(WriteRequest::VT_DATA, data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> WriteRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    WriteRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<WriteRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum WriteResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct WriteResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for WriteResponse<'a> {
+    type Inner = WriteResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> WriteResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        WriteResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args WriteResponseArgs<'args>) -> flatbuffers::WIPOffset<WriteResponse<'bldr>> {
+      let mut builder = WriteResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.poststat { builder.add_poststat(x); }
+      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(WriteResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(WriteResponse::VT_PRESTAT, None)
+  }
+  #[inline]
+  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(WriteResponse::VT_POSTSTAT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(WriteResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct WriteResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for WriteResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        WriteResponseArgs {
+            result: None,
+            prestat: None,
+            poststat: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct WriteResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> WriteResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(WriteResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(WriteResponse::VT_PRESTAT, prestat);
+  }
+  #[inline]
+  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(WriteResponse::VT_POSTSTAT, poststat);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(WriteResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> WriteResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    WriteResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<WriteResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum StatfsRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct StatfsRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for StatfsRequest<'a> {
+    type Inner = StatfsRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> StatfsRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        StatfsRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args StatfsRequestArgs<'args>) -> flatbuffers::WIPOffset<StatfsRequest<'bldr>> {
+      let mut builder = StatfsRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(StatfsRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(StatfsRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct StatfsRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for StatfsRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        StatfsRequestArgs {
+            rfid: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct StatfsRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> StatfsRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(StatfsRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatfsRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatfsRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    StatfsRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<StatfsRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum StatfsResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct StatfsResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for StatfsResponse<'a> {
+    type Inner = StatfsResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> StatfsResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        StatfsResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args StatfsResponseArgs<'args>) -> flatbuffers::WIPOffset<StatfsResponse<'bldr>> {
+      let mut builder = StatfsResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.statfs { builder.add_statfs(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STATFS: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(StatfsResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn statfs(&'a self) -> Option<Statfs<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Statfs<'a>>>(StatfsResponse::VT_STATFS, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(StatfsResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct StatfsResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub statfs: Option<flatbuffers::WIPOffset<Statfs<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for StatfsResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        StatfsResponseArgs {
+            result: None,
+            statfs: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct StatfsResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> StatfsResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(StatfsResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_statfs(&mut self, statfs: flatbuffers::WIPOffset<Statfs<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Statfs>>(StatfsResponse::VT_STATFS, statfs);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(StatfsResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatfsResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    StatfsResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<StatfsResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LockRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LockRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LockRequest<'a> {
+    type Inner = LockRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LockRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LockRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LockRequestArgs<'args>) -> flatbuffers::WIPOffset<LockRequest<'bldr>> {
+      let mut builder = LockRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.flock { builder.add_flock(x); }
+      builder.add_type_(args.type_);
+      builder.add_cmd(args.cmd);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_CMD: flatbuffers::VOffsetT = 8;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 10;
+    pub const VT_FLOCK: flatbuffers::VOffsetT = 12;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LockRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> i64 {
+    self._tab.get::<i64>(LockRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn cmd(&'a self) -> u32 {
+    self._tab.get::<u32>(LockRequest::VT_CMD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn type_(&'a self) -> u32 {
+    self._tab.get::<u32>(LockRequest::VT_TYPE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(LockRequest::VT_FLOCK, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LockRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LockRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: i64,
+    pub cmd: u32,
+    pub type_: u32,
+    pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LockRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LockRequestArgs {
+            rfid: None,
+            fd: 0,
+            cmd: 0,
+            type_: 0,
+            flock: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LockRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LockRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LockRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: i64) {
+    self.fbb_.push_slot::<i64>(LockRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_cmd(&mut self, cmd: u32) {
+    self.fbb_.push_slot::<u32>(LockRequest::VT_CMD, cmd, 0);
+  }
+  #[inline]
+  pub fn add_type_(&mut self, type_: u32) {
+    self.fbb_.push_slot::<u32>(LockRequest::VT_TYPE_, type_, 0);
+  }
+  #[inline]
+  pub fn add_flock(&mut self, flock: flatbuffers::WIPOffset<ProtoFlock<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoFlock>>(LockRequest::VT_FLOCK, flock);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LockRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LockRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LockRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LockRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LockResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LockResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LockResponse<'a> {
+    type Inner = LockResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LockResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LockResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LockResponseArgs<'args>) -> flatbuffers::WIPOffset<LockResponse<'bldr>> {
+      let mut builder = LockResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.flock { builder.add_flock(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_FLOCK: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LockResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(LockResponse::VT_FLOCK, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LockResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LockResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LockResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LockResponseArgs {
+            result: None,
+            flock: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LockResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LockResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(LockResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_flock(&mut self, flock: flatbuffers::WIPOffset<ProtoFlock<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoFlock>>(LockResponse::VT_FLOCK, flock);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LockResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LockResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LockResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LockResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LeaseRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LeaseRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LeaseRequest<'a> {
+    type Inner = LeaseRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LeaseRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LeaseRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LeaseRequestArgs<'args>) -> flatbuffers::WIPOffset<LeaseRequest<'bldr>> {
+      let mut builder = LeaseRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.lease { builder.add_lease(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_LEASE: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LeaseRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn lease(&'a self) -> Option<ProtoLease<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoLease<'a>>>(LeaseRequest::VT_LEASE, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LeaseRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LeaseRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub lease: Option<flatbuffers::WIPOffset<ProtoLease<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LeaseRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LeaseRequestArgs {
+            rfid: None,
+            lease: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LeaseRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LeaseRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LeaseRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_lease(&mut self, lease: flatbuffers::WIPOffset<ProtoLease<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoLease>>(LeaseRequest::VT_LEASE, lease);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LeaseRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LeaseRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LeaseRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LeaseRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LeaseResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LeaseResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LeaseResponse<'a> {
+    type Inner = LeaseResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LeaseResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LeaseResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LeaseResponseArgs<'args>) -> flatbuffers::WIPOffset<LeaseResponse<'bldr>> {
+      let mut builder = LeaseResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.lease { builder.add_lease(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_LEASE: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LeaseResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn lease(&'a self) -> Option<ProtoLease<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoLease<'a>>>(LeaseResponse::VT_LEASE, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(LeaseResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct LeaseResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub lease: Option<flatbuffers::WIPOffset<ProtoLease<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for LeaseResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LeaseResponseArgs {
+            result: None,
+            lease: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct LeaseResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LeaseResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(LeaseResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_lease(&mut self, lease: flatbuffers::WIPOffset<ProtoLease<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoLease>>(LeaseResponse::VT_LEASE, lease);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LeaseResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LeaseResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LeaseResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LeaseResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RecallLeaseRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RecallLeaseRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RecallLeaseRequest<'a> {
+    type Inner = RecallLeaseRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RecallLeaseRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RecallLeaseRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RecallLeaseRequestArgs<'args>) -> flatbuffers::WIPOffset<RecallLeaseRequest<'bldr>> {
+      let mut builder = RecallLeaseRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.tid { builder.add_tid(x); }
+      builder.add_lease_type(args.lease_type);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_LEASE_TYPE: flatbuffers::VOffsetT = 6;
+    pub const VT_TID: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RecallLeaseRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn lease_type(&'a self) -> u32 {
+    self._tab.get::<u32>(RecallLeaseRequest::VT_LEASE_TYPE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn tid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RecallLeaseRequest::VT_TID, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RecallLeaseRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RecallLeaseRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub lease_type: u32,
+    pub tid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RecallLeaseRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RecallLeaseRequestArgs {
+            rfid: None,
+            lease_type: 0,
+            tid: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RecallLeaseRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RecallLeaseRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RecallLeaseRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_lease_type(&mut self, lease_type: u32) {
+    self.fbb_.push_slot::<u32>(RecallLeaseRequest::VT_LEASE_TYPE, lease_type, 0);
+  }
+  #[inline]
+  pub fn add_tid(&mut self, tid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RecallLeaseRequest::VT_TID, tid);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RecallLeaseRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RecallLeaseRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RecallLeaseRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RecallLeaseRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum InodelkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct InodelkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for InodelkRequest<'a> {
+    type Inner = InodelkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> InodelkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        InodelkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args InodelkRequestArgs<'args>) -> flatbuffers::WIPOffset<InodelkRequest<'bldr>> {
+      let mut builder = InodelkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.volume { builder.add_volume(x); }
+      if let Some(x) = args.flock { builder.add_flock(x); }
+      builder.add_type_(args.type_);
+      builder.add_cmd(args.cmd);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_CMD: flatbuffers::VOffsetT = 6;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 8;
+    pub const VT_FLOCK: flatbuffers::VOffsetT = 10;
+    pub const VT_VOLUME: flatbuffers::VOffsetT = 12;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(InodelkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn cmd(&'a self) -> u32 {
+    self._tab.get::<u32>(InodelkRequest::VT_CMD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn type_(&'a self) -> u32 {
+    self._tab.get::<u32>(InodelkRequest::VT_TYPE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(InodelkRequest::VT_FLOCK, None)
+  }
+  #[inline]
+  pub fn volume(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(InodelkRequest::VT_VOLUME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(InodelkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct InodelkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub cmd: u32,
+    pub type_: u32,
+    pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
+    pub volume: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for InodelkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        InodelkRequestArgs {
+            rfid: None,
+            cmd: 0,
+            type_: 0,
+            flock: None,
+            volume: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct InodelkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> InodelkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(InodelkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_cmd(&mut self, cmd: u32) {
+    self.fbb_.push_slot::<u32>(InodelkRequest::VT_CMD, cmd, 0);
+  }
+  #[inline]
+  pub fn add_type_(&mut self, type_: u32) {
+    self.fbb_.push_slot::<u32>(InodelkRequest::VT_TYPE_, type_, 0);
+  }
+  #[inline]
+  pub fn add_flock(&mut self, flock: flatbuffers::WIPOffset<ProtoFlock<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoFlock>>(InodelkRequest::VT_FLOCK, flock);
+  }
+  #[inline]
+  pub fn add_volume(&mut self, volume: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(InodelkRequest::VT_VOLUME, volume);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(InodelkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> InodelkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    InodelkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<InodelkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FinodelkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FinodelkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FinodelkRequest<'a> {
+    type Inner = FinodelkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FinodelkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FinodelkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FinodelkRequestArgs<'args>) -> flatbuffers::WIPOffset<FinodelkRequest<'bldr>> {
+      let mut builder = FinodelkRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.volume { builder.add_volume(x); }
+      if let Some(x) = args.flock { builder.add_flock(x); }
+      builder.add_type_(args.type_);
+      builder.add_cmd(args.cmd);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_CMD: flatbuffers::VOffsetT = 8;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 10;
+    pub const VT_FLOCK: flatbuffers::VOffsetT = 12;
+    pub const VT_VOLUME: flatbuffers::VOffsetT = 14;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 16;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FinodelkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FinodelkRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn cmd(&'a self) -> u32 {
+    self._tab.get::<u32>(FinodelkRequest::VT_CMD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn type_(&'a self) -> u32 {
+    self._tab.get::<u32>(FinodelkRequest::VT_TYPE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(FinodelkRequest::VT_FLOCK, None)
+  }
+  #[inline]
+  pub fn volume(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FinodelkRequest::VT_VOLUME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FinodelkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FinodelkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub cmd: u32,
+    pub type_: u32,
+    pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
+    pub volume: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FinodelkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FinodelkRequestArgs {
+            rfid: None,
+            fd: 0,
+            cmd: 0,
+            type_: 0,
+            flock: None,
+            volume: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FinodelkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FinodelkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FinodelkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FinodelkRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_cmd(&mut self, cmd: u32) {
+    self.fbb_.push_slot::<u32>(FinodelkRequest::VT_CMD, cmd, 0);
+  }
+  #[inline]
+  pub fn add_type_(&mut self, type_: u32) {
+    self.fbb_.push_slot::<u32>(FinodelkRequest::VT_TYPE_, type_, 0);
+  }
+  #[inline]
+  pub fn add_flock(&mut self, flock: flatbuffers::WIPOffset<ProtoFlock<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoFlock>>(FinodelkRequest::VT_FLOCK, flock);
+  }
+  #[inline]
+  pub fn add_volume(&mut self, volume: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FinodelkRequest::VT_VOLUME, volume);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FinodelkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FinodelkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FinodelkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FinodelkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FlushRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FlushRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FlushRequest<'a> {
+    type Inner = FlushRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FlushRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FlushRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FlushRequestArgs<'args>) -> flatbuffers::WIPOffset<FlushRequest<'bldr>> {
+      let mut builder = FlushRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FlushRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FlushRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FlushRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FlushRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FlushRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FlushRequestArgs {
+            rfid: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FlushRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FlushRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FlushRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FlushRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FlushRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FlushRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FlushRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FlushRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FsyncRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FsyncRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FsyncRequest<'a> {
+    type Inner = FsyncRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FsyncRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FsyncRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FsyncRequestArgs<'args>) -> flatbuffers::WIPOffset<FsyncRequest<'bldr>> {
+      let mut builder = FsyncRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_data(args.data);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_DATA: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsyncRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FsyncRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn data(&'a self) -> u32 {
+    self._tab.get::<u32>(FsyncRequest::VT_DATA, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FsyncRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FsyncRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub data: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FsyncRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FsyncRequestArgs {
+            rfid: None,
+            fd: 0,
+            data: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FsyncRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FsyncRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsyncRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FsyncRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_data(&mut self, data: u32) {
+    self.fbb_.push_slot::<u32>(FsyncRequest::VT_DATA, data, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FsyncRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsyncRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FsyncRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FsyncRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FsyncResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FsyncResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FsyncResponse<'a> {
+    type Inner = FsyncResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FsyncResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FsyncResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FsyncResponseArgs<'args>) -> flatbuffers::WIPOffset<FsyncResponse<'bldr>> {
+      let mut builder = FsyncResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.poststat { builder.add_poststat(x); }
+      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FsyncResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsyncResponse::VT_PRESTAT, None)
+  }
+  #[inline]
+  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsyncResponse::VT_POSTSTAT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FsyncResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FsyncResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FsyncResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FsyncResponseArgs {
+            result: None,
+            prestat: None,
+            poststat: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FsyncResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FsyncResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FsyncResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsyncResponse::VT_PRESTAT, prestat);
+  }
+  #[inline]
+  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsyncResponse::VT_POSTSTAT, poststat);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FsyncResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsyncResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FsyncResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FsyncResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetxattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetxattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetxattrRequest<'a> {
+    type Inner = SetxattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetxattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetxattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SetxattrRequestArgs<'args>) -> flatbuffers::WIPOffset<SetxattrRequest<'bldr>> {
+      let mut builder = SetxattrRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetxattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(SetxattrRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SetxattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SetxattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub flags: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SetxattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SetxattrRequestArgs {
+            rfid: None,
+            flags: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct SetxattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetxattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SetxattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(SetxattrRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SetxattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetxattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetxattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetxattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FsetxattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FsetxattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FsetxattrRequest<'a> {
+    type Inner = FsetxattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FsetxattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FsetxattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FsetxattrRequestArgs<'args>) -> flatbuffers::WIPOffset<FsetxattrRequest<'bldr>> {
+      let mut builder = FsetxattrRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsetxattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> i64 {
+    self._tab.get::<i64>(FsetxattrRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(FsetxattrRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FsetxattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FsetxattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: i64,
+    pub flags: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FsetxattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FsetxattrRequestArgs {
+            rfid: None,
+            fd: 0,
+            flags: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FsetxattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FsetxattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsetxattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: i64) {
+    self.fbb_.push_slot::<i64>(FsetxattrRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(FsetxattrRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FsetxattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsetxattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FsetxattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FsetxattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum XattropRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct XattropRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for XattropRequest<'a> {
+    type Inner = XattropRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> XattropRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        XattropRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args XattropRequestArgs<'args>) -> flatbuffers::WIPOffset<XattropRequest<'bldr>> {
+      let mut builder = XattropRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(XattropRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(XattropRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(XattropRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct XattropRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub flags: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for XattropRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        XattropRequestArgs {
+            rfid: None,
+            flags: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct XattropRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> XattropRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(XattropRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(XattropRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(XattropRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> XattropRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    XattropRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<XattropRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum XattropResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct XattropResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for XattropResponse<'a> {
+    type Inner = XattropResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> XattropResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        XattropResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args XattropResponseArgs<'args>) -> flatbuffers::WIPOffset<XattropResponse<'bldr>> {
+      let mut builder = XattropResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(XattropResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(XattropResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct XattropResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for XattropResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        XattropResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct XattropResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> XattropResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(XattropResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(XattropResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> XattropResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    XattropResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<XattropResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FxattropRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FxattropRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FxattropRequest<'a> {
+    type Inner = FxattropRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FxattropRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FxattropRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FxattropRequestArgs<'args>) -> flatbuffers::WIPOffset<FxattropRequest<'bldr>> {
+      let mut builder = FxattropRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FxattropRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FxattropRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(FxattropRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FxattropRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FxattropRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub flags: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FxattropRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FxattropRequestArgs {
+            rfid: None,
+            fd: 0,
+            flags: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FxattropRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FxattropRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FxattropRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FxattropRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(FxattropRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FxattropRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FxattropRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FxattropRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FxattropRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FxattropResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FxattropResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FxattropResponse<'a> {
+    type Inner = FxattropResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FxattropResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FxattropResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FxattropResponseArgs<'args>) -> flatbuffers::WIPOffset<FxattropResponse<'bldr>> {
+      let mut builder = FxattropResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FxattropResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FxattropResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FxattropResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FxattropResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FxattropResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FxattropResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FxattropResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FxattropResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FxattropResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FxattropResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FxattropResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FxattropResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetXattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetXattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetXattrRequest<'a> {
+    type Inner = GetXattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetXattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetXattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetXattrRequestArgs<'args>) -> flatbuffers::WIPOffset<GetXattrRequest<'bldr>> {
+      let mut builder = GetXattrRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      builder.add_namelen(args.namelen);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_NAMELEN: flatbuffers::VOffsetT = 6;
+    pub const VT_NAME: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(GetXattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn namelen(&'a self) -> u32 {
+    self._tab.get::<u32>(GetXattrRequest::VT_NAMELEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetXattrRequest::VT_NAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(GetXattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct GetXattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub namelen: u32,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for GetXattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetXattrRequestArgs {
+            rfid: None,
+            namelen: 0,
+            name: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct GetXattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetXattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(GetXattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_namelen(&mut self, namelen: u32) {
+    self.fbb_.push_slot::<u32>(GetXattrRequest::VT_NAMELEN, namelen, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetXattrRequest::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetXattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetXattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetXattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetXattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetxattrResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetxattrResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetxattrResponse<'a> {
+    type Inner = GetxattrResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetxattrResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetxattrResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetxattrResponseArgs<'args>) -> flatbuffers::WIPOffset<GetxattrResponse<'bldr>> {
+      let mut builder = GetxattrResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetxattrResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(GetxattrResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct GetxattrResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for GetxattrResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetxattrResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct GetxattrResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetxattrResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(GetxattrResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetxattrResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetxattrResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetxattrResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetxattrResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FgetxattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FgetxattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FgetxattrRequest<'a> {
+    type Inner = FgetxattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FgetxattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FgetxattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FgetxattrRequestArgs<'args>) -> flatbuffers::WIPOffset<FgetxattrRequest<'bldr>> {
+      let mut builder = FgetxattrRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      builder.add_namelen(args.namelen);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_NAMELEN: flatbuffers::VOffsetT = 8;
+    pub const VT_NAME: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FgetxattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FgetxattrRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn namelen(&'a self) -> u32 {
+    self._tab.get::<u32>(FgetxattrRequest::VT_NAMELEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FgetxattrRequest::VT_NAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FgetxattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FgetxattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub namelen: u32,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FgetxattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FgetxattrRequestArgs {
+            rfid: None,
+            fd: 0,
+            namelen: 0,
+            name: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FgetxattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FgetxattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FgetxattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FgetxattrRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_namelen(&mut self, namelen: u32) {
+    self.fbb_.push_slot::<u32>(FgetxattrRequest::VT_NAMELEN, namelen, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FgetxattrRequest::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FgetxattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FgetxattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FgetxattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FgetxattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FgetxattrResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FgetxattrResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FgetxattrResponse<'a> {
+    type Inner = FgetxattrResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FgetxattrResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FgetxattrResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FgetxattrResponseArgs<'args>) -> flatbuffers::WIPOffset<FgetxattrResponse<'bldr>> {
+      let mut builder = FgetxattrResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FgetxattrResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FgetxattrResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FgetxattrResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FgetxattrResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FgetxattrResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FgetxattrResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FgetxattrResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FgetxattrResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FgetxattrResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FgetxattrResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FgetxattrResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FgetxattrResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RemovexattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RemovexattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RemovexattrRequest<'a> {
+    type Inner = RemovexattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RemovexattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RemovexattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RemovexattrRequestArgs<'args>) -> flatbuffers::WIPOffset<RemovexattrRequest<'bldr>> {
+      let mut builder = RemovexattrRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_NAME: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RemovexattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RemovexattrRequest::VT_NAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RemovexattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RemovexattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RemovexattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RemovexattrRequestArgs {
+            rfid: None,
+            name: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RemovexattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RemovexattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RemovexattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RemovexattrRequest::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RemovexattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RemovexattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RemovexattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RemovexattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FremovexattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FremovexattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FremovexattrRequest<'a> {
+    type Inner = FremovexattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FremovexattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FremovexattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FremovexattrRequestArgs<'args>) -> flatbuffers::WIPOffset<FremovexattrRequest<'bldr>> {
+      let mut builder = FremovexattrRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_NAME: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FremovexattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FremovexattrRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FremovexattrRequest::VT_NAME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FremovexattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FremovexattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FremovexattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FremovexattrRequestArgs {
+            rfid: None,
+            fd: 0,
+            name: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FremovexattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FremovexattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FremovexattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FremovexattrRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FremovexattrRequest::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FremovexattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FremovexattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FremovexattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FremovexattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum OpendirRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct OpendirRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for OpendirRequest<'a> {
+    type Inner = OpendirRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> OpendirRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        OpendirRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args OpendirRequestArgs<'args>) -> flatbuffers::WIPOffset<OpendirRequest<'bldr>> {
+      let mut builder = OpendirRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(OpendirRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(OpendirRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct OpendirRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for OpendirRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        OpendirRequestArgs {
+            rfid: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct OpendirRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> OpendirRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(OpendirRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(OpendirRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> OpendirRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    OpendirRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<OpendirRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum OpendirResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct OpendirResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for OpendirResponse<'a> {
+    type Inner = OpendirResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> OpendirResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        OpendirResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args OpendirResponseArgs<'args>) -> flatbuffers::WIPOffset<OpendirResponse<'bldr>> {
+      let mut builder = OpendirResponseBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(OpendirResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(OpendirResponse::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(OpendirResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct OpendirResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for OpendirResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        OpendirResponseArgs {
+            result: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct OpendirResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> OpendirResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(OpendirResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(OpendirResponse::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(OpendirResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> OpendirResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    OpendirResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<OpendirResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FsyncdirRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FsyncdirRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FsyncdirRequest<'a> {
+    type Inner = FsyncdirRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FsyncdirRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FsyncdirRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FsyncdirRequestArgs<'args>) -> flatbuffers::WIPOffset<FsyncdirRequest<'bldr>> {
+      let mut builder = FsyncdirRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsyncdirRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FsyncdirRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FsyncdirRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FsyncdirRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FsyncdirRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FsyncdirRequestArgs {
+            rfid: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FsyncdirRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FsyncdirRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsyncdirRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FsyncdirRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FsyncdirRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsyncdirRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FsyncdirRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FsyncdirRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReaddirRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReaddirRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReaddirRequest<'a> {
+    type Inner = ReaddirRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReaddirRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReaddirRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReaddirRequestArgs<'args>) -> flatbuffers::WIPOffset<ReaddirRequest<'bldr>> {
+      let mut builder = ReaddirRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_size_(args.size_);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReaddirRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(ReaddirRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(ReaddirRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u32 {
+    self._tab.get::<u32>(ReaddirRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReaddirRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReaddirRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub size_: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReaddirRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReaddirRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            size_: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReaddirRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReaddirRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReaddirRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(ReaddirRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(ReaddirRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u32) {
+    self.fbb_.push_slot::<u32>(ReaddirRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReaddirRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReaddirRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReaddirRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReaddirRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReaddirpRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReaddirpRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReaddirpRequest<'a> {
+    type Inner = ReaddirpRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReaddirpRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReaddirpRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReaddirpRequestArgs<'args>) -> flatbuffers::WIPOffset<ReaddirpRequest<'bldr>> {
+      let mut builder = ReaddirpRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      builder.add_size_(args.size_);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReaddirpRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(ReaddirpRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(ReaddirpRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u32 {
+    self._tab.get::<u32>(ReaddirpRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+}
+
+pub struct ReaddirpRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub size_: u32,
+}
+impl<'a> Default for ReaddirpRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReaddirpRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            size_: 0,
+        }
+    }
+}
+pub struct ReaddirpRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReaddirpRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReaddirpRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(ReaddirpRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(ReaddirpRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u32) {
+    self.fbb_.push_slot::<u32>(ReaddirpRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReaddirpRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReaddirpRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReaddirpRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum AccessRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct AccessRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for AccessRequest<'a> {
+    type Inner = AccessRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> AccessRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        AccessRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args AccessRequestArgs<'args>) -> flatbuffers::WIPOffset<AccessRequest<'bldr>> {
+      let mut builder = AccessRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_mask(args.mask);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_MASK: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(AccessRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn mask(&'a self) -> u32 {
+    self._tab.get::<u32>(AccessRequest::VT_MASK, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(AccessRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct AccessRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub mask: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for AccessRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        AccessRequestArgs {
+            rfid: None,
+            mask: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct AccessRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> AccessRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(AccessRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_mask(&mut self, mask: u32) {
+    self.fbb_.push_slot::<u32>(AccessRequest::VT_MASK, mask, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(AccessRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> AccessRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    AccessRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<AccessRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum CreateResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct CreateResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for CreateResponse<'a> {
+    type Inner = CreateResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> CreateResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        CreateResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args CreateResponseArgs<'args>) -> flatbuffers::WIPOffset<CreateResponse<'bldr>> {
+      let mut builder = CreateResponseBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_FD: flatbuffers::VOffsetT = 8;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 12;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(CreateResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(CreateResponse::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_POSTPARENT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(CreateResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct CreateResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub fd: u64,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for CreateResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        CreateResponseArgs {
+            result: None,
+            stat: None,
+            fd: 0,
+            preparent: None,
+            postparent: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct CreateResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> CreateResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(CreateResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(CreateResponse::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_POSTPARENT, postparent);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CreateResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CreateResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    CreateResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<CreateResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FtruncateRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FtruncateRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FtruncateRequest<'a> {
+    type Inner = FtruncateRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FtruncateRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FtruncateRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FtruncateRequestArgs<'args>) -> flatbuffers::WIPOffset<FtruncateRequest<'bldr>> {
+      let mut builder = FtruncateRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FtruncateRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FtruncateRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(FtruncateRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FtruncateRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FtruncateRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FtruncateRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FtruncateRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FtruncateRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FtruncateRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FtruncateRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FtruncateRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(FtruncateRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FtruncateRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FtruncateRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FtruncateRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FtruncateRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FtruncateResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FtruncateResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FtruncateResponse<'a> {
+    type Inner = FtruncateResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FtruncateResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FtruncateResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FtruncateResponseArgs<'args>) -> flatbuffers::WIPOffset<FtruncateResponse<'bldr>> {
+      let mut builder = FtruncateResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.poststat { builder.add_poststat(x); }
+      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FtruncateResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FtruncateResponse::VT_PRESTAT, None)
+  }
+  #[inline]
+  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FtruncateResponse::VT_POSTSTAT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FtruncateResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FtruncateResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FtruncateResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FtruncateResponseArgs {
+            result: None,
+            prestat: None,
+            poststat: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FtruncateResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FtruncateResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FtruncateResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FtruncateResponse::VT_PRESTAT, prestat);
+  }
+  #[inline]
+  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FtruncateResponse::VT_POSTSTAT, poststat);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FtruncateResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FtruncateResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FtruncateResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FtruncateResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FstatRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FstatRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FstatRequest<'a> {
+    type Inner = FstatRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FstatRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FstatRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FstatRequestArgs<'args>) -> flatbuffers::WIPOffset<FstatRequest<'bldr>> {
+      let mut builder = FstatRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FstatRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FstatRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FstatRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FstatRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FstatRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FstatRequestArgs {
+            rfid: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FstatRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FstatRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FstatRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FstatRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FstatRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FstatRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FstatRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FstatRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FstatResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FstatResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FstatResponse<'a> {
+    type Inner = FstatResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FstatResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FstatResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FstatResponseArgs<'args>) -> flatbuffers::WIPOffset<FstatResponse<'bldr>> {
+      let mut builder = FstatResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FstatResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FstatResponse::VT_STAT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FstatResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FstatResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FstatResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FstatResponseArgs {
+            result: None,
+            stat: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FstatResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FstatResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FstatResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FstatResponse::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FstatResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FstatResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FstatResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FstatResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum EntrylkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct EntrylkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for EntrylkRequest<'a> {
+    type Inner = EntrylkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> EntrylkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        EntrylkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args EntrylkRequestArgs<'args>) -> flatbuffers::WIPOffset<EntrylkRequest<'bldr>> {
+      let mut builder = EntrylkRequestBuilder::new(_fbb);
+      builder.add_namelen(args.namelen);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.volume { builder.add_volume(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      builder.add_type_(args.type_);
+      builder.add_cmd(args.cmd);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_CMD: flatbuffers::VOffsetT = 6;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 8;
+    pub const VT_NAMELEN: flatbuffers::VOffsetT = 10;
+    pub const VT_NAME: flatbuffers::VOffsetT = 12;
+    pub const VT_VOLUME: flatbuffers::VOffsetT = 14;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 16;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(EntrylkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn cmd(&'a self) -> u32 {
+    self._tab.get::<u32>(EntrylkRequest::VT_CMD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn type_(&'a self) -> u32 {
+    self._tab.get::<u32>(EntrylkRequest::VT_TYPE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn namelen(&'a self) -> u64 {
+    self._tab.get::<u64>(EntrylkRequest::VT_NAMELEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EntrylkRequest::VT_NAME, None)
+  }
+  #[inline]
+  pub fn volume(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EntrylkRequest::VT_VOLUME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(EntrylkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct EntrylkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub cmd: u32,
+    pub type_: u32,
+    pub namelen: u64,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub volume: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for EntrylkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        EntrylkRequestArgs {
+            rfid: None,
+            cmd: 0,
+            type_: 0,
+            namelen: 0,
+            name: None,
+            volume: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct EntrylkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> EntrylkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(EntrylkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_cmd(&mut self, cmd: u32) {
+    self.fbb_.push_slot::<u32>(EntrylkRequest::VT_CMD, cmd, 0);
+  }
+  #[inline]
+  pub fn add_type_(&mut self, type_: u32) {
+    self.fbb_.push_slot::<u32>(EntrylkRequest::VT_TYPE_, type_, 0);
+  }
+  #[inline]
+  pub fn add_namelen(&mut self, namelen: u64) {
+    self.fbb_.push_slot::<u64>(EntrylkRequest::VT_NAMELEN, namelen, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EntrylkRequest::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_volume(&mut self, volume: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EntrylkRequest::VT_VOLUME, volume);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(EntrylkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> EntrylkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    EntrylkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<EntrylkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FentrylkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FentrylkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FentrylkRequest<'a> {
+    type Inner = FentrylkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FentrylkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FentrylkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FentrylkRequestArgs<'args>) -> flatbuffers::WIPOffset<FentrylkRequest<'bldr>> {
+      let mut builder = FentrylkRequestBuilder::new(_fbb);
+      builder.add_namelen(args.namelen);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.volume { builder.add_volume(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      builder.add_type_(args.type_);
+      builder.add_cmd(args.cmd);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_CMD: flatbuffers::VOffsetT = 8;
+    pub const VT_TYPE_: flatbuffers::VOffsetT = 10;
+    pub const VT_NAMELEN: flatbuffers::VOffsetT = 12;
+    pub const VT_NAME: flatbuffers::VOffsetT = 14;
+    pub const VT_VOLUME: flatbuffers::VOffsetT = 16;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 18;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FentrylkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FentrylkRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn cmd(&'a self) -> u32 {
+    self._tab.get::<u32>(FentrylkRequest::VT_CMD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn type_(&'a self) -> u32 {
+    self._tab.get::<u32>(FentrylkRequest::VT_TYPE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn namelen(&'a self) -> u64 {
+    self._tab.get::<u64>(FentrylkRequest::VT_NAMELEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FentrylkRequest::VT_NAME, None)
+  }
+  #[inline]
+  pub fn volume(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FentrylkRequest::VT_VOLUME, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FentrylkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FentrylkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub cmd: u32,
+    pub type_: u32,
+    pub namelen: u64,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub volume: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FentrylkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FentrylkRequestArgs {
+            rfid: None,
+            fd: 0,
+            cmd: 0,
+            type_: 0,
+            namelen: 0,
+            name: None,
+            volume: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FentrylkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FentrylkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FentrylkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FentrylkRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_cmd(&mut self, cmd: u32) {
+    self.fbb_.push_slot::<u32>(FentrylkRequest::VT_CMD, cmd, 0);
+  }
+  #[inline]
+  pub fn add_type_(&mut self, type_: u32) {
+    self.fbb_.push_slot::<u32>(FentrylkRequest::VT_TYPE_, type_, 0);
+  }
+  #[inline]
+  pub fn add_namelen(&mut self, namelen: u64) {
+    self.fbb_.push_slot::<u64>(FentrylkRequest::VT_NAMELEN, namelen, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FentrylkRequest::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_volume(&mut self, volume: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FentrylkRequest::VT_VOLUME, volume);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FentrylkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FentrylkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FentrylkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FentrylkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetattrRequest<'a> {
+    type Inner = SetattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SetattrRequestArgs<'args>) -> flatbuffers::WIPOffset<SetattrRequest<'bldr>> {
+      let mut builder = SetattrRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_valid(args.valid);
+      if let Some(x) = args.stbuf { builder.add_stbuf(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_STBUF: flatbuffers::VOffsetT = 6;
+    pub const VT_VALID: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetattrRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn stbuf(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SetattrRequest::VT_STBUF, None)
+  }
+  #[inline]
+  pub fn valid(&'a self) -> i32 {
+    self._tab.get::<i32>(SetattrRequest::VT_VALID, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SetattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SetattrRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub stbuf: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub valid: i32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SetattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SetattrRequestArgs {
+            rfid: None,
+            stbuf: None,
+            valid: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct SetattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SetattrRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_stbuf(&mut self, stbuf: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(SetattrRequest::VT_STBUF, stbuf);
+  }
+  #[inline]
+  pub fn add_valid(&mut self, valid: i32) {
+    self.fbb_.push_slot::<i32>(SetattrRequest::VT_VALID, valid, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SetattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetattrResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetattrResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetattrResponse<'a> {
+    type Inner = SetattrResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetattrResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetattrResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SetattrResponseArgs<'args>) -> flatbuffers::WIPOffset<SetattrResponse<'bldr>> {
+      let mut builder = SetattrResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.statpost { builder.add_statpost(x); }
+      if let Some(x) = args.statpre { builder.add_statpre(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STATPRE: flatbuffers::VOffsetT = 6;
+    pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SetattrResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SetattrResponse::VT_STATPRE, None)
+  }
+  #[inline]
+  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SetattrResponse::VT_STATPOST, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SetattrResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SetattrResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub statpre: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub statpost: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SetattrResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SetattrResponseArgs {
+            result: None,
+            statpre: None,
+            statpost: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct SetattrResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetattrResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(SetattrResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_statpre(&mut self, statpre: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(SetattrResponse::VT_STATPRE, statpre);
+  }
+  #[inline]
+  pub fn add_statpost(&mut self, statpost: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(SetattrResponse::VT_STATPOST, statpost);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SetattrResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetattrResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetattrResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetattrResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FsetattrRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FsetattrRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FsetattrRequest<'a> {
+    type Inner = FsetattrRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FsetattrRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FsetattrRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FsetattrRequestArgs<'args>) -> flatbuffers::WIPOffset<FsetattrRequest<'bldr>> {
+      let mut builder = FsetattrRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_valid(args.valid);
+      if let Some(x) = args.stbuf { builder.add_stbuf(x); }
+      builder.finish()
+    }
+
+    pub const VT_FD: flatbuffers::VOffsetT = 4;
+    pub const VT_STBUF: flatbuffers::VOffsetT = 6;
+    pub const VT_VALID: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FsetattrRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn stbuf(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsetattrRequest::VT_STBUF, None)
+  }
+  #[inline]
+  pub fn valid(&'a self) -> i32 {
+    self._tab.get::<i32>(FsetattrRequest::VT_VALID, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FsetattrRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FsetattrRequestArgs<'a> {
+    pub fd: u64,
+    pub stbuf: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub valid: i32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FsetattrRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FsetattrRequestArgs {
+            fd: 0,
+            stbuf: None,
+            valid: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FsetattrRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FsetattrRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FsetattrRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_stbuf(&mut self, stbuf: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsetattrRequest::VT_STBUF, stbuf);
+  }
+  #[inline]
+  pub fn add_valid(&mut self, valid: i32) {
+    self.fbb_.push_slot::<i32>(FsetattrRequest::VT_VALID, valid, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FsetattrRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsetattrRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FsetattrRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FsetattrRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FsetattrResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FsetattrResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FsetattrResponse<'a> {
+    type Inner = FsetattrResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FsetattrResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FsetattrResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FsetattrResponseArgs<'args>) -> flatbuffers::WIPOffset<FsetattrResponse<'bldr>> {
+      let mut builder = FsetattrResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.statpost { builder.add_statpost(x); }
+      if let Some(x) = args.statpre { builder.add_statpre(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STATPRE: flatbuffers::VOffsetT = 6;
+    pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FsetattrResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsetattrResponse::VT_STATPRE, None)
+  }
+  #[inline]
+  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsetattrResponse::VT_STATPOST, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FsetattrResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FsetattrResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub statpre: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub statpost: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FsetattrResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FsetattrResponseArgs {
+            result: None,
+            statpre: None,
+            statpost: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FsetattrResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FsetattrResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FsetattrResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_statpre(&mut self, statpre: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsetattrResponse::VT_STATPRE, statpre);
+  }
+  #[inline]
+  pub fn add_statpost(&mut self, statpost: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsetattrResponse::VT_STATPOST, statpost);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FsetattrResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsetattrResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FsetattrResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FsetattrResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FallocateRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FallocateRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FallocateRequest<'a> {
+    type Inner = FallocateRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FallocateRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FallocateRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FallocateRequestArgs<'args>) -> flatbuffers::WIPOffset<FallocateRequest<'bldr>> {
+      let mut builder = FallocateRequestBuilder::new(_fbb);
+      builder.add_size_(args.size_);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 10;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 12;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FallocateRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FallocateRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(FallocateRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(FallocateRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u64 {
+    self._tab.get::<u64>(FallocateRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FallocateRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FallocateRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub fd: u64,
+    pub flags: u32,
+    pub offset: u64,
+    pub size_: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FallocateRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FallocateRequestArgs {
+            rfid: None,
+            fd: 0,
+            flags: 0,
+            offset: 0,
+            size_: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct FallocateRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FallocateRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FallocateRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FallocateRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(FallocateRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(FallocateRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u64) {
+    self.fbb_.push_slot::<u64>(FallocateRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FallocateRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FallocateRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FallocateRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FallocateRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FallocateResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FallocateResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FallocateResponse<'a> {
+    type Inner = FallocateResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FallocateResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FallocateResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FallocateResponseArgs<'args>) -> flatbuffers::WIPOffset<FallocateResponse<'bldr>> {
+      let mut builder = FallocateResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.statpost { builder.add_statpost(x); }
+      if let Some(x) = args.statpre { builder.add_statpre(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STATPRE: flatbuffers::VOffsetT = 6;
+    pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FallocateResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FallocateResponse::VT_STATPRE, None)
+  }
+  #[inline]
+  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FallocateResponse::VT_STATPOST, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(FallocateResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FallocateResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub statpre: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub statpost: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for FallocateResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FallocateResponseArgs {
+            result: None,
+            statpre: None,
+            statpost: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct FallocateResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FallocateResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FallocateResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_statpre(&mut self, statpre: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FallocateResponse::VT_STATPRE, statpre);
+  }
+  #[inline]
+  pub fn add_statpost(&mut self, statpost: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FallocateResponse::VT_STATPOST, statpost);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FallocateResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FallocateResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FallocateResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FallocateResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DiscardRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct DiscardRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for DiscardRequest<'a> {
+    type Inner = DiscardRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> DiscardRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        DiscardRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DiscardRequestArgs<'args>) -> flatbuffers::WIPOffset<DiscardRequest<'bldr>> {
+      let mut builder = DiscardRequestBuilder::new(_fbb);
+      builder.add_size_(args.size_);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DiscardRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(DiscardRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(DiscardRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u64 {
+    self._tab.get::<u64>(DiscardRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(DiscardRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct DiscardRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub size_: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for DiscardRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DiscardRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            size_: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct DiscardRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DiscardRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiscardRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(DiscardRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(DiscardRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u64) {
+    self.fbb_.push_slot::<u64>(DiscardRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiscardRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DiscardRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DiscardRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<DiscardRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DiscardResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct DiscardResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for DiscardResponse<'a> {
+    type Inner = DiscardResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> DiscardResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        DiscardResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DiscardResponseArgs<'args>) -> flatbuffers::WIPOffset<DiscardResponse<'bldr>> {
+      let mut builder = DiscardResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.statpost { builder.add_statpost(x); }
+      if let Some(x) = args.statpre { builder.add_statpre(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STATPRE: flatbuffers::VOffsetT = 6;
+    pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(DiscardResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(DiscardResponse::VT_STATPRE, None)
+  }
+  #[inline]
+  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(DiscardResponse::VT_STATPOST, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(DiscardResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct DiscardResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub statpre: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub statpost: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for DiscardResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DiscardResponseArgs {
+            result: None,
+            statpre: None,
+            statpost: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct DiscardResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DiscardResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(DiscardResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_statpre(&mut self, statpre: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(DiscardResponse::VT_STATPRE, statpre);
+  }
+  #[inline]
+  pub fn add_statpost(&mut self, statpost: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(DiscardResponse::VT_STATPOST, statpost);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DiscardResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DiscardResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DiscardResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<DiscardResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ZerofillRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ZerofillRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ZerofillRequest<'a> {
+    type Inner = ZerofillRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ZerofillRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ZerofillRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ZerofillRequestArgs<'args>) -> flatbuffers::WIPOffset<ZerofillRequest<'bldr>> {
+      let mut builder = ZerofillRequestBuilder::new(_fbb);
+      builder.add_size_(args.size_);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ZerofillRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(ZerofillRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(ZerofillRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn size_(&'a self) -> u64 {
+    self._tab.get::<u64>(ZerofillRequest::VT_SIZE_, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ZerofillRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ZerofillRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub size_: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ZerofillRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ZerofillRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            size_: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct ZerofillRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ZerofillRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ZerofillRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(ZerofillRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(ZerofillRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_size_(&mut self, size_: u64) {
+    self.fbb_.push_slot::<u64>(ZerofillRequest::VT_SIZE_, size_, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ZerofillRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ZerofillRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ZerofillRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ZerofillRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ZerofillResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ZerofillResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ZerofillResponse<'a> {
+    type Inner = ZerofillResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ZerofillResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ZerofillResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ZerofillResponseArgs<'args>) -> flatbuffers::WIPOffset<ZerofillResponse<'bldr>> {
+      let mut builder = ZerofillResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.statpost { builder.add_statpost(x); }
+      if let Some(x) = args.statpre { builder.add_statpre(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_STATPRE: flatbuffers::VOffsetT = 6;
+    pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ZerofillResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ZerofillResponse::VT_STATPRE, None)
+  }
+  #[inline]
+  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ZerofillResponse::VT_STATPOST, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ZerofillResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ZerofillResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub statpre: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub statpost: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ZerofillResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ZerofillResponseArgs {
+            result: None,
+            statpre: None,
+            statpost: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct ZerofillResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ZerofillResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(ZerofillResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_statpre(&mut self, statpre: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(ZerofillResponse::VT_STATPRE, statpre);
+  }
+  #[inline]
+  pub fn add_statpost(&mut self, statpost: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(ZerofillResponse::VT_STATPOST, statpost);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ZerofillResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ZerofillResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ZerofillResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ZerofillResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RchecksumRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RchecksumRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RchecksumRequest<'a> {
+    type Inner = RchecksumRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RchecksumRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RchecksumRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RchecksumRequestArgs<'args>) -> flatbuffers::WIPOffset<RchecksumRequest<'bldr>> {
+      let mut builder = RchecksumRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_len(args.len);
+      builder.finish()
+    }
+
+    pub const VT_FD: flatbuffers::VOffsetT = 4;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 6;
+    pub const VT_LEN: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(RchecksumRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(RchecksumRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn len(&'a self) -> u32 {
+    self._tab.get::<u32>(RchecksumRequest::VT_LEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RchecksumRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RchecksumRequestArgs<'a> {
+    pub fd: u64,
+    pub offset: u64,
+    pub len: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RchecksumRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RchecksumRequestArgs {
+            fd: 0,
+            offset: 0,
+            len: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct RchecksumRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RchecksumRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(RchecksumRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(RchecksumRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_len(&mut self, len: u32) {
+    self.fbb_.push_slot::<u32>(RchecksumRequest::VT_LEN, len, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RchecksumRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RchecksumRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RchecksumRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RchecksumRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum RchecksumResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct RchecksumResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for RchecksumResponse<'a> {
+    type Inner = RchecksumResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> RchecksumResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        RchecksumResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args RchecksumResponseArgs<'args>) -> flatbuffers::WIPOffset<RchecksumResponse<'bldr>> {
+      let mut builder = RchecksumResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.strong_checksum { builder.add_strong_checksum(x); }
+      builder.add_weak_checksum(args.weak_checksum);
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_WEAK_CHECKSUM: flatbuffers::VOffsetT = 6;
+    pub const VT_STRONG_CHECKSUM: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(RchecksumResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn weak_checksum(&'a self) -> u32 {
+    self._tab.get::<u32>(RchecksumResponse::VT_WEAK_CHECKSUM, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn strong_checksum(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RchecksumResponse::VT_STRONG_CHECKSUM, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(RchecksumResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct RchecksumResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub weak_checksum: u32,
+    pub strong_checksum: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for RchecksumResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        RchecksumResponseArgs {
+            result: None,
+            weak_checksum: 0,
+            strong_checksum: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct RchecksumResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> RchecksumResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(RchecksumResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_weak_checksum(&mut self, weak_checksum: u32) {
+    self.fbb_.push_slot::<u32>(RchecksumResponse::VT_WEAK_CHECKSUM, weak_checksum, 0);
+  }
+  #[inline]
+  pub fn add_strong_checksum(&mut self, strong_checksum: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RchecksumResponse::VT_STRONG_CHECKSUM, strong_checksum);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(RchecksumResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RchecksumResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    RchecksumResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<RchecksumResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum IpcRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct IpcRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for IpcRequest<'a> {
+    type Inner = IpcRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> IpcRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        IpcRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args IpcRequestArgs<'args>) -> flatbuffers::WIPOffset<IpcRequest<'bldr>> {
+      let mut builder = IpcRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_op(args.op);
+      builder.finish()
+    }
+
+    pub const VT_OP: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn op(&'a self) -> u32 {
+    self._tab.get::<u32>(IpcRequest::VT_OP, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(IpcRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct IpcRequestArgs<'a> {
+    pub op: u32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for IpcRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        IpcRequestArgs {
+            op: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct IpcRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> IpcRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_op(&mut self, op: u32) {
+    self.fbb_.push_slot::<u32>(IpcRequest::VT_OP, op, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(IpcRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> IpcRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    IpcRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<IpcRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum IpcResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct IpcResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for IpcResponse<'a> {
+    type Inner = IpcResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> IpcResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        IpcResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args IpcResponseArgs<'args>) -> flatbuffers::WIPOffset<IpcResponse<'bldr>> {
+      let mut builder = IpcResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(IpcResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(IpcResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct IpcResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for IpcResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        IpcResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct IpcResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> IpcResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(IpcResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(IpcResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> IpcResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    IpcResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<IpcResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SeekRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SeekRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SeekRequest<'a> {
+    type Inner = SeekRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SeekRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SeekRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SeekRequestArgs<'args>) -> flatbuffers::WIPOffset<SeekRequest<'bldr>> {
+      let mut builder = SeekRequestBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      builder.add_what(args.what);
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
+    pub const VT_WHAT: flatbuffers::VOffsetT = 10;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SeekRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(SeekRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(SeekRequest::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn what(&'a self) -> i32 {
+    self._tab.get::<i32>(SeekRequest::VT_WHAT, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SeekRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SeekRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub fd: u64,
+    pub offset: u64,
+    pub what: i32,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SeekRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SeekRequestArgs {
+            rfid: None,
+            fd: 0,
+            offset: 0,
+            what: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct SeekRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SeekRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SeekRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(SeekRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(SeekRequest::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_what(&mut self, what: i32) {
+    self.fbb_.push_slot::<i32>(SeekRequest::VT_WHAT, what, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SeekRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SeekRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SeekRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SeekRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SeekResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SeekResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SeekResponse<'a> {
+    type Inner = SeekResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SeekResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SeekResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SeekResponseArgs<'args>) -> flatbuffers::WIPOffset<SeekResponse<'bldr>> {
+      let mut builder = SeekResponseBuilder::new(_fbb);
+      builder.add_offset(args.offset);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_OFFSET: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SeekResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn offset(&'a self) -> u64 {
+    self._tab.get::<u64>(SeekResponse::VT_OFFSET, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SeekResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SeekResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub offset: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SeekResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SeekResponseArgs {
+            result: None,
+            offset: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct SeekResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SeekResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(SeekResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_offset(&mut self, offset: u64) {
+    self.fbb_.push_slot::<u64>(SeekResponse::VT_OFFSET, offset, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SeekResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SeekResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SeekResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SeekResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetVolumeRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetVolumeRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetVolumeRequest<'a> {
+    type Inner = SetVolumeRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetVolumeRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetVolumeRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args SetVolumeRequestArgs) -> flatbuffers::WIPOffset<SetVolumeRequest<'bldr>> {
+      let mut builder = SetVolumeRequestBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct SetVolumeRequestArgs {
+}
+impl<'a> Default for SetVolumeRequestArgs {
+    #[inline]
+    fn default() -> Self {
+        SetVolumeRequestArgs {
+        }
+    }
+}
+pub struct SetVolumeRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetVolumeRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetVolumeRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetVolumeRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetVolumeRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetVolumeResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetVolumeResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetVolumeResponse<'a> {
+    type Inner = SetVolumeResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetVolumeResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetVolumeResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SetVolumeResponseArgs<'args>) -> flatbuffers::WIPOffset<SetVolumeResponse<'bldr>> {
+      let mut builder = SetVolumeResponseBuilder::new(_fbb);
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SetVolumeResponse::VT_RESULT, None)
+  }
+}
+
+pub struct SetVolumeResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+}
+impl<'a> Default for SetVolumeResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SetVolumeResponseArgs {
+            result: None,
+        }
+    }
+}
+pub struct SetVolumeResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetVolumeResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(SetVolumeResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetVolumeResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetVolumeResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetVolumeResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetSpecRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetSpecRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetSpecRequest<'a> {
+    type Inner = GetSpecRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetSpecRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetSpecRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetSpecRequestArgs<'args>) -> flatbuffers::WIPOffset<GetSpecRequest<'bldr>> {
+      let mut builder = GetSpecRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.key { builder.add_key(x); }
+      builder.add_flags(args.flags);
+      builder.finish()
+    }
+
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 4;
+    pub const VT_KEY: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(GetSpecRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn key(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetSpecRequest::VT_KEY, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(GetSpecRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct GetSpecRequestArgs<'a> {
+    pub flags: u32,
+    pub key: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for GetSpecRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetSpecRequestArgs {
+            flags: 0,
+            key: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct GetSpecRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetSpecRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(GetSpecRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_key(&mut self, key: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetSpecRequest::VT_KEY, key);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetSpecRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetSpecRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetSpecRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetSpecRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetSpecResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetSpecResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetSpecResponse<'a> {
+    type Inner = GetSpecResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetSpecResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetSpecResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetSpecResponseArgs<'args>) -> flatbuffers::WIPOffset<GetSpecResponse<'bldr>> {
+      let mut builder = GetSpecResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.spec { builder.add_spec(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_SPEC: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetSpecResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn spec(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetSpecResponse::VT_SPEC, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(GetSpecResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct GetSpecResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub spec: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for GetSpecResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetSpecResponseArgs {
+            result: None,
+            spec: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct GetSpecResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetSpecResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(GetSpecResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_spec(&mut self, spec: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetSpecResponse::VT_SPEC, spec);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetSpecResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetSpecResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetSpecResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetSpecResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetVolumeInfoRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetVolumeInfoRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetVolumeInfoRequest<'a> {
+    type Inner = GetVolumeInfoRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetVolumeInfoRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetVolumeInfoRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args GetVolumeInfoRequestArgs) -> flatbuffers::WIPOffset<GetVolumeInfoRequest<'bldr>> {
+      let mut builder = GetVolumeInfoRequestBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct GetVolumeInfoRequestArgs {
+}
+impl<'a> Default for GetVolumeInfoRequestArgs {
+    #[inline]
+    fn default() -> Self {
+        GetVolumeInfoRequestArgs {
+        }
+    }
+}
+pub struct GetVolumeInfoRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetVolumeInfoRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetVolumeInfoRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetVolumeInfoRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetVolumeInfoRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetVolumeInfoResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetVolumeInfoResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetVolumeInfoResponse<'a> {
+    type Inner = GetVolumeInfoResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetVolumeInfoResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetVolumeInfoResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetVolumeInfoResponseArgs<'args>) -> flatbuffers::WIPOffset<GetVolumeInfoResponse<'bldr>> {
+      let mut builder = GetVolumeInfoResponseBuilder::new(_fbb);
+      if let Some(x) = args.op_errstr { builder.add_op_errstr(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_OP_ERRSTR: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetVolumeInfoResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn op_errstr(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetVolumeInfoResponse::VT_OP_ERRSTR, None)
+  }
+}
+
+pub struct GetVolumeInfoResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub op_errstr: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for GetVolumeInfoResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetVolumeInfoResponseArgs {
+            result: None,
+            op_errstr: None,
+        }
+    }
+}
+pub struct GetVolumeInfoResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetVolumeInfoResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(GetVolumeInfoResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_op_errstr(&mut self, op_errstr: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetVolumeInfoResponse::VT_OP_ERRSTR, op_errstr);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetVolumeInfoResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetVolumeInfoResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetVolumeInfoResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum MgmtHndskRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct MgmtHndskRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for MgmtHndskRequest<'a> {
+    type Inner = MgmtHndskRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> MgmtHndskRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        MgmtHndskRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args MgmtHndskRequestArgs<'args>) -> flatbuffers::WIPOffset<MgmtHndskRequest<'bldr>> {
+      let mut builder = MgmtHndskRequestBuilder::new(_fbb);
+      if let Some(x) = args.hndsk { builder.add_hndsk(x); }
+      builder.finish()
+    }
+
+    pub const VT_HNDSK: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn hndsk(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MgmtHndskRequest::VT_HNDSK, None)
+  }
+}
+
+pub struct MgmtHndskRequestArgs<'a> {
+    pub hndsk: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for MgmtHndskRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        MgmtHndskRequestArgs {
+            hndsk: None,
+        }
+    }
+}
+pub struct MgmtHndskRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> MgmtHndskRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_hndsk(&mut self, hndsk: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MgmtHndskRequest::VT_HNDSK, hndsk);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> MgmtHndskRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    MgmtHndskRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<MgmtHndskRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum MgmtHndskResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct MgmtHndskResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for MgmtHndskResponse<'a> {
+    type Inner = MgmtHndskResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> MgmtHndskResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        MgmtHndskResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args MgmtHndskResponseArgs<'args>) -> flatbuffers::WIPOffset<MgmtHndskResponse<'bldr>> {
+      let mut builder = MgmtHndskResponseBuilder::new(_fbb);
+      if let Some(x) = args.hndsk { builder.add_hndsk(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_HNDSK: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(MgmtHndskResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn hndsk(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MgmtHndskResponse::VT_HNDSK, None)
+  }
+}
+
+pub struct MgmtHndskResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub hndsk: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for MgmtHndskResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        MgmtHndskResponseArgs {
+            result: None,
+            hndsk: None,
+        }
+    }
+}
+pub struct MgmtHndskResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> MgmtHndskResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(MgmtHndskResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_hndsk(&mut self, hndsk: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(MgmtHndskResponse::VT_HNDSK, hndsk);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> MgmtHndskResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    MgmtHndskResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<MgmtHndskResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LogRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LogRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LogRequest<'a> {
+    type Inner = LogRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LogRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LogRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LogRequestArgs<'args>) -> flatbuffers::WIPOffset<LogRequest<'bldr>> {
+      let mut builder = LogRequestBuilder::new(_fbb);
+      if let Some(x) = args.msg { builder.add_msg(x); }
+      builder.finish()
+    }
+
+    pub const VT_MSG: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn msg(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LogRequest::VT_MSG, None)
+  }
+}
+
+pub struct LogRequestArgs<'a> {
+    pub msg: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for LogRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LogRequestArgs {
+            msg: None,
+        }
+    }
+}
+pub struct LogRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LogRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_msg(&mut self, msg: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LogRequest::VT_MSG, msg);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LogRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LogRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LogRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum NotifyRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct NotifyRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for NotifyRequest<'a> {
+    type Inner = NotifyRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> NotifyRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        NotifyRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args NotifyRequestArgs<'args>) -> flatbuffers::WIPOffset<NotifyRequest<'bldr>> {
+      let mut builder = NotifyRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.buf { builder.add_buf(x); }
+      builder.add_flags(args.flags);
+      builder.finish()
+    }
+
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 4;
+    pub const VT_BUF: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(NotifyRequest::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn buf(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(NotifyRequest::VT_BUF, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(NotifyRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct NotifyRequestArgs<'a> {
+    pub flags: u32,
+    pub buf: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for NotifyRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        NotifyRequestArgs {
+            flags: 0,
+            buf: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct NotifyRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> NotifyRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(NotifyRequest::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_buf(&mut self, buf: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(NotifyRequest::VT_BUF, buf);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(NotifyRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> NotifyRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    NotifyRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<NotifyRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum NotifyResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct NotifyResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for NotifyResponse<'a> {
+    type Inner = NotifyResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> NotifyResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        NotifyResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args NotifyResponseArgs<'args>) -> flatbuffers::WIPOffset<NotifyResponse<'bldr>> {
+      let mut builder = NotifyResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.buf { builder.add_buf(x); }
+      builder.add_flags(args.flags);
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
+    pub const VT_BUF: flatbuffers::VOffsetT = 8;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 10;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(NotifyResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn flags(&'a self) -> u32 {
+    self._tab.get::<u32>(NotifyResponse::VT_FLAGS, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn buf(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(NotifyResponse::VT_BUF, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(NotifyResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct NotifyResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub flags: u32,
+    pub buf: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for NotifyResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        NotifyResponseArgs {
+            result: None,
+            flags: 0,
+            buf: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct NotifyResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> NotifyResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(NotifyResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_flags(&mut self, flags: u32) {
+    self.fbb_.push_slot::<u32>(NotifyResponse::VT_FLAGS, flags, 0);
+  }
+  #[inline]
+  pub fn add_buf(&mut self, buf: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(NotifyResponse::VT_BUF, buf);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(NotifyResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> NotifyResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    NotifyResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<NotifyResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReleasedirRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReleasedirRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReleasedirRequest<'a> {
+    type Inner = ReleasedirRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReleasedirRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReleasedirRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReleasedirRequestArgs<'args>) -> flatbuffers::WIPOffset<ReleasedirRequest<'bldr>> {
+      let mut builder = ReleasedirRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReleasedirRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(ReleasedirRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReleasedirRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReleasedirRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReleasedirRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReleasedirRequestArgs {
+            rfid: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReleasedirRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReleasedirRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReleasedirRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(ReleasedirRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReleasedirRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReleasedirRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReleasedirRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReleasedirRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReleaseRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReleaseRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReleaseRequest<'a> {
+    type Inner = ReleaseRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReleaseRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReleaseRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReleaseRequestArgs<'args>) -> flatbuffers::WIPOffset<ReleaseRequest<'bldr>> {
+      let mut builder = ReleaseRequestBuilder::new(_fbb);
+      builder.add_fd(args.fd);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_FD: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReleaseRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(ReleaseRequest::VT_FD, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReleaseRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReleaseRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub fd: u64,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReleaseRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReleaseRequestArgs {
+            rfid: None,
+            fd: 0,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReleaseRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReleaseRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReleaseRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(ReleaseRequest::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReleaseRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReleaseRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReleaseRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReleaseRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DirListEntryOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct DirListEntry<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for DirListEntry<'a> {
+    type Inner = DirListEntry<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> DirListEntry<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        DirListEntry {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DirListEntryArgs<'args>) -> flatbuffers::WIPOffset<DirListEntry<'bldr>> {
+      let mut builder = DirListEntryBuilder::new(_fbb);
+      builder.add_d_off(args.d_off);
+      builder.add_d_ino(args.d_ino);
+      if let Some(x) = args.name { builder.add_name(x); }
+      builder.add_d_type(args.d_type);
+      builder.add_d_len(args.d_len);
+      builder.finish()
+    }
+
+    pub const VT_D_INO: flatbuffers::VOffsetT = 4;
+    pub const VT_D_OFF: flatbuffers::VOffsetT = 6;
+    pub const VT_D_LEN: flatbuffers::VOffsetT = 8;
+    pub const VT_D_TYPE: flatbuffers::VOffsetT = 10;
+    pub const VT_NAME: flatbuffers::VOffsetT = 12;
+
+  #[inline]
+  pub fn d_ino(&'a self) -> u64 {
+    self._tab.get::<u64>(DirListEntry::VT_D_INO, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d_off(&'a self) -> u64 {
+    self._tab.get::<u64>(DirListEntry::VT_D_OFF, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d_len(&'a self) -> u32 {
+    self._tab.get::<u32>(DirListEntry::VT_D_LEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d_type(&'a self) -> u32 {
+    self._tab.get::<u32>(DirListEntry::VT_D_TYPE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DirListEntry::VT_NAME, None)
+  }
+}
+
+pub struct DirListEntryArgs<'a> {
+    pub d_ino: u64,
+    pub d_off: u64,
+    pub d_len: u32,
+    pub d_type: u32,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+}
+impl<'a> Default for DirListEntryArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DirListEntryArgs {
+            d_ino: 0,
+            d_off: 0,
+            d_len: 0,
+            d_type: 0,
+            name: None,
+        }
+    }
+}
+pub struct DirListEntryBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DirListEntryBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_d_ino(&mut self, d_ino: u64) {
+    self.fbb_.push_slot::<u64>(DirListEntry::VT_D_INO, d_ino, 0);
+  }
+  #[inline]
+  pub fn add_d_off(&mut self, d_off: u64) {
+    self.fbb_.push_slot::<u64>(DirListEntry::VT_D_OFF, d_off, 0);
+  }
+  #[inline]
+  pub fn add_d_len(&mut self, d_len: u32) {
+    self.fbb_.push_slot::<u32>(DirListEntry::VT_D_LEN, d_len, 0);
+  }
+  #[inline]
+  pub fn add_d_type(&mut self, d_type: u32) {
+    self.fbb_.push_slot::<u32>(DirListEntry::VT_D_TYPE, d_type, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DirListEntry::VT_NAME, name);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DirListEntryBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DirListEntryBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<DirListEntry<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DirListOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct DirList<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for DirList<'a> {
+    type Inner = DirList<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> DirList<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        DirList {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DirListArgs<'args>) -> flatbuffers::WIPOffset<DirList<'bldr>> {
+      let mut builder = DirListBuilder::new(_fbb);
+      if let Some(x) = args.entry { builder.add_entry(x); }
+      builder.finish()
+    }
+
+    pub const VT_ENTRY: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn entry(&'a self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirListEntry<'a>>>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirListEntry<'a>>>>>(DirList::VT_ENTRY, None)
+  }
+}
+
+pub struct DirListArgs<'a> {
+    pub entry: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a , flatbuffers::ForwardsUOffset<DirListEntry<'a >>>>>,
+}
+impl<'a> Default for DirListArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DirListArgs {
+            entry: None,
+        }
+    }
+}
+pub struct DirListBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DirListBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_entry(&mut self, entry: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DirListEntry<'b >>>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DirList::VT_ENTRY, entry);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DirListBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DirListBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<DirList<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReaddirResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReaddirResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReaddirResponse<'a> {
+    type Inner = ReaddirResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReaddirResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReaddirResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReaddirResponseArgs<'args>) -> flatbuffers::WIPOffset<ReaddirResponse<'bldr>> {
+      let mut builder = ReaddirResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.reply { builder.add_reply(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_REPLY: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReaddirResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn reply(&'a self) -> Option<DirList<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<DirList<'a>>>(ReaddirResponse::VT_REPLY, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReaddirResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReaddirResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub reply: Option<flatbuffers::WIPOffset<DirList<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReaddirResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReaddirResponseArgs {
+            result: None,
+            reply: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReaddirResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReaddirResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(ReaddirResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_reply(&mut self, reply: flatbuffers::WIPOffset<DirList<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DirList>>(ReaddirResponse::VT_REPLY, reply);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReaddirResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReaddirResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReaddirResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReaddirResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DirPListEntryOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct DirPListEntry<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for DirPListEntry<'a> {
+    type Inner = DirPListEntry<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> DirPListEntry<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        DirPListEntry {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DirPListEntryArgs<'args>) -> flatbuffers::WIPOffset<DirPListEntry<'bldr>> {
+      let mut builder = DirPListEntryBuilder::new(_fbb);
+      builder.add_d_off(args.d_off);
+      builder.add_d_ino(args.d_ino);
+      if let Some(x) = args.stat { builder.add_stat(x); }
+      if let Some(x) = args.name { builder.add_name(x); }
+      builder.add_d_type(args.d_type);
+      builder.add_d_len(args.d_len);
+      builder.finish()
+    }
+
+    pub const VT_D_INO: flatbuffers::VOffsetT = 4;
+    pub const VT_D_OFF: flatbuffers::VOffsetT = 6;
+    pub const VT_D_LEN: flatbuffers::VOffsetT = 8;
+    pub const VT_D_TYPE: flatbuffers::VOffsetT = 10;
+    pub const VT_NAME: flatbuffers::VOffsetT = 12;
+    pub const VT_STAT: flatbuffers::VOffsetT = 14;
+
+  #[inline]
+  pub fn d_ino(&'a self) -> u64 {
+    self._tab.get::<u64>(DirPListEntry::VT_D_INO, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d_off(&'a self) -> u64 {
+    self._tab.get::<u64>(DirPListEntry::VT_D_OFF, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d_len(&'a self) -> u32 {
+    self._tab.get::<u32>(DirPListEntry::VT_D_LEN, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn d_type(&'a self) -> u32 {
+    self._tab.get::<u32>(DirPListEntry::VT_D_TYPE, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn name(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DirPListEntry::VT_NAME, None)
+  }
+  #[inline]
+  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(DirPListEntry::VT_STAT, None)
+  }
+}
+
+pub struct DirPListEntryArgs<'a> {
+    pub d_ino: u64,
+    pub d_off: u64,
+    pub d_len: u32,
+    pub d_type: u32,
+    pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+}
+impl<'a> Default for DirPListEntryArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DirPListEntryArgs {
+            d_ino: 0,
+            d_off: 0,
+            d_len: 0,
+            d_type: 0,
+            name: None,
+            stat: None,
+        }
+    }
+}
+pub struct DirPListEntryBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DirPListEntryBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_d_ino(&mut self, d_ino: u64) {
+    self.fbb_.push_slot::<u64>(DirPListEntry::VT_D_INO, d_ino, 0);
+  }
+  #[inline]
+  pub fn add_d_off(&mut self, d_off: u64) {
+    self.fbb_.push_slot::<u64>(DirPListEntry::VT_D_OFF, d_off, 0);
+  }
+  #[inline]
+  pub fn add_d_len(&mut self, d_len: u32) {
+    self.fbb_.push_slot::<u32>(DirPListEntry::VT_D_LEN, d_len, 0);
+  }
+  #[inline]
+  pub fn add_d_type(&mut self, d_type: u32) {
+    self.fbb_.push_slot::<u32>(DirPListEntry::VT_D_TYPE, d_type, 0);
+  }
+  #[inline]
+  pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DirPListEntry::VT_NAME, name);
+  }
+  #[inline]
+  pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(DirPListEntry::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DirPListEntryBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DirPListEntryBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<DirPListEntry<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DirPListOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct DirPList<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for DirPList<'a> {
+    type Inner = DirPList<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> DirPList<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        DirPList {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DirPListArgs<'args>) -> flatbuffers::WIPOffset<DirPList<'bldr>> {
+      let mut builder = DirPListBuilder::new(_fbb);
+      if let Some(x) = args.entry { builder.add_entry(x); }
+      builder.finish()
+    }
+
+    pub const VT_ENTRY: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn entry(&'a self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirPListEntry<'a>>>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirPListEntry<'a>>>>>(DirPList::VT_ENTRY, None)
+  }
+}
+
+pub struct DirPListArgs<'a> {
+    pub entry: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a , flatbuffers::ForwardsUOffset<DirPListEntry<'a >>>>>,
+}
+impl<'a> Default for DirPListArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DirPListArgs {
+            entry: None,
+        }
+    }
+}
+pub struct DirPListBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DirPListBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_entry(&mut self, entry: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<DirPListEntry<'b >>>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(DirPList::VT_ENTRY, entry);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DirPListBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DirPListBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<DirPList<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum ReaddirpResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct ReaddirpResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for ReaddirpResponse<'a> {
+    type Inner = ReaddirpResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> ReaddirpResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        ReaddirpResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args ReaddirpResponseArgs<'args>) -> flatbuffers::WIPOffset<ReaddirpResponse<'bldr>> {
+      let mut builder = ReaddirpResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.reply { builder.add_reply(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_REPLY: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReaddirpResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn reply(&'a self) -> Option<DirPList<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<DirPList<'a>>>(ReaddirpResponse::VT_REPLY, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(ReaddirpResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct ReaddirpResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub reply: Option<flatbuffers::WIPOffset<DirPList<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for ReaddirpResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        ReaddirpResponseArgs {
+            result: None,
+            reply: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct ReaddirpResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> ReaddirpResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(ReaddirpResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_reply(&mut self, reply: flatbuffers::WIPOffset<DirPList<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DirPList>>(ReaddirpResponse::VT_REPLY, reply);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(ReaddirpResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ReaddirpResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    ReaddirpResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<ReaddirpResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum Set_lk_verResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Set_lk_verResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Set_lk_verResponse<'a> {
+    type Inner = Set_lk_verResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Set_lk_verResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Set_lk_verResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args Set_lk_verResponseArgs<'args>) -> flatbuffers::WIPOffset<Set_lk_verResponse<'bldr>> {
+      let mut builder = Set_lk_verResponseBuilder::new(_fbb);
+      builder.add_lk_ver(args.lk_ver);
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_LK_VER: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(Set_lk_verResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn lk_ver(&'a self) -> i32 {
+    self._tab.get::<i32>(Set_lk_verResponse::VT_LK_VER, Some(0)).unwrap()
+  }
+}
+
+pub struct Set_lk_verResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub lk_ver: i32,
+}
+impl<'a> Default for Set_lk_verResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        Set_lk_verResponseArgs {
+            result: None,
+            lk_ver: 0,
+        }
+    }
+}
+pub struct Set_lk_verResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> Set_lk_verResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(Set_lk_verResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_lk_ver(&mut self, lk_ver: i32) {
+    self.fbb_.push_slot::<i32>(Set_lk_verResponse::VT_LK_VER, lk_ver, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> Set_lk_verResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    Set_lk_verResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Set_lk_verResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum Set_lk_verRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Set_lk_verRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Set_lk_verRequest<'a> {
+    type Inner = Set_lk_verRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Set_lk_verRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Set_lk_verRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args Set_lk_verRequestArgs<'args>) -> flatbuffers::WIPOffset<Set_lk_verRequest<'bldr>> {
+      let mut builder = Set_lk_verRequestBuilder::new(_fbb);
+      builder.add_lk_ver(args.lk_ver);
+      if let Some(x) = args.uid { builder.add_uid(x); }
+      builder.finish()
+    }
+
+    pub const VT_UID: flatbuffers::VOffsetT = 4;
+    pub const VT_LK_VER: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn uid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Set_lk_verRequest::VT_UID, None)
+  }
+  #[inline]
+  pub fn lk_ver(&'a self) -> i32 {
+    self._tab.get::<i32>(Set_lk_verRequest::VT_LK_VER, Some(0)).unwrap()
+  }
+}
+
+pub struct Set_lk_verRequestArgs<'a> {
+    pub uid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub lk_ver: i32,
+}
+impl<'a> Default for Set_lk_verRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        Set_lk_verRequestArgs {
+            uid: None,
+            lk_ver: 0,
+        }
+    }
+}
+pub struct Set_lk_verRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> Set_lk_verRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_uid(&mut self, uid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Set_lk_verRequest::VT_UID, uid);
+  }
+  #[inline]
+  pub fn add_lk_ver(&mut self, lk_ver: i32) {
+    self.fbb_.push_slot::<i32>(Set_lk_verRequest::VT_LK_VER, lk_ver, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> Set_lk_verRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    Set_lk_verRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Set_lk_verRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum EventNotifyRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct EventNotifyRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for EventNotifyRequest<'a> {
+    type Inner = EventNotifyRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> EventNotifyRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        EventNotifyRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args EventNotifyRequestArgs) -> flatbuffers::WIPOffset<EventNotifyRequest<'bldr>> {
+      let mut builder = EventNotifyRequestBuilder::new(_fbb);
+      builder.add_op(args.op);
+      builder.finish()
+    }
+
+    pub const VT_OP: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn op(&'a self) -> i32 {
+    self._tab.get::<i32>(EventNotifyRequest::VT_OP, Some(0)).unwrap()
+  }
+}
+
+pub struct EventNotifyRequestArgs {
+    pub op: i32,
+}
+impl<'a> Default for EventNotifyRequestArgs {
+    #[inline]
+    fn default() -> Self {
+        EventNotifyRequestArgs {
+            op: 0,
+        }
+    }
+}
+pub struct EventNotifyRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> EventNotifyRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_op(&mut self, op: i32) {
+    self.fbb_.push_slot::<i32>(EventNotifyRequest::VT_OP, op, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> EventNotifyRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    EventNotifyRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<EventNotifyRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum EventNotifyResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct EventNotifyResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for EventNotifyResponse<'a> {
+    type Inner = EventNotifyResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> EventNotifyResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        EventNotifyResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args EventNotifyResponseArgs<'args>) -> flatbuffers::WIPOffset<EventNotifyResponse<'bldr>> {
+      let mut builder = EventNotifyResponseBuilder::new(_fbb);
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(EventNotifyResponse::VT_RESULT, None)
+  }
+}
+
+pub struct EventNotifyResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+}
+impl<'a> Default for EventNotifyResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        EventNotifyResponseArgs {
+            result: None,
+        }
+    }
+}
+pub struct EventNotifyResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> EventNotifyResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(EventNotifyResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> EventNotifyResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    EventNotifyResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<EventNotifyResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetSnapNameUuidRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetSnapNameUuidRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetSnapNameUuidRequest<'a> {
+    type Inner = GetSnapNameUuidRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetSnapNameUuidRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetSnapNameUuidRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args GetSnapNameUuidRequestArgs) -> flatbuffers::WIPOffset<GetSnapNameUuidRequest<'bldr>> {
+      let mut builder = GetSnapNameUuidRequestBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct GetSnapNameUuidRequestArgs {
+}
+impl<'a> Default for GetSnapNameUuidRequestArgs {
+    #[inline]
+    fn default() -> Self {
+        GetSnapNameUuidRequestArgs {
+        }
+    }
+}
+pub struct GetSnapNameUuidRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetSnapNameUuidRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetSnapNameUuidRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetSnapNameUuidRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetSnapNameUuidRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetSnapNameUuidResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetSnapNameUuidResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetSnapNameUuidResponse<'a> {
+    type Inner = GetSnapNameUuidResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetSnapNameUuidResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetSnapNameUuidResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetSnapNameUuidResponseArgs<'args>) -> flatbuffers::WIPOffset<GetSnapNameUuidResponse<'bldr>> {
+      let mut builder = GetSnapNameUuidResponseBuilder::new(_fbb);
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetSnapNameUuidResponse::VT_RESULT, None)
+  }
+}
+
+pub struct GetSnapNameUuidResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+}
+impl<'a> Default for GetSnapNameUuidResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetSnapNameUuidResponseArgs {
+            result: None,
+        }
+    }
+}
+pub struct GetSnapNameUuidResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetSnapNameUuidResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(GetSnapNameUuidResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetSnapNameUuidResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetSnapNameUuidResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetSnapNameUuidResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum CompoundRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct CompoundRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for CompoundRequest<'a> {
+    type Inner = CompoundRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> CompoundRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        CompoundRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args CompoundRequestArgs<'args>) -> flatbuffers::WIPOffset<CompoundRequest<'bldr>> {
+      let mut builder = CompoundRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.requests { builder.add_requests(x); }
+      builder.add_compound_version(args.compound_version);
+      builder.finish()
+    }
+
+    pub const VT_COMPOUND_VERSION: flatbuffers::VOffsetT = 4;
+    pub const VT_REQUESTS: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn compound_version(&'a self) -> i32 {
+    self._tab.get::<i32>(CompoundRequest::VT_COMPOUND_VERSION, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn requests(&'a self) -> Option<flatbuffers::Vector<'a, Fop>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Fop>>>(CompoundRequest::VT_REQUESTS, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(CompoundRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct CompoundRequestArgs<'a> {
+    pub compound_version: i32,
+    pub requests: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a , Fop>>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for CompoundRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        CompoundRequestArgs {
+            compound_version: 0,
+            requests: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct CompoundRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> CompoundRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_compound_version(&mut self, compound_version: i32) {
+    self.fbb_.push_slot::<i32>(CompoundRequest::VT_COMPOUND_VERSION, compound_version, 0);
+  }
+  #[inline]
+  pub fn add_requests(&mut self, requests: flatbuffers::WIPOffset<flatbuffers::Vector<'b , Fop>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompoundRequest::VT_REQUESTS, requests);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompoundRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CompoundRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    CompoundRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<CompoundRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum CompoundResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct CompoundResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for CompoundResponse<'a> {
+    type Inner = CompoundResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> CompoundResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        CompoundResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args CompoundResponseArgs<'args>) -> flatbuffers::WIPOffset<CompoundResponse<'bldr>> {
+      let mut builder = CompoundResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(CompoundResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(CompoundResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct CompoundResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for CompoundResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        CompoundResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct CompoundResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> CompoundResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(CompoundResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(CompoundResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CompoundResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    CompoundResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<CompoundResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LocklistEntryOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LocklistEntry<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LocklistEntry<'a> {
+    type Inner = LocklistEntry<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LocklistEntry<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LocklistEntry {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LocklistEntryArgs<'args>) -> flatbuffers::WIPOffset<LocklistEntry<'bldr>> {
+      let mut builder = LocklistEntryBuilder::new(_fbb);
+      builder.add_lk_flags(args.lk_flags);
+      if let Some(x) = args.client_uid { builder.add_client_uid(x); }
+      if let Some(x) = args.flock { builder.add_flock(x); }
+      builder.finish()
+    }
+
+    pub const VT_FLOCK: flatbuffers::VOffsetT = 4;
+    pub const VT_CLIENT_UID: flatbuffers::VOffsetT = 6;
+    pub const VT_LK_FLAGS: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(LocklistEntry::VT_FLOCK, None)
+  }
+  #[inline]
+  pub fn client_uid(&'a self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LocklistEntry::VT_CLIENT_UID, None)
+  }
+  #[inline]
+  pub fn lk_flags(&'a self) -> u32 {
+    self._tab.get::<u32>(LocklistEntry::VT_LK_FLAGS, Some(0)).unwrap()
+  }
+}
+
+pub struct LocklistEntryArgs<'a> {
+    pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
+    pub client_uid: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub lk_flags: u32,
+}
+impl<'a> Default for LocklistEntryArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LocklistEntryArgs {
+            flock: None,
+            client_uid: None,
+            lk_flags: 0,
+        }
+    }
+}
+pub struct LocklistEntryBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LocklistEntryBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_flock(&mut self, flock: flatbuffers::WIPOffset<ProtoFlock<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ProtoFlock>>(LocklistEntry::VT_FLOCK, flock);
+  }
+  #[inline]
+  pub fn add_client_uid(&mut self, client_uid: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LocklistEntry::VT_CLIENT_UID, client_uid);
+  }
+  #[inline]
+  pub fn add_lk_flags(&mut self, lk_flags: u32) {
+    self.fbb_.push_slot::<u32>(LocklistEntry::VT_LK_FLAGS, lk_flags, 0);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LocklistEntryBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LocklistEntryBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LocklistEntry<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LockListOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct LockList<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for LockList<'a> {
+    type Inner = LockList<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> LockList<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        LockList {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args LockListArgs<'args>) -> flatbuffers::WIPOffset<LockList<'bldr>> {
+      let mut builder = LockListBuilder::new(_fbb);
+      if let Some(x) = args.entry { builder.add_entry(x); }
+      builder.finish()
+    }
+
+    pub const VT_ENTRY: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn entry(&'a self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<LocklistEntry<'a>>>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<LocklistEntry<'a>>>>>(LockList::VT_ENTRY, None)
+  }
+}
+
+pub struct LockListArgs<'a> {
+    pub entry: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a , flatbuffers::ForwardsUOffset<LocklistEntry<'a >>>>>,
+}
+impl<'a> Default for LockListArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        LockListArgs {
+            entry: None,
+        }
+    }
+}
+pub struct LockListBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LockListBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_entry(&mut self, entry: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<LocklistEntry<'b >>>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(LockList::VT_ENTRY, entry);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LockListBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LockListBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<LockList<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetactivelkResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetactivelkResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetactivelkResponse<'a> {
+    type Inner = GetactivelkResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetactivelkResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetactivelkResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetactivelkResponseArgs<'args>) -> flatbuffers::WIPOffset<GetactivelkResponse<'bldr>> {
+      let mut builder = GetactivelkResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.reply { builder.add_reply(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_REPLY: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetactivelkResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn reply(&'a self) -> Option<LockList<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LockList<'a>>>(GetactivelkResponse::VT_REPLY, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(GetactivelkResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct GetactivelkResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub reply: Option<flatbuffers::WIPOffset<LockList<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for GetactivelkResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetactivelkResponseArgs {
+            result: None,
+            reply: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct GetactivelkResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetactivelkResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(GetactivelkResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_reply(&mut self, reply: flatbuffers::WIPOffset<LockList<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LockList>>(GetactivelkResponse::VT_REPLY, reply);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetactivelkResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetactivelkResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetactivelkResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetactivelkResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum GetactivelkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct GetactivelkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for GetactivelkRequest<'a> {
+    type Inner = GetactivelkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> GetactivelkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        GetactivelkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args GetactivelkRequestArgs<'args>) -> flatbuffers::WIPOffset<GetactivelkRequest<'bldr>> {
+      let mut builder = GetactivelkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(GetactivelkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(GetactivelkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct GetactivelkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for GetactivelkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        GetactivelkRequestArgs {
+            rfid: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct GetactivelkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> GetactivelkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(GetactivelkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(GetactivelkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetactivelkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    GetactivelkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<GetactivelkRequest<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetactivelkResponseOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetactivelkResponse<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetactivelkResponse<'a> {
+    type Inner = SetactivelkResponse<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetactivelkResponse<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetactivelkResponse {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SetactivelkResponseArgs<'args>) -> flatbuffers::WIPOffset<SetactivelkResponse<'bldr>> {
+      let mut builder = SetactivelkResponseBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.result { builder.add_result(x); }
+      builder.finish()
+    }
+
+    pub const VT_RESULT: flatbuffers::VOffsetT = 4;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn result(&'a self) -> Option<OpResult<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SetactivelkResponse::VT_RESULT, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SetactivelkResponse::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SetactivelkResponseArgs<'a> {
+    pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SetactivelkResponseArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SetactivelkResponseArgs {
+            result: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct SetactivelkResponseBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetactivelkResponseBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_result(&mut self, result: flatbuffers::WIPOffset<OpResult<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(SetactivelkResponse::VT_RESULT, result);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SetactivelkResponse::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetactivelkResponseBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetactivelkResponseBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetactivelkResponse<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SetactivelkRequestOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct SetactivelkRequest<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for SetactivelkRequest<'a> {
+    type Inner = SetactivelkRequest<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> SetactivelkRequest<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        SetactivelkRequest {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args SetactivelkRequestArgs<'args>) -> flatbuffers::WIPOffset<SetactivelkRequest<'bldr>> {
+      let mut builder = SetactivelkRequestBuilder::new(_fbb);
+      if let Some(x) = args.extra_data { builder.add_extra_data(x); }
+      if let Some(x) = args.request { builder.add_request(x); }
+      if let Some(x) = args.rfid { builder.add_rfid(x); }
+      builder.finish()
+    }
+
+    pub const VT_RFID: flatbuffers::VOffsetT = 4;
+    pub const VT_REQUEST: flatbuffers::VOffsetT = 6;
+    pub const VT_EXTRA_DATA: flatbuffers::VOffsetT = 8;
+
+  #[inline]
+  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetactivelkRequest::VT_RFID, None)
+  }
+  #[inline]
+  pub fn request(&'a self) -> Option<LockList<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LockList<'a>>>(SetactivelkRequest::VT_REQUEST, None)
+  }
+  #[inline]
+  pub fn extra_data(&'a self) -> Option<&'a [i8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(SetactivelkRequest::VT_EXTRA_DATA, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct SetactivelkRequestArgs<'a> {
+    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub request: Option<flatbuffers::WIPOffset<LockList<'a >>>,
+    pub extra_data: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+}
+impl<'a> Default for SetactivelkRequestArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        SetactivelkRequestArgs {
+            rfid: None,
+            request: None,
+            extra_data: None,
+        }
+    }
+}
+pub struct SetactivelkRequestBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SetactivelkRequestBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SetactivelkRequest::VT_RFID, rfid);
+  }
+  #[inline]
+  pub fn add_request(&mut self, request: flatbuffers::WIPOffset<LockList<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LockList>>(SetactivelkRequest::VT_REQUEST, request);
+  }
+  #[inline]
+  pub fn add_extra_data(&mut self, extra_data: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SetactivelkRequest::VT_EXTRA_DATA, extra_data);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SetactivelkRequestBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SetactivelkRequestBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<SetactivelkRequest<'a>> {
     let o = self.fbb_.end_table(self.start_);
     flatbuffers::WIPOffset::new(o.value())
   }
@@ -638,26 +13400,514 @@ impl<'a> Operation<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args OperationArgs<'args>) -> flatbuffers::WIPOffset<Operation<'bldr>> {
       let mut builder = OperationBuilder::new(_fbb);
+      if let Some(x) = args.setactivelk { builder.add_setactivelk(x); }
+      if let Some(x) = args.getactivelk { builder.add_getactivelk(x); }
+      if let Some(x) = args.compound { builder.add_compound(x); }
+      if let Some(x) = args.get_snap_name_uuid { builder.add_get_snap_name_uuid(x); }
+      if let Some(x) = args.event_notify { builder.add_event_notify(x); }
+      if let Some(x) = args.set_lk_ver { builder.add_set_lk_ver(x); }
+      if let Some(x) = args.release { builder.add_release(x); }
+      if let Some(x) = args.releasedir { builder.add_releasedir(x); }
+      if let Some(x) = args.notify { builder.add_notify(x); }
+      if let Some(x) = args.log { builder.add_log(x); }
+      if let Some(x) = args.mgmt_hndsk { builder.add_mgmt_hndsk(x); }
+      if let Some(x) = args.get_volume_info { builder.add_get_volume_info(x); }
+      if let Some(x) = args.get_spec { builder.add_get_spec(x); }
+      if let Some(x) = args.set_volume { builder.add_set_volume(x); }
+      if let Some(x) = args.seek { builder.add_seek(x); }
+      if let Some(x) = args.ipc { builder.add_ipc(x); }
+      if let Some(x) = args.rchecksum { builder.add_rchecksum(x); }
+      if let Some(x) = args.zerofill { builder.add_zerofill(x); }
+      if let Some(x) = args.discard { builder.add_discard(x); }
+      if let Some(x) = args.fallocate { builder.add_fallocate(x); }
+      if let Some(x) = args.fsetattr { builder.add_fsetattr(x); }
+      if let Some(x) = args.setattr { builder.add_setattr(x); }
+      if let Some(x) = args.fentrylk { builder.add_fentrylk(x); }
+      if let Some(x) = args.entrylk { builder.add_entrylk(x); }
+      if let Some(x) = args.fstat { builder.add_fstat(x); }
+      if let Some(x) = args.ftruncate { builder.add_ftruncate(x); }
+      if let Some(x) = args.access { builder.add_access(x); }
+      if let Some(x) = args.readdirp { builder.add_readdirp(x); }
+      if let Some(x) = args.readdir { builder.add_readdir(x); }
+      if let Some(x) = args.fsyncdir { builder.add_fsyncdir(x); }
+      if let Some(x) = args.opendir { builder.add_opendir(x); }
+      if let Some(x) = args.fremovexattr { builder.add_fremovexattr(x); }
+      if let Some(x) = args.removexattr { builder.add_removexattr(x); }
+      if let Some(x) = args.fgetxattr { builder.add_fgetxattr(x); }
+      if let Some(x) = args.getxattr { builder.add_getxattr(x); }
+      if let Some(x) = args.fxattrop { builder.add_fxattrop(x); }
+      if let Some(x) = args.xattrop { builder.add_xattrop(x); }
+      if let Some(x) = args.fsetxattr { builder.add_fsetxattr(x); }
+      if let Some(x) = args.setxattr { builder.add_setxattr(x); }
+      if let Some(x) = args.fsync { builder.add_fsync(x); }
+      if let Some(x) = args.flush { builder.add_flush(x); }
+      if let Some(x) = args.finodelk { builder.add_finodelk(x); }
+      if let Some(x) = args.inodelk { builder.add_inodelk(x); }
+      if let Some(x) = args.recall { builder.add_recall(x); }
+      if let Some(x) = args.lease { builder.add_lease(x); }
+      if let Some(x) = args.lock { builder.add_lock(x); }
+      if let Some(x) = args.statfs { builder.add_statfs(x); }
+      if let Some(x) = args.write { builder.add_write(x); }
+      if let Some(x) = args.lookup { builder.add_lookup(x); }
+      if let Some(x) = args.read { builder.add_read(x); }
+      if let Some(x) = args.open { builder.add_open(x); }
+      if let Some(x) = args.trunate { builder.add_trunate(x); }
+      if let Some(x) = args.link { builder.add_link(x); }
+      if let Some(x) = args.rename { builder.add_rename(x); }
+      if let Some(x) = args.symlink { builder.add_symlink(x); }
+      if let Some(x) = args.rmdir { builder.add_rmdir(x); }
+      if let Some(x) = args.unlink { builder.add_unlink(x); }
+      if let Some(x) = args.mkdir { builder.add_mkdir(x); }
+      if let Some(x) = args.mknod { builder.add_mknod(x); }
+      if let Some(x) = args.readlk { builder.add_readlk(x); }
+      if let Some(x) = args.cache_invalidate { builder.add_cache_invalidate(x); }
       if let Some(x) = args.stat { builder.add_stat(x); }
       builder.finish()
     }
 
     pub const VT_STAT: flatbuffers::VOffsetT = 4;
+    pub const VT_CACHE_INVALIDATE: flatbuffers::VOffsetT = 6;
+    pub const VT_READLK: flatbuffers::VOffsetT = 8;
+    pub const VT_MKNOD: flatbuffers::VOffsetT = 10;
+    pub const VT_MKDIR: flatbuffers::VOffsetT = 12;
+    pub const VT_UNLINK: flatbuffers::VOffsetT = 14;
+    pub const VT_RMDIR: flatbuffers::VOffsetT = 16;
+    pub const VT_SYMLINK: flatbuffers::VOffsetT = 18;
+    pub const VT_RENAME: flatbuffers::VOffsetT = 20;
+    pub const VT_LINK: flatbuffers::VOffsetT = 22;
+    pub const VT_TRUNATE: flatbuffers::VOffsetT = 24;
+    pub const VT_OPEN: flatbuffers::VOffsetT = 26;
+    pub const VT_READ: flatbuffers::VOffsetT = 28;
+    pub const VT_LOOKUP: flatbuffers::VOffsetT = 30;
+    pub const VT_WRITE: flatbuffers::VOffsetT = 32;
+    pub const VT_STATFS: flatbuffers::VOffsetT = 34;
+    pub const VT_LOCK: flatbuffers::VOffsetT = 36;
+    pub const VT_LEASE: flatbuffers::VOffsetT = 38;
+    pub const VT_RECALL: flatbuffers::VOffsetT = 40;
+    pub const VT_INODELK: flatbuffers::VOffsetT = 42;
+    pub const VT_FINODELK: flatbuffers::VOffsetT = 44;
+    pub const VT_FLUSH: flatbuffers::VOffsetT = 46;
+    pub const VT_FSYNC: flatbuffers::VOffsetT = 48;
+    pub const VT_SETXATTR: flatbuffers::VOffsetT = 50;
+    pub const VT_FSETXATTR: flatbuffers::VOffsetT = 52;
+    pub const VT_XATTROP: flatbuffers::VOffsetT = 54;
+    pub const VT_FXATTROP: flatbuffers::VOffsetT = 56;
+    pub const VT_GETXATTR: flatbuffers::VOffsetT = 58;
+    pub const VT_FGETXATTR: flatbuffers::VOffsetT = 60;
+    pub const VT_REMOVEXATTR: flatbuffers::VOffsetT = 62;
+    pub const VT_FREMOVEXATTR: flatbuffers::VOffsetT = 64;
+    pub const VT_OPENDIR: flatbuffers::VOffsetT = 66;
+    pub const VT_FSYNCDIR: flatbuffers::VOffsetT = 68;
+    pub const VT_READDIR: flatbuffers::VOffsetT = 70;
+    pub const VT_READDIRP: flatbuffers::VOffsetT = 72;
+    pub const VT_ACCESS: flatbuffers::VOffsetT = 74;
+    pub const VT_FTRUNCATE: flatbuffers::VOffsetT = 76;
+    pub const VT_FSTAT: flatbuffers::VOffsetT = 78;
+    pub const VT_ENTRYLK: flatbuffers::VOffsetT = 80;
+    pub const VT_FENTRYLK: flatbuffers::VOffsetT = 82;
+    pub const VT_SETATTR: flatbuffers::VOffsetT = 84;
+    pub const VT_FSETATTR: flatbuffers::VOffsetT = 86;
+    pub const VT_FALLOCATE: flatbuffers::VOffsetT = 88;
+    pub const VT_DISCARD: flatbuffers::VOffsetT = 90;
+    pub const VT_ZEROFILL: flatbuffers::VOffsetT = 92;
+    pub const VT_RCHECKSUM: flatbuffers::VOffsetT = 94;
+    pub const VT_IPC: flatbuffers::VOffsetT = 96;
+    pub const VT_SEEK: flatbuffers::VOffsetT = 98;
+    pub const VT_SET_VOLUME: flatbuffers::VOffsetT = 100;
+    pub const VT_GET_SPEC: flatbuffers::VOffsetT = 102;
+    pub const VT_GET_VOLUME_INFO: flatbuffers::VOffsetT = 104;
+    pub const VT_MGMT_HNDSK: flatbuffers::VOffsetT = 106;
+    pub const VT_LOG: flatbuffers::VOffsetT = 108;
+    pub const VT_NOTIFY: flatbuffers::VOffsetT = 110;
+    pub const VT_RELEASEDIR: flatbuffers::VOffsetT = 112;
+    pub const VT_RELEASE: flatbuffers::VOffsetT = 114;
+    pub const VT_SET_LK_VER: flatbuffers::VOffsetT = 116;
+    pub const VT_EVENT_NOTIFY: flatbuffers::VOffsetT = 118;
+    pub const VT_GET_SNAP_NAME_UUID: flatbuffers::VOffsetT = 120;
+    pub const VT_COMPOUND: flatbuffers::VOffsetT = 122;
+    pub const VT_GETACTIVELK: flatbuffers::VOffsetT = 124;
+    pub const VT_SETACTIVELK: flatbuffers::VOffsetT = 126;
 
   #[inline]
   pub fn stat(&'a self) -> Option<StatRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<StatRequest<'a>>>(Operation::VT_STAT, None)
   }
+  #[inline]
+  pub fn cache_invalidate(&'a self) -> Option<CacheInvalidationRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<CacheInvalidationRequest<'a>>>(Operation::VT_CACHE_INVALIDATE, None)
+  }
+  #[inline]
+  pub fn readlk(&'a self) -> Option<ReadlinkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ReadlinkRequest<'a>>>(Operation::VT_READLK, None)
+  }
+  #[inline]
+  pub fn mknod(&'a self) -> Option<MknodRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<MknodRequest<'a>>>(Operation::VT_MKNOD, None)
+  }
+  #[inline]
+  pub fn mkdir(&'a self) -> Option<MkdirRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<MkdirRequest<'a>>>(Operation::VT_MKDIR, None)
+  }
+  #[inline]
+  pub fn unlink(&'a self) -> Option<UnlinkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<UnlinkRequest<'a>>>(Operation::VT_UNLINK, None)
+  }
+  #[inline]
+  pub fn rmdir(&'a self) -> Option<RmdirRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<RmdirRequest<'a>>>(Operation::VT_RMDIR, None)
+  }
+  #[inline]
+  pub fn symlink(&'a self) -> Option<SymlinkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<SymlinkRequest<'a>>>(Operation::VT_SYMLINK, None)
+  }
+  #[inline]
+  pub fn rename(&'a self) -> Option<RenameRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<RenameRequest<'a>>>(Operation::VT_RENAME, None)
+  }
+  #[inline]
+  pub fn link(&'a self) -> Option<LinkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LinkRequest<'a>>>(Operation::VT_LINK, None)
+  }
+  #[inline]
+  pub fn trunate(&'a self) -> Option<TruncateRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<TruncateRequest<'a>>>(Operation::VT_TRUNATE, None)
+  }
+  #[inline]
+  pub fn open(&'a self) -> Option<OpenRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpenRequest<'a>>>(Operation::VT_OPEN, None)
+  }
+  #[inline]
+  pub fn read(&'a self) -> Option<ReadRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ReadRequest<'a>>>(Operation::VT_READ, None)
+  }
+  #[inline]
+  pub fn lookup(&'a self) -> Option<LookupRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LookupRequest<'a>>>(Operation::VT_LOOKUP, None)
+  }
+  #[inline]
+  pub fn write(&'a self) -> Option<WriteRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<WriteRequest<'a>>>(Operation::VT_WRITE, None)
+  }
+  #[inline]
+  pub fn statfs(&'a self) -> Option<StatfsRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<StatfsRequest<'a>>>(Operation::VT_STATFS, None)
+  }
+  #[inline]
+  pub fn lock(&'a self) -> Option<LockRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LockRequest<'a>>>(Operation::VT_LOCK, None)
+  }
+  #[inline]
+  pub fn lease(&'a self) -> Option<LeaseRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LeaseRequest<'a>>>(Operation::VT_LEASE, None)
+  }
+  #[inline]
+  pub fn recall(&'a self) -> Option<RecallLeaseRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<RecallLeaseRequest<'a>>>(Operation::VT_RECALL, None)
+  }
+  #[inline]
+  pub fn inodelk(&'a self) -> Option<InodelkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<InodelkRequest<'a>>>(Operation::VT_INODELK, None)
+  }
+  #[inline]
+  pub fn finodelk(&'a self) -> Option<FinodelkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FinodelkRequest<'a>>>(Operation::VT_FINODELK, None)
+  }
+  #[inline]
+  pub fn flush(&'a self) -> Option<FlushRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FlushRequest<'a>>>(Operation::VT_FLUSH, None)
+  }
+  #[inline]
+  pub fn fsync(&'a self) -> Option<FsyncRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FsyncRequest<'a>>>(Operation::VT_FSYNC, None)
+  }
+  #[inline]
+  pub fn setxattr(&'a self) -> Option<SetxattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<SetxattrRequest<'a>>>(Operation::VT_SETXATTR, None)
+  }
+  #[inline]
+  pub fn fsetxattr(&'a self) -> Option<FsetxattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FsetxattrRequest<'a>>>(Operation::VT_FSETXATTR, None)
+  }
+  #[inline]
+  pub fn xattrop(&'a self) -> Option<XattropRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<XattropRequest<'a>>>(Operation::VT_XATTROP, None)
+  }
+  #[inline]
+  pub fn fxattrop(&'a self) -> Option<FxattropRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FxattropRequest<'a>>>(Operation::VT_FXATTROP, None)
+  }
+  #[inline]
+  pub fn getxattr(&'a self) -> Option<GetXattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<GetXattrRequest<'a>>>(Operation::VT_GETXATTR, None)
+  }
+  #[inline]
+  pub fn fgetxattr(&'a self) -> Option<FgetxattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FgetxattrRequest<'a>>>(Operation::VT_FGETXATTR, None)
+  }
+  #[inline]
+  pub fn removexattr(&'a self) -> Option<RemovexattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<RemovexattrRequest<'a>>>(Operation::VT_REMOVEXATTR, None)
+  }
+  #[inline]
+  pub fn fremovexattr(&'a self) -> Option<FremovexattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FremovexattrRequest<'a>>>(Operation::VT_FREMOVEXATTR, None)
+  }
+  #[inline]
+  pub fn opendir(&'a self) -> Option<OpendirRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<OpendirRequest<'a>>>(Operation::VT_OPENDIR, None)
+  }
+  #[inline]
+  pub fn fsyncdir(&'a self) -> Option<FsyncdirRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FsyncdirRequest<'a>>>(Operation::VT_FSYNCDIR, None)
+  }
+  #[inline]
+  pub fn readdir(&'a self) -> Option<ReaddirRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ReaddirRequest<'a>>>(Operation::VT_READDIR, None)
+  }
+  #[inline]
+  pub fn readdirp(&'a self) -> Option<ReaddirpRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ReaddirpRequest<'a>>>(Operation::VT_READDIRP, None)
+  }
+  #[inline]
+  pub fn access(&'a self) -> Option<AccessRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<AccessRequest<'a>>>(Operation::VT_ACCESS, None)
+  }
+  #[inline]
+  pub fn ftruncate(&'a self) -> Option<FtruncateRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FtruncateRequest<'a>>>(Operation::VT_FTRUNCATE, None)
+  }
+  #[inline]
+  pub fn fstat(&'a self) -> Option<FstatRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FstatRequest<'a>>>(Operation::VT_FSTAT, None)
+  }
+  #[inline]
+  pub fn entrylk(&'a self) -> Option<EntrylkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<EntrylkRequest<'a>>>(Operation::VT_ENTRYLK, None)
+  }
+  #[inline]
+  pub fn fentrylk(&'a self) -> Option<FentrylkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FentrylkRequest<'a>>>(Operation::VT_FENTRYLK, None)
+  }
+  #[inline]
+  pub fn setattr(&'a self) -> Option<SetattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<SetattrRequest<'a>>>(Operation::VT_SETATTR, None)
+  }
+  #[inline]
+  pub fn fsetattr(&'a self) -> Option<FsetattrRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FsetattrRequest<'a>>>(Operation::VT_FSETATTR, None)
+  }
+  #[inline]
+  pub fn fallocate(&'a self) -> Option<FallocateRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FallocateRequest<'a>>>(Operation::VT_FALLOCATE, None)
+  }
+  #[inline]
+  pub fn discard(&'a self) -> Option<DiscardRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<DiscardRequest<'a>>>(Operation::VT_DISCARD, None)
+  }
+  #[inline]
+  pub fn zerofill(&'a self) -> Option<ZerofillRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ZerofillRequest<'a>>>(Operation::VT_ZEROFILL, None)
+  }
+  #[inline]
+  pub fn rchecksum(&'a self) -> Option<RchecksumRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<RchecksumRequest<'a>>>(Operation::VT_RCHECKSUM, None)
+  }
+  #[inline]
+  pub fn ipc(&'a self) -> Option<IpcRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<IpcRequest<'a>>>(Operation::VT_IPC, None)
+  }
+  #[inline]
+  pub fn seek(&'a self) -> Option<SeekRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<SeekRequest<'a>>>(Operation::VT_SEEK, None)
+  }
+  #[inline]
+  pub fn set_volume(&'a self) -> Option<SetVolumeRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<SetVolumeRequest<'a>>>(Operation::VT_SET_VOLUME, None)
+  }
+  #[inline]
+  pub fn get_spec(&'a self) -> Option<GetSpecRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<GetSpecRequest<'a>>>(Operation::VT_GET_SPEC, None)
+  }
+  #[inline]
+  pub fn get_volume_info(&'a self) -> Option<GetVolumeInfoRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<GetVolumeInfoRequest<'a>>>(Operation::VT_GET_VOLUME_INFO, None)
+  }
+  #[inline]
+  pub fn mgmt_hndsk(&'a self) -> Option<MgmtHndskRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<MgmtHndskRequest<'a>>>(Operation::VT_MGMT_HNDSK, None)
+  }
+  #[inline]
+  pub fn log(&'a self) -> Option<LogRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<LogRequest<'a>>>(Operation::VT_LOG, None)
+  }
+  #[inline]
+  pub fn notify(&'a self) -> Option<NotifyRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<NotifyRequest<'a>>>(Operation::VT_NOTIFY, None)
+  }
+  #[inline]
+  pub fn releasedir(&'a self) -> Option<ReleasedirRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ReleasedirRequest<'a>>>(Operation::VT_RELEASEDIR, None)
+  }
+  #[inline]
+  pub fn release(&'a self) -> Option<ReleaseRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<ReleaseRequest<'a>>>(Operation::VT_RELEASE, None)
+  }
+  #[inline]
+  pub fn set_lk_ver(&'a self) -> Option<Set_lk_verRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Set_lk_verRequest<'a>>>(Operation::VT_SET_LK_VER, None)
+  }
+  #[inline]
+  pub fn event_notify(&'a self) -> Option<EventNotifyRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<EventNotifyRequest<'a>>>(Operation::VT_EVENT_NOTIFY, None)
+  }
+  #[inline]
+  pub fn get_snap_name_uuid(&'a self) -> Option<GetSnapNameUuidRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<GetSnapNameUuidRequest<'a>>>(Operation::VT_GET_SNAP_NAME_UUID, None)
+  }
+  #[inline]
+  pub fn compound(&'a self) -> Option<CompoundRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<CompoundRequest<'a>>>(Operation::VT_COMPOUND, None)
+  }
+  #[inline]
+  pub fn getactivelk(&'a self) -> Option<GetactivelkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<GetactivelkRequest<'a>>>(Operation::VT_GETACTIVELK, None)
+  }
+  #[inline]
+  pub fn setactivelk(&'a self) -> Option<SetactivelkRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<SetactivelkRequest<'a>>>(Operation::VT_SETACTIVELK, None)
+  }
 }
 
 pub struct OperationArgs<'a> {
     pub stat: Option<flatbuffers::WIPOffset<StatRequest<'a >>>,
+    pub cache_invalidate: Option<flatbuffers::WIPOffset<CacheInvalidationRequest<'a >>>,
+    pub readlk: Option<flatbuffers::WIPOffset<ReadlinkRequest<'a >>>,
+    pub mknod: Option<flatbuffers::WIPOffset<MknodRequest<'a >>>,
+    pub mkdir: Option<flatbuffers::WIPOffset<MkdirRequest<'a >>>,
+    pub unlink: Option<flatbuffers::WIPOffset<UnlinkRequest<'a >>>,
+    pub rmdir: Option<flatbuffers::WIPOffset<RmdirRequest<'a >>>,
+    pub symlink: Option<flatbuffers::WIPOffset<SymlinkRequest<'a >>>,
+    pub rename: Option<flatbuffers::WIPOffset<RenameRequest<'a >>>,
+    pub link: Option<flatbuffers::WIPOffset<LinkRequest<'a >>>,
+    pub trunate: Option<flatbuffers::WIPOffset<TruncateRequest<'a >>>,
+    pub open: Option<flatbuffers::WIPOffset<OpenRequest<'a >>>,
+    pub read: Option<flatbuffers::WIPOffset<ReadRequest<'a >>>,
+    pub lookup: Option<flatbuffers::WIPOffset<LookupRequest<'a >>>,
+    pub write: Option<flatbuffers::WIPOffset<WriteRequest<'a >>>,
+    pub statfs: Option<flatbuffers::WIPOffset<StatfsRequest<'a >>>,
+    pub lock: Option<flatbuffers::WIPOffset<LockRequest<'a >>>,
+    pub lease: Option<flatbuffers::WIPOffset<LeaseRequest<'a >>>,
+    pub recall: Option<flatbuffers::WIPOffset<RecallLeaseRequest<'a >>>,
+    pub inodelk: Option<flatbuffers::WIPOffset<InodelkRequest<'a >>>,
+    pub finodelk: Option<flatbuffers::WIPOffset<FinodelkRequest<'a >>>,
+    pub flush: Option<flatbuffers::WIPOffset<FlushRequest<'a >>>,
+    pub fsync: Option<flatbuffers::WIPOffset<FsyncRequest<'a >>>,
+    pub setxattr: Option<flatbuffers::WIPOffset<SetxattrRequest<'a >>>,
+    pub fsetxattr: Option<flatbuffers::WIPOffset<FsetxattrRequest<'a >>>,
+    pub xattrop: Option<flatbuffers::WIPOffset<XattropRequest<'a >>>,
+    pub fxattrop: Option<flatbuffers::WIPOffset<FxattropRequest<'a >>>,
+    pub getxattr: Option<flatbuffers::WIPOffset<GetXattrRequest<'a >>>,
+    pub fgetxattr: Option<flatbuffers::WIPOffset<FgetxattrRequest<'a >>>,
+    pub removexattr: Option<flatbuffers::WIPOffset<RemovexattrRequest<'a >>>,
+    pub fremovexattr: Option<flatbuffers::WIPOffset<FremovexattrRequest<'a >>>,
+    pub opendir: Option<flatbuffers::WIPOffset<OpendirRequest<'a >>>,
+    pub fsyncdir: Option<flatbuffers::WIPOffset<FsyncdirRequest<'a >>>,
+    pub readdir: Option<flatbuffers::WIPOffset<ReaddirRequest<'a >>>,
+    pub readdirp: Option<flatbuffers::WIPOffset<ReaddirpRequest<'a >>>,
+    pub access: Option<flatbuffers::WIPOffset<AccessRequest<'a >>>,
+    pub ftruncate: Option<flatbuffers::WIPOffset<FtruncateRequest<'a >>>,
+    pub fstat: Option<flatbuffers::WIPOffset<FstatRequest<'a >>>,
+    pub entrylk: Option<flatbuffers::WIPOffset<EntrylkRequest<'a >>>,
+    pub fentrylk: Option<flatbuffers::WIPOffset<FentrylkRequest<'a >>>,
+    pub setattr: Option<flatbuffers::WIPOffset<SetattrRequest<'a >>>,
+    pub fsetattr: Option<flatbuffers::WIPOffset<FsetattrRequest<'a >>>,
+    pub fallocate: Option<flatbuffers::WIPOffset<FallocateRequest<'a >>>,
+    pub discard: Option<flatbuffers::WIPOffset<DiscardRequest<'a >>>,
+    pub zerofill: Option<flatbuffers::WIPOffset<ZerofillRequest<'a >>>,
+    pub rchecksum: Option<flatbuffers::WIPOffset<RchecksumRequest<'a >>>,
+    pub ipc: Option<flatbuffers::WIPOffset<IpcRequest<'a >>>,
+    pub seek: Option<flatbuffers::WIPOffset<SeekRequest<'a >>>,
+    pub set_volume: Option<flatbuffers::WIPOffset<SetVolumeRequest<'a >>>,
+    pub get_spec: Option<flatbuffers::WIPOffset<GetSpecRequest<'a >>>,
+    pub get_volume_info: Option<flatbuffers::WIPOffset<GetVolumeInfoRequest<'a >>>,
+    pub mgmt_hndsk: Option<flatbuffers::WIPOffset<MgmtHndskRequest<'a >>>,
+    pub log: Option<flatbuffers::WIPOffset<LogRequest<'a >>>,
+    pub notify: Option<flatbuffers::WIPOffset<NotifyRequest<'a >>>,
+    pub releasedir: Option<flatbuffers::WIPOffset<ReleasedirRequest<'a >>>,
+    pub release: Option<flatbuffers::WIPOffset<ReleaseRequest<'a >>>,
+    pub set_lk_ver: Option<flatbuffers::WIPOffset<Set_lk_verRequest<'a >>>,
+    pub event_notify: Option<flatbuffers::WIPOffset<EventNotifyRequest<'a >>>,
+    pub get_snap_name_uuid: Option<flatbuffers::WIPOffset<GetSnapNameUuidRequest<'a >>>,
+    pub compound: Option<flatbuffers::WIPOffset<CompoundRequest<'a >>>,
+    pub getactivelk: Option<flatbuffers::WIPOffset<GetactivelkRequest<'a >>>,
+    pub setactivelk: Option<flatbuffers::WIPOffset<SetactivelkRequest<'a >>>,
 }
 impl<'a> Default for OperationArgs<'a> {
     #[inline]
     fn default() -> Self {
         OperationArgs {
             stat: None,
+            cache_invalidate: None,
+            readlk: None,
+            mknod: None,
+            mkdir: None,
+            unlink: None,
+            rmdir: None,
+            symlink: None,
+            rename: None,
+            link: None,
+            trunate: None,
+            open: None,
+            read: None,
+            lookup: None,
+            write: None,
+            statfs: None,
+            lock: None,
+            lease: None,
+            recall: None,
+            inodelk: None,
+            finodelk: None,
+            flush: None,
+            fsync: None,
+            setxattr: None,
+            fsetxattr: None,
+            xattrop: None,
+            fxattrop: None,
+            getxattr: None,
+            fgetxattr: None,
+            removexattr: None,
+            fremovexattr: None,
+            opendir: None,
+            fsyncdir: None,
+            readdir: None,
+            readdirp: None,
+            access: None,
+            ftruncate: None,
+            fstat: None,
+            entrylk: None,
+            fentrylk: None,
+            setattr: None,
+            fsetattr: None,
+            fallocate: None,
+            discard: None,
+            zerofill: None,
+            rchecksum: None,
+            ipc: None,
+            seek: None,
+            set_volume: None,
+            get_spec: None,
+            get_volume_info: None,
+            mgmt_hndsk: None,
+            log: None,
+            notify: None,
+            releasedir: None,
+            release: None,
+            set_lk_ver: None,
+            event_notify: None,
+            get_snap_name_uuid: None,
+            compound: None,
+            getactivelk: None,
+            setactivelk: None,
         }
     }
 }
@@ -669,6 +13919,250 @@ impl<'a: 'b, 'b> OperationBuilder<'a, 'b> {
   #[inline]
   pub fn add_stat(&mut self, stat: flatbuffers::WIPOffset<StatRequest<'b >>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<StatRequest>>(Operation::VT_STAT, stat);
+  }
+  #[inline]
+  pub fn add_cache_invalidate(&mut self, cache_invalidate: flatbuffers::WIPOffset<CacheInvalidationRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CacheInvalidationRequest>>(Operation::VT_CACHE_INVALIDATE, cache_invalidate);
+  }
+  #[inline]
+  pub fn add_readlk(&mut self, readlk: flatbuffers::WIPOffset<ReadlinkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ReadlinkRequest>>(Operation::VT_READLK, readlk);
+  }
+  #[inline]
+  pub fn add_mknod(&mut self, mknod: flatbuffers::WIPOffset<MknodRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<MknodRequest>>(Operation::VT_MKNOD, mknod);
+  }
+  #[inline]
+  pub fn add_mkdir(&mut self, mkdir: flatbuffers::WIPOffset<MkdirRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<MkdirRequest>>(Operation::VT_MKDIR, mkdir);
+  }
+  #[inline]
+  pub fn add_unlink(&mut self, unlink: flatbuffers::WIPOffset<UnlinkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<UnlinkRequest>>(Operation::VT_UNLINK, unlink);
+  }
+  #[inline]
+  pub fn add_rmdir(&mut self, rmdir: flatbuffers::WIPOffset<RmdirRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<RmdirRequest>>(Operation::VT_RMDIR, rmdir);
+  }
+  #[inline]
+  pub fn add_symlink(&mut self, symlink: flatbuffers::WIPOffset<SymlinkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SymlinkRequest>>(Operation::VT_SYMLINK, symlink);
+  }
+  #[inline]
+  pub fn add_rename(&mut self, rename: flatbuffers::WIPOffset<RenameRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<RenameRequest>>(Operation::VT_RENAME, rename);
+  }
+  #[inline]
+  pub fn add_link(&mut self, link: flatbuffers::WIPOffset<LinkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LinkRequest>>(Operation::VT_LINK, link);
+  }
+  #[inline]
+  pub fn add_trunate(&mut self, trunate: flatbuffers::WIPOffset<TruncateRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<TruncateRequest>>(Operation::VT_TRUNATE, trunate);
+  }
+  #[inline]
+  pub fn add_open(&mut self, open: flatbuffers::WIPOffset<OpenRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpenRequest>>(Operation::VT_OPEN, open);
+  }
+  #[inline]
+  pub fn add_read(&mut self, read: flatbuffers::WIPOffset<ReadRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ReadRequest>>(Operation::VT_READ, read);
+  }
+  #[inline]
+  pub fn add_lookup(&mut self, lookup: flatbuffers::WIPOffset<LookupRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LookupRequest>>(Operation::VT_LOOKUP, lookup);
+  }
+  #[inline]
+  pub fn add_write(&mut self, write: flatbuffers::WIPOffset<WriteRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<WriteRequest>>(Operation::VT_WRITE, write);
+  }
+  #[inline]
+  pub fn add_statfs(&mut self, statfs: flatbuffers::WIPOffset<StatfsRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<StatfsRequest>>(Operation::VT_STATFS, statfs);
+  }
+  #[inline]
+  pub fn add_lock(&mut self, lock: flatbuffers::WIPOffset<LockRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LockRequest>>(Operation::VT_LOCK, lock);
+  }
+  #[inline]
+  pub fn add_lease(&mut self, lease: flatbuffers::WIPOffset<LeaseRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LeaseRequest>>(Operation::VT_LEASE, lease);
+  }
+  #[inline]
+  pub fn add_recall(&mut self, recall: flatbuffers::WIPOffset<RecallLeaseRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<RecallLeaseRequest>>(Operation::VT_RECALL, recall);
+  }
+  #[inline]
+  pub fn add_inodelk(&mut self, inodelk: flatbuffers::WIPOffset<InodelkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<InodelkRequest>>(Operation::VT_INODELK, inodelk);
+  }
+  #[inline]
+  pub fn add_finodelk(&mut self, finodelk: flatbuffers::WIPOffset<FinodelkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FinodelkRequest>>(Operation::VT_FINODELK, finodelk);
+  }
+  #[inline]
+  pub fn add_flush(&mut self, flush: flatbuffers::WIPOffset<FlushRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FlushRequest>>(Operation::VT_FLUSH, flush);
+  }
+  #[inline]
+  pub fn add_fsync(&mut self, fsync: flatbuffers::WIPOffset<FsyncRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FsyncRequest>>(Operation::VT_FSYNC, fsync);
+  }
+  #[inline]
+  pub fn add_setxattr(&mut self, setxattr: flatbuffers::WIPOffset<SetxattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SetxattrRequest>>(Operation::VT_SETXATTR, setxattr);
+  }
+  #[inline]
+  pub fn add_fsetxattr(&mut self, fsetxattr: flatbuffers::WIPOffset<FsetxattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FsetxattrRequest>>(Operation::VT_FSETXATTR, fsetxattr);
+  }
+  #[inline]
+  pub fn add_xattrop(&mut self, xattrop: flatbuffers::WIPOffset<XattropRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<XattropRequest>>(Operation::VT_XATTROP, xattrop);
+  }
+  #[inline]
+  pub fn add_fxattrop(&mut self, fxattrop: flatbuffers::WIPOffset<FxattropRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FxattropRequest>>(Operation::VT_FXATTROP, fxattrop);
+  }
+  #[inline]
+  pub fn add_getxattr(&mut self, getxattr: flatbuffers::WIPOffset<GetXattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<GetXattrRequest>>(Operation::VT_GETXATTR, getxattr);
+  }
+  #[inline]
+  pub fn add_fgetxattr(&mut self, fgetxattr: flatbuffers::WIPOffset<FgetxattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FgetxattrRequest>>(Operation::VT_FGETXATTR, fgetxattr);
+  }
+  #[inline]
+  pub fn add_removexattr(&mut self, removexattr: flatbuffers::WIPOffset<RemovexattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<RemovexattrRequest>>(Operation::VT_REMOVEXATTR, removexattr);
+  }
+  #[inline]
+  pub fn add_fremovexattr(&mut self, fremovexattr: flatbuffers::WIPOffset<FremovexattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FremovexattrRequest>>(Operation::VT_FREMOVEXATTR, fremovexattr);
+  }
+  #[inline]
+  pub fn add_opendir(&mut self, opendir: flatbuffers::WIPOffset<OpendirRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpendirRequest>>(Operation::VT_OPENDIR, opendir);
+  }
+  #[inline]
+  pub fn add_fsyncdir(&mut self, fsyncdir: flatbuffers::WIPOffset<FsyncdirRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FsyncdirRequest>>(Operation::VT_FSYNCDIR, fsyncdir);
+  }
+  #[inline]
+  pub fn add_readdir(&mut self, readdir: flatbuffers::WIPOffset<ReaddirRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ReaddirRequest>>(Operation::VT_READDIR, readdir);
+  }
+  #[inline]
+  pub fn add_readdirp(&mut self, readdirp: flatbuffers::WIPOffset<ReaddirpRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ReaddirpRequest>>(Operation::VT_READDIRP, readdirp);
+  }
+  #[inline]
+  pub fn add_access(&mut self, access: flatbuffers::WIPOffset<AccessRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<AccessRequest>>(Operation::VT_ACCESS, access);
+  }
+  #[inline]
+  pub fn add_ftruncate(&mut self, ftruncate: flatbuffers::WIPOffset<FtruncateRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FtruncateRequest>>(Operation::VT_FTRUNCATE, ftruncate);
+  }
+  #[inline]
+  pub fn add_fstat(&mut self, fstat: flatbuffers::WIPOffset<FstatRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FstatRequest>>(Operation::VT_FSTAT, fstat);
+  }
+  #[inline]
+  pub fn add_entrylk(&mut self, entrylk: flatbuffers::WIPOffset<EntrylkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<EntrylkRequest>>(Operation::VT_ENTRYLK, entrylk);
+  }
+  #[inline]
+  pub fn add_fentrylk(&mut self, fentrylk: flatbuffers::WIPOffset<FentrylkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FentrylkRequest>>(Operation::VT_FENTRYLK, fentrylk);
+  }
+  #[inline]
+  pub fn add_setattr(&mut self, setattr: flatbuffers::WIPOffset<SetattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SetattrRequest>>(Operation::VT_SETATTR, setattr);
+  }
+  #[inline]
+  pub fn add_fsetattr(&mut self, fsetattr: flatbuffers::WIPOffset<FsetattrRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FsetattrRequest>>(Operation::VT_FSETATTR, fsetattr);
+  }
+  #[inline]
+  pub fn add_fallocate(&mut self, fallocate: flatbuffers::WIPOffset<FallocateRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FallocateRequest>>(Operation::VT_FALLOCATE, fallocate);
+  }
+  #[inline]
+  pub fn add_discard(&mut self, discard: flatbuffers::WIPOffset<DiscardRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<DiscardRequest>>(Operation::VT_DISCARD, discard);
+  }
+  #[inline]
+  pub fn add_zerofill(&mut self, zerofill: flatbuffers::WIPOffset<ZerofillRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ZerofillRequest>>(Operation::VT_ZEROFILL, zerofill);
+  }
+  #[inline]
+  pub fn add_rchecksum(&mut self, rchecksum: flatbuffers::WIPOffset<RchecksumRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<RchecksumRequest>>(Operation::VT_RCHECKSUM, rchecksum);
+  }
+  #[inline]
+  pub fn add_ipc(&mut self, ipc: flatbuffers::WIPOffset<IpcRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<IpcRequest>>(Operation::VT_IPC, ipc);
+  }
+  #[inline]
+  pub fn add_seek(&mut self, seek: flatbuffers::WIPOffset<SeekRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SeekRequest>>(Operation::VT_SEEK, seek);
+  }
+  #[inline]
+  pub fn add_set_volume(&mut self, set_volume: flatbuffers::WIPOffset<SetVolumeRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SetVolumeRequest>>(Operation::VT_SET_VOLUME, set_volume);
+  }
+  #[inline]
+  pub fn add_get_spec(&mut self, get_spec: flatbuffers::WIPOffset<GetSpecRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<GetSpecRequest>>(Operation::VT_GET_SPEC, get_spec);
+  }
+  #[inline]
+  pub fn add_get_volume_info(&mut self, get_volume_info: flatbuffers::WIPOffset<GetVolumeInfoRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<GetVolumeInfoRequest>>(Operation::VT_GET_VOLUME_INFO, get_volume_info);
+  }
+  #[inline]
+  pub fn add_mgmt_hndsk(&mut self, mgmt_hndsk: flatbuffers::WIPOffset<MgmtHndskRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<MgmtHndskRequest>>(Operation::VT_MGMT_HNDSK, mgmt_hndsk);
+  }
+  #[inline]
+  pub fn add_log(&mut self, log: flatbuffers::WIPOffset<LogRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<LogRequest>>(Operation::VT_LOG, log);
+  }
+  #[inline]
+  pub fn add_notify(&mut self, notify: flatbuffers::WIPOffset<NotifyRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<NotifyRequest>>(Operation::VT_NOTIFY, notify);
+  }
+  #[inline]
+  pub fn add_releasedir(&mut self, releasedir: flatbuffers::WIPOffset<ReleasedirRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ReleasedirRequest>>(Operation::VT_RELEASEDIR, releasedir);
+  }
+  #[inline]
+  pub fn add_release(&mut self, release: flatbuffers::WIPOffset<ReleaseRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<ReleaseRequest>>(Operation::VT_RELEASE, release);
+  }
+  #[inline]
+  pub fn add_set_lk_ver(&mut self, set_lk_ver: flatbuffers::WIPOffset<Set_lk_verRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Set_lk_verRequest>>(Operation::VT_SET_LK_VER, set_lk_ver);
+  }
+  #[inline]
+  pub fn add_event_notify(&mut self, event_notify: flatbuffers::WIPOffset<EventNotifyRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<EventNotifyRequest>>(Operation::VT_EVENT_NOTIFY, event_notify);
+  }
+  #[inline]
+  pub fn add_get_snap_name_uuid(&mut self, get_snap_name_uuid: flatbuffers::WIPOffset<GetSnapNameUuidRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<GetSnapNameUuidRequest>>(Operation::VT_GET_SNAP_NAME_UUID, get_snap_name_uuid);
+  }
+  #[inline]
+  pub fn add_compound(&mut self, compound: flatbuffers::WIPOffset<CompoundRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<CompoundRequest>>(Operation::VT_COMPOUND, compound);
+  }
+  #[inline]
+  pub fn add_getactivelk(&mut self, getactivelk: flatbuffers::WIPOffset<GetactivelkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<GetactivelkRequest>>(Operation::VT_GETACTIVELK, getactivelk);
+  }
+  #[inline]
+  pub fn add_setactivelk(&mut self, setactivelk: flatbuffers::WIPOffset<SetactivelkRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SetactivelkRequest>>(Operation::VT_SETACTIVELK, setactivelk);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> OperationBuilder<'a, 'b> {
