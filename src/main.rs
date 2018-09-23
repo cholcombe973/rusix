@@ -107,6 +107,7 @@ fn main() {
         };
         let layout = vec![(peer, PathBuf::from("/"))];
 
+        /*
         let start = Instant::now();
         let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
         let d4 = builder.create_vector(&vec![0]);
@@ -130,6 +131,7 @@ fn main() {
         );
 
         c.process_fop(layout, &buf);
+        */
     } else {
         info!("rusixd starting");
         let h: HashMap<String, Value> = HashMap::new();

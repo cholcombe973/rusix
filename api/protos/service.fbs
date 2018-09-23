@@ -112,7 +112,7 @@ table ProtoLease {
 } 
 
 table Iatt {
-	ia_rfid:string;
+	ia_rfid:Rfid;
 	ia_ino:uint64;
 	ia_dev:uint64;
 	mode:uint32;
@@ -140,41 +140,35 @@ table CacheInvalidationRequest {
 	stat:Iatt;
 	parent_stat:Iatt;
 	oldparent_stat:Iatt;
-	extra_data:[byte];
 }
 
 table StatRequest {
 	rfid:Rfid;
-	extra_data:[byte];
 }
 
 table StatResponse {
 	result:OpResult;
 	stat:Iatt;
-	extra_data:[byte];
 }
 
 table ReadlinkRequest {
 	rfid:Rfid;
 	size:uint32;
-	extra_data:[byte];
 }
 
 table ReadlinkResponse {
 	result:OpResult;
 	buf:Iatt;
 	path:string;
-	extra_data:[byte];
 } 
 
 
 table MknodRequest {
-	parrfid:string;
+	parent_rfid:Rfid;
 	dev:uint64;
 	mode:uint32;
 	umask:uint32;
 	bname:string;
-	extra_data:[byte];
 } 
 
 table MknodResponse {
@@ -182,15 +176,13 @@ table MknodResponse {
 	stat:Iatt;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 }
 
  table MkdirRequest {
-	parrfid:string;
+	parent_rfid:Rfid;
 	mode:uint32;
 	umask:uint32;
 	bname:string;
-	extra_data:[byte];
 }
 
 table MkdirResponse {
@@ -198,44 +190,38 @@ table MkdirResponse {
 	stat:Iatt;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 } 
 
 
 table UnlinkRequest {
-	parrfid:string;
+	parent_rfid:Rfid;
 	bname:string;
 	xflags:uint32;
-	extra_data:[byte];
 }
 
 table  UnlinkResponse {
 	result:OpResult;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 }
 
 table  RmdirRequest {
-	parrfid:string;
+	parent_rfid:Rfid;
 	xflags:int32;
 	bname:string;
-	extra_data:[byte];
 }
 
 table  RmdirResponse {
 	result:OpResult;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 }
 
 table SymlinkRequest {
-	parrfid:string;
+	parent_rfid:Rfid;
 	bname:string;
 	umask:uint32;
 	linkname:string;
-	extra_data:[byte];
 }
 
 table SymlinkResponse {
@@ -243,16 +229,14 @@ table SymlinkResponse {
 	stat:Iatt;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 }
 
 
 table  RenameRequest {
-	oldrfid:string;
-	newrfid:string;
+	oldrfid:Rfid;
+	newrfid:Rfid;
 	oldbname:string;
 	newbname:string;
-	extra_data:[byte];
 }
 
 table  RenameResponse {
@@ -262,14 +246,12 @@ table  RenameResponse {
 	postoldparent:Iatt;
 	prenewparent:Iatt;
 	postnewparent:Iatt;
-	extra_data:[byte];
 }
 
 table LinkRequest {
-	oldrfid:string;
-	newrfid:string;
+	oldrfid:Rfid;
+	newrfid:Rfid;
 	newbname:string;
-	extra_data:[byte];
 }
 
 table LinkResponse {
@@ -277,88 +259,77 @@ table LinkResponse {
 	stat:Iatt;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 }
 
 table  TruncateRequest {
 	rfid:Rfid;
 	offset:uint64;
-	extra_data:[byte];
 }
 
 table  TruncateResponse {
 	result:OpResult;
 	prestat:Iatt;
 	poststat:Iatt;
-	extra_data:[byte];
 }
 
 table OpenRequest {
 	rfid:Rfid;
 	flags:uint32;
-	extra_data:[byte];
 }
 
 table OpenResponse {
 	result:OpResult;
 	fd:uint64;
-	extra_data:[byte];
 }
 
 table ReadRequest {
 	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
-	size:uint32;
-	flag:uint32;
+	size:uint64;
+	flag:int32;
 }
 
 table ReadResponse {
 	result:OpResult;
 	stat:Iatt;
-	data:string;
+	data:[ubyte];
 }
 
 table LookupRequest {
 	rfid:Rfid;
-	parrfid:string;
+	parent_rfid:Rfid;
 	flags:uint32;
 	bname:string;
-	extra_data:[byte];
 }
 
 table LookupResponse {
 	result:OpResult;
 	stat:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 }
 
 table WriteRequest {
 	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
-	flag:uint32;
-	// We can ask the data vec for the write size
-	data:string;
+	flag:int32;
+	data:[ubyte];
 }
 
 table WriteResponse {
 	result:OpResult;
 	prestat:Iatt;
 	poststat:Iatt;
-	extra_data:[byte];
 }
 
 table StatfsRequest {
 	rfid:Rfid;
-	extra_data:[byte];
 } 
 
 table StatfsResponse {
 	result:OpResult;
 	statfs:Statfs;
-	extra_data:[byte];
 } 
 
  table LockRequest {
@@ -367,31 +338,26 @@ table StatfsResponse {
 	cmd:uint32;
 	type:uint32;
 	flock:ProtoFlock;
-	extra_data:[byte];
 } 
  table LockResponse {
 	result:OpResult;
 	flock:ProtoFlock;
-	extra_data:[byte];
 } 
 
 table LeaseRequest {
 	rfid:Rfid;
 	lease:ProtoLease;
-	extra_data:[byte];
 } 
 
 table LeaseResponse {
 	result:OpResult;
 	lease:ProtoLease;
-	extra_data:[byte];
 } 
 
 table RecallLeaseRequest {
 	rfid:Rfid;
 	lease_type:uint32;
 	tid:string;
-	extra_data:[byte];
 } 
 
 table InodelkRequest {
@@ -400,7 +366,6 @@ table InodelkRequest {
 	type:uint32;
 	flock:ProtoFlock;
 	volume:string;
-	extra_data:[byte];
 } 
 
 table FinodelkRequest {
@@ -410,63 +375,53 @@ table FinodelkRequest {
 	type:uint32;
 	flock:ProtoFlock;
 	volume:string;
-	extra_data:[byte];
 } 
 
 table FlushRequest {
 	rfid:Rfid;
 	fd:uint64;
-	extra_data:[byte];
 } 
 
 table FsyncRequest {
 	rfid:Rfid;
 	fd:uint64;
 	data:uint32;
-	extra_data:[byte];
 } 
 table FsyncResponse {
 	result:OpResult;
 	prestat:Iatt;
 	poststat:Iatt;
-	extra_data:[byte];
 } 
 
 
 table SetxattrRequest {
 	rfid:Rfid;
 	flags:uint32;
-	extra_data:[byte];
 } 
 
  table FsetxattrRequest {
 	rfid:Rfid;
 	fd:int64;
 	flags:uint32;
-	extra_data:[byte];
 } 
 
  table XattropRequest {
 	rfid:Rfid;
 	flags:uint32;
-	extra_data:[byte];
 } 
 
  table XattropResponse {
 	result:OpResult;
-	extra_data:[byte];
 } 
 
  table FxattropRequest {
 	rfid:Rfid;
 	fd:uint64;
 	flags:uint32;
-	extra_data:[byte];
 } 
 
  table FxattropResponse {
 	result:OpResult;
-	extra_data:[byte];
 } 
 
 
@@ -474,12 +429,10 @@ table GetXattrRequest {
 	rfid:Rfid;
 	namelen:uint32;
 	name:string;
-	extra_data:[byte];
 } 
 
 table GetxattrResponse {
 	result:OpResult;
-	extra_data:[byte];
 } 
 
 
@@ -488,41 +441,34 @@ table GetxattrResponse {
 	fd:uint64;
 	namelen:uint32;
 	name:string;
-	extra_data:[byte];
 } 
  table FgetxattrResponse {
 	result:OpResult;
-	extra_data:[byte];
 } 
 
  table RemovexattrRequest {
 	rfid:Rfid;
 	name:string;
-	extra_data:[byte];
 } 
 
  table FremovexattrRequest {
 	rfid:Rfid;
 	fd:uint64;
 	name:string;
-	extra_data:[byte];
 } 
 
  table OpendirRequest {
 	rfid:Rfid;
-	extra_data:[byte];
 } 
  table OpendirResponse {
 	result:OpResult;
 	fd:uint64;
-	extra_data:[byte];
 } 
 
 
  table FsyncdirRequest {
 	rfid:Rfid;
 	fd:uint64;
-	extra_data:[byte];
 } 
 
  table ReaddirRequest {
@@ -530,7 +476,6 @@ table GetxattrResponse {
 	fd:uint64;
 	offset:uint64;
 	size:uint32;
-	extra_data:[byte];
 }
 
  table ReaddirpRequest {
@@ -544,20 +489,16 @@ table GetxattrResponse {
 table AccessRequest {
 	rfid:Rfid;
 	mask:uint32;
-	extra_data:[byte];
 } 
 
 
-/*
 table CreateRequest {
-	parrfid:string;
-	flags:uint32;
+	parent_rfid:Rfid;
+	flags:int32;
 	mode:uint32;
 	umask:uint32;
 	bname:string;
-	extra_data:[byte];
 } 
-*/
 
 table CreateResponse {
 	result:OpResult;
@@ -565,32 +506,27 @@ table CreateResponse {
 	fd:uint64;
 	preparent:Iatt;
 	postparent:Iatt;
-	extra_data:[byte];
 } 
 
 table FtruncateRequest {
 	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
-	extra_data:[byte];
 } 
 table FtruncateResponse {
 	result:OpResult;
 	prestat:Iatt;
 	poststat:Iatt;
-	extra_data:[byte];
 } 
 
 table FstatRequest {
 	rfid:Rfid;
 	fd:uint64;
-	extra_data:[byte];
 } 
 
 table FstatResponse {
 	result:OpResult;
 	stat:Iatt;
-	extra_data:[byte];
 } 
 
  table  EntrylkRequest {
@@ -600,7 +536,6 @@ table FstatResponse {
 	namelen:uint64;
 	name:string;
 	volume:string;
-	extra_data:[byte];
 }
 
  table  FentrylkRequest {
@@ -611,7 +546,6 @@ table FstatResponse {
 	namelen:uint64;
 	name:string;
 	volume:string;
-	extra_data:[byte];
 }
 
 
@@ -619,72 +553,62 @@ table FstatResponse {
 	rfid:Rfid;
 	stbuf:Iatt;
 	valid:int32;
-	extra_data:[byte];
 } 
  table SetattrResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
-	extra_data:[byte];
 } 
 
  table FsetattrRequest {
 	fd:uint64;
 	stbuf:Iatt;
 	valid:int32;
-	extra_data:[byte];
 } 
  table FsetattrResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
-	extra_data:[byte];
 } 
 
  table FallocateRequest {
-	rfid:string;
-	fd:uint64	;
-	flags:uint32	;
-	offset:uint64	;
-	size:uint64	;
-	extra_data:[byte];
+	rfid:Rfid;
+	fd:uint64;
+	flags:uint32;
+	offset:uint64;
+	size:uint64;
 } 
 
  table FallocateResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
-	extra_data:[byte];
 } 
 
  table DiscardRequest {
-	rfid:string	;
+	rfid:Rfid;
 	fd:uint64;
 	offset:uint64	;
 	size:uint64	;
-	extra_data:[byte];
 } 
 
 table DiscardResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
-	extra_data:[byte];
 } 
 
 table ZerofillRequest {
-	rfid:string;
+	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
 	size:uint64;
-	extra_data:[byte];
 } 
 
 table ZerofillResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
-	extra_data:[byte];
 } 
 
 
@@ -692,40 +616,34 @@ table RchecksumRequest {
 	fd:uint64;
 	offset:uint64;
 	len:uint32;
-	extra_data:[byte];
 } 
 
 table RchecksumResponse {
 	result:OpResult;
 	weak_checksum:uint32;
 	strong_checksum:string;
-	extra_data:[byte];
 } 
 
 
 table IpcRequest {
 	op:uint32;
-	extra_data:[byte];
 }
 
 table IpcResponse {
 	result:OpResult;
-	extra_data:[byte];
 }
 
 
 table SeekRequest {
-	rfid:string;
+	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
 	what:int32;
-	extra_data:[byte];
 }
 
 table SeekResponse {
 	result:OpResult;
 	offset:uint64;
-	extra_data:[byte];
 }
 
 
@@ -739,13 +657,11 @@ table SetVolumeResponse {
 table GetSpecRequest {
 	flags:uint32;
 	key:string;
-	extra_data:[byte];
 } 
 
 table GetSpecResponse {
 	result:OpResult;
 	spec:string;
-	extra_data:[byte];
 } 
 
 table GetVolumeInfoRequest {
@@ -771,26 +687,22 @@ table LogRequest {
 table NotifyRequest {
 	flags:uint32;
 	buf:string;
-	extra_data:[byte];
 } 
 
 table NotifyResponse {
 	result:OpResult;
 	flags:uint32;
 	buf:string;
-	extra_data:[byte];
 } 
 
 table ReleasedirRequest {
 	rfid:Rfid;
 	fd:uint64;
-	extra_data:[byte];
 } 
 
 table ReleaseRequest {
 	rfid:Rfid;
 	fd:uint64;
-	extra_data:[byte];
 } 
 
 table DirListEntry {
@@ -808,7 +720,6 @@ table DirList {
 table ReaddirResponse {
 	result:OpResult;
 	reply:DirList;
-	extra_data:[byte];
 }
 
 table DirPListEntry {
@@ -827,7 +738,6 @@ table DirPList {
 table ReaddirpResponse {
 	result:OpResult;
 	reply:DirPList;
-	extra_data:[byte];
 }
 
 table Set_lk_verResponse {
@@ -858,12 +768,10 @@ table GetSnapNameUuidResponse {
 table CompoundRequest {
 	compound_version:int32;
 	requests:[Fop];
-	extra_data:[byte];
 }
 
 table CompoundResponse {
 	result:OpResult;
-	extra_data:[byte];
 }
 
 table LocklistEntry {
@@ -879,88 +787,85 @@ table LockList {
 table GetactivelkResponse {
 	result:OpResult;
 	reply:LockList;
-	extra_data:[byte];
 }
 
 table GetactivelkRequest {
 	rfid:Rfid;
-	extra_data:[byte];
 }
 
 table SetactivelkResponse {
 	result:OpResult;
-	extra_data:[byte];
 }
 
 table SetactivelkRequest {
 	rfid:Rfid;
 	request:LockList;
-	extra_data:[byte];
 }
 
 table Operation {
-	stat:StatRequest;
+	access:AccessRequest;
 	cache_invalidate:CacheInvalidationRequest;
-	readlk:ReadlinkRequest;
-	mknod:MknodRequest;
-	mkdir:MkdirRequest;
-	unlink:UnlinkRequest;
-	rmdir:RmdirRequest;
-	symlink:SymlinkRequest;
-	rename:RenameRequest;
-	link:LinkRequest;
-	trunate:TruncateRequest;
-	open:OpenRequest;
-	read:ReadRequest;
-	lookup:LookupRequest;
-	write:WriteRequest;
-	statfs:StatfsRequest;
-	lock:LockRequest;
-	lease:LeaseRequest;
-	recall:RecallLeaseRequest;
-	inodelk:InodelkRequest;
+	compound:CompoundRequest;
+	creat:CreateRequest;
+	discard:DiscardRequest;
+	entrylk:EntrylkRequest;
+	event_notify:EventNotifyRequest;
+	fallocate:FallocateRequest;
+	fentrylk:FentrylkRequest;
+	fgetxattr:FgetxattrRequest;
 	finodelk:FinodelkRequest;
 	flush:FlushRequest;
-	fsync:FsyncRequest;
-	setxattr:SetxattrRequest;
-	fsetxattr:FsetxattrRequest;
-	xattrop:XattropRequest;
-	fxattrop:FxattropRequest;
-	getxattr:GetXattrRequest;
-	fgetxattr:FgetxattrRequest;
-	removexattr:RemovexattrRequest;
 	fremovexattr:FremovexattrRequest;
-	opendir:OpendirRequest;
-	fsyncdir:FsyncdirRequest;
-	readdir:ReaddirRequest;
-	readdirp:ReaddirpRequest;
-	access:AccessRequest;
-	ftruncate:FtruncateRequest;
-	fstat:FstatRequest;
-	entrylk:EntrylkRequest;
-	fentrylk:FentrylkRequest;
-	setattr:SetattrRequest;
 	fsetattr:FsetattrRequest;
-	fallocate:FallocateRequest;
-	discard:DiscardRequest;
-	zerofill:ZerofillRequest;
-	rchecksum:RchecksumRequest;
-	ipc:IpcRequest;
-	seek:SeekRequest;
-	set_volume:SetVolumeRequest;
+	fsetxattr:FsetxattrRequest;
+	fstat:FstatRequest;
+	fsyncdir:FsyncdirRequest;
+	fsync:FsyncRequest;
+	ftruncate:FtruncateRequest;
+	fxattrop:FxattropRequest;
+	getactivelk:GetactivelkRequest;
+	get_snap_name_uuid:GetSnapNameUuidRequest;
 	get_spec:GetSpecRequest;
 	get_volume_info:GetVolumeInfoRequest;
-	mgmt_hndsk:MgmtHndskRequest;
+	getxattr:GetXattrRequest;
+	inodelk:InodelkRequest;
+	ipc:IpcRequest;
+	lease:LeaseRequest;
+	link:LinkRequest;
+	lock:LockRequest;
 	log:LogRequest;
+	lookup:LookupRequest;
+	mgmt_hndsk:MgmtHndskRequest;
+	mkdir:MkdirRequest;
+	mknod:MknodRequest;
 	notify:NotifyRequest;
+	opendir:OpendirRequest;
+	open:OpenRequest;
+	rchecksum:RchecksumRequest;
+	readdirp:ReaddirpRequest;
+	readdir:ReaddirRequest;
+	readlk:ReadlinkRequest;
+	read:ReadRequest;
+	recall:RecallLeaseRequest;
 	releasedir:ReleasedirRequest;
 	release:ReleaseRequest;
-	set_lk_ver:Set_lk_verRequest;
-	event_notify:EventNotifyRequest;
-	get_snap_name_uuid:GetSnapNameUuidRequest;
-	compound:CompoundRequest;
-	getactivelk:GetactivelkRequest;
+	removexattr:RemovexattrRequest;
+	rename:RenameRequest;
+	rmdir:RmdirRequest;
+	seek:SeekRequest;
 	setactivelk:SetactivelkRequest;
+	setattr:SetattrRequest;
+	set_lk_ver:Set_lk_verRequest;
+	set_volume:SetVolumeRequest;
+	setxattr:SetxattrRequest;
+	statfs:StatfsRequest;
+	stat:StatRequest;
+	symlink:SymlinkRequest;
+	trunate:TruncateRequest;
+	unlink:UnlinkRequest;
+	write:WriteRequest;
+	xattrop:XattropRequest;
+	zerofill:ZerofillRequest;
 }
 
 root_type Operation;
