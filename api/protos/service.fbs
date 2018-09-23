@@ -78,7 +78,7 @@ table Rfid {
 	d2:uint16;
 	d3:uint16;
 	// Must be 8 bytes long
-	d4:[byte];
+	d4:[ubyte];
 }
 
 table Statfs {

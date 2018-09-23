@@ -59,7 +59,7 @@ impl Server {
         let fop = get_root_as_operation(&data);
         let elapsed = start.elapsed();
         if fop.stat().is_some(){
-            debug!("fop: {:?}", fop.stat().unwrap().gfid().unwrap());
+            debug!("fop: {:?}", fop.stat().unwrap().rfid().unwrap());
         }
         debug!(
             "flatbuffers load msg took: {} nanosecs",

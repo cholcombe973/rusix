@@ -408,8 +408,8 @@ impl<'a> Rfid<'a> {
     self._tab.get::<u16>(Rfid::VT_D3, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d4(&'a self) -> Option<&'a [i8]> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, i8>>>(Rfid::VT_D4, None).map(|v| v.safe_slice())
+  pub fn d4(&'a self) -> Option<&'a [u8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(Rfid::VT_D4, None).map(|v| v.safe_slice())
   }
 }
 
@@ -417,7 +417,7 @@ pub struct RfidArgs<'a> {
     pub d1: u32,
     pub d2: u16,
     pub d3: u16,
-    pub d4: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  i8>>>,
+    pub d4: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  u8>>>,
 }
 impl<'a> Default for RfidArgs<'a> {
     #[inline]
@@ -448,7 +448,7 @@ impl<'a: 'b, 'b> RfidBuilder<'a, 'b> {
     self.fbb_.push_slot::<u16>(Rfid::VT_D3, d3, 0);
   }
   #[inline]
-  pub fn add_d4(&mut self, d4: flatbuffers::WIPOffset<flatbuffers::Vector<'b , i8>>) {
+  pub fn add_d4(&mut self, d4: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Rfid::VT_D4, d4);
   }
   #[inline]

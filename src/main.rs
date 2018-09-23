@@ -109,11 +109,13 @@ fn main() {
 
         let start = Instant::now();
         let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
-        let gfid = builder.create_string("gfid");
+        let d4 = builder.create_vector(&vec![0]);
+        let rfid = Rfid::create(&mut builder, &RfidArgs { d1: 0, d2: 0, d3: 0, d4: Some(d4)});
         let stat = StatRequest::create(
             &mut builder,
             &StatRequestArgs {
-                gfid: Some(gfid),
+                rfid: Some(rfid),
+                extra_data: None,
             },
         );
         let operation = Operation::create(&mut builder, &OperationArgs { stat: Some(stat) });

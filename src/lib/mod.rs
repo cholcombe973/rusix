@@ -9,6 +9,7 @@
 
 pub mod config;
 pub mod dht;
+pub mod fop;
 pub mod layout;
 pub mod peer;
 pub mod placement;
