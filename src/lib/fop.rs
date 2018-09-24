@@ -5,9 +5,12 @@ extern crate flatbuffers;
 extern crate nix;
 extern crate uuid;
 
+use std::fs::{File, Metadata};
+use std::io::Result as IOResult;
+use std::os::unix::io::AsRawFd;
+
 use self::flatbuffers::{FlatBufferBuilder, WIPOffset};
-use self::nix::fcntl::OFlag;
-use self::nix::sys::stat::Mode;
+use self::nix::{fcntl::OFlag, sys::stat::Mode};
 use self::uuid::Uuid;
 use api::service_generated::*;
 
@@ -37,6 +40,78 @@ pub fn create_request(
     let operation = Operation::create(&mut builder, &args);
     builder.finish_minimal(operation);
     builder.finished_data().to_vec()
+}
+
+// Response's all include a OpResult field which says if they succeeded or failed
+// and why
+// TODO: How are we going to handle rusts ownership system here?  The file descriptor
+// needs to stay open and valid for the lifetime of the clients network request.
+pub fn create_response(result: IOResult<(File, Metadata)>) -> Vec<u8> {
+    match result {
+        Ok(res) => {
+            let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+            let error_msg = builder.create_string("");
+            let op_res = OpResult::create(
+                &mut builder,
+                &OpResultArgs {
+                    result: ResultType::Ok,
+                    errno: Errno::UNKNOWN,
+                    errorMsg: None,
+                },
+            );
+            let stat = Iatt::create(&mut builder, &IattArgs{
+                ia_rfid: None,
+                ia_ino: 0,
+                ia_dev:0,
+                mode:0,
+                ia_nlink:0,
+                ia_uid:0,
+                ia_gid:0,
+                ia_rdev:0,
+                ia_size:0,
+                ia_blksize:0,
+                ia_blocks:0,
+                ia_atime:0,
+                ia_atime_nsec:0,
+                ia_mtime:0,
+                ia_mtime_nsec:0,
+                ia_ctime:0,
+                ia_ctime_nsec:0,
+            });
+            let create = CreateResponse::create(
+                &mut builder,
+                &CreateResponseArgs {
+                    result: Some(op_res),
+                    stat: Some(stat),
+                    fd: res.0.as_raw_fd() as u64,
+                },
+            );
+            builder.finish_minimal(create);
+            builder.finished_data().to_vec()
+        }
+        Err(e) => {
+            let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+            let error_msg = builder.create_string(&e.to_string());
+            let op_res = OpResult::create(
+                &mut builder,
+                &OpResultArgs {
+                    result: ResultType::Err,
+                    errno: Errno::UNKNOWN,
+                    errorMsg: None,
+                },
+            );
+            let create = CreateResponse::create(
+                &mut builder,
+                &CreateResponseArgs {
+                    result: Some(op_res),
+                    stat: None,
+                    fd: 0,
+                },
+            );
+            builder.finish_minimal(create);
+            builder.finished_data().to_vec()
+        }
+    }
 }
 
 pub fn stat_request(inode: &Uuid) -> Vec<u8> {

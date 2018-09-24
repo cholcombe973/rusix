@@ -18,7 +18,7 @@ pub mod protocols;
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-use self::api::service::*;
+use self::api::service_generated::*;
 use self::nix::errno::Errno;
 
 /*
@@ -75,16 +75,19 @@ pub trait PipelinePlugin {
     fn init(&self, options: HashMap<String, Value>, subvolumes: Vec<String>);
 
     /// Process data and make available for the next plugin
+    /*
     fn process(
         &self,
         io_type: &Fop,
         data: &mut FileOperation,
     ) -> Result<(&Fop, &mut FileOperation), String>;
+    */
 
     /// Stop
     fn stop(&self);
 }
 
+/*
 pub fn process_pipeline<T>(
     io_type: &Fop,
     data: &mut FileOperation,
@@ -106,3 +109,5 @@ where
     });
     Ok(())
 }
+
+*/

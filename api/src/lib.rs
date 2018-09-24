@@ -13,51 +13,12 @@
 extern crate test;
 
 extern crate flatbuffers;
-extern crate protobuf;
 
-pub mod err;
-pub mod service;
 pub mod service_generated;
 
 #[cfg(test)]
 mod tests {
-    use protobuf::{parse_from_bytes, Message};
-    use service::*;
+    use service_generated::*;
     use test::{black_box, Bencher};
-
-    fn create_proto_stat_request() {
-        let mut stat = StatRequest::new();
-        stat.set_gfid("foo".to_string());
-
-        let encoded = stat.write_to_bytes().unwrap();
-    }
-
-    fn read_proto_stat_request(bytes: &Vec<u8>) {
-        parse_from_bytes::<StatRequest>(&bytes).unwrap();
-    }
-
-    #[bench]
-    fn bench_protobuf_read(b: &mut Bencher) {
-        let mut stat = StatRequest::new();
-        stat.set_gfid("foo".to_string());
-        let bytes = stat.write_to_bytes().unwrap();
-
-        b.iter(|| {
-            // Inner closure, the actual test
-            for _ in 1..100 {
-                black_box(read_proto_stat_request(&bytes));
-            }
-        });
-    }
-
-    #[bench]
-    fn bench_protobuf(b: &mut Bencher) {
-        b.iter(|| {
-            // Inner closure, the actual test
-            for _ in 1..100 {
-                black_box(create_proto_stat_request());
-            }
-        });
-    }
 
 }

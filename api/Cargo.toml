@@ -2,14 +2,9 @@
 name = "api"
 version = "0.1.0"
 authors = ["Chris Holcombe <xfactor973@gmail.com>"]
-build = "build.rs"
-
-[build-dependencies]
-protobuf-codegen-pure = "~2"
 
 [dependencies]
 flatbuffers = "*"
-protobuf = "*" 
 
 [features]
 with-bench = []

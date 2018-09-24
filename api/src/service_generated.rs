@@ -66,6 +66,452 @@ pub fn enum_name_result_type(e: ResultType) -> &'static str {
 }
 
 #[allow(non_camel_case_types)]
+#[repr(i32)]
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub enum Errno {
+  UNKNOWN = 0,
+  EPERM = 1,
+  ENOENT = 2,
+  ESRCH = 3,
+  EINTR = 4,
+  EIO = 5,
+  ENXIO = 6,
+  E2BIG = 7,
+  ENOEXEC = 8,
+  EBADF = 9,
+  ECHILD = 10,
+  EAGAIN = 11,
+  ENOMEM = 12,
+  EACCES = 13,
+  EFAULT = 14,
+  ENOTBLK = 15,
+  EBUSY = 16,
+  EEXIST = 17,
+  EXDEV = 18,
+  ENODEV = 19,
+  ENOTDIR = 20,
+  EISDIR = 21,
+  EINVAL = 22,
+  ENFILE = 23,
+  EMFILE = 24,
+  ENOTTY = 25,
+  ETXTBSY = 26,
+  EFBIG = 27,
+  ENOSPC = 28,
+  ESPIPE = 29,
+  EROFS = 30,
+  EMLINK = 31,
+  EPIPE = 32,
+  EDOM = 33,
+  ERANGE = 34,
+  EDEADLK = 35,
+  ENAMETOOLONG = 36,
+  ENOLCK = 37,
+  ENOSYS = 38,
+  ENOTEMPTY = 39,
+  ELOOP = 40,
+  ENOMSG = 42,
+  EIDRM = 43,
+  ECHRNG = 44,
+  EL2NSYNC = 45,
+  EL3HLT = 46,
+  EL3RST = 47,
+  ELNRNG = 48,
+  EUNATCH = 49,
+  ENOCSI = 50,
+  EL2HLT = 51,
+  EBADE = 52,
+  EBADR = 53,
+  EXFULL = 54,
+  ENOANO = 55,
+  EBADRQC = 56,
+  EBADSLT = 57,
+  EBFONT = 59,
+  ENOSTR = 60,
+  ENODATA = 61,
+  ETIME = 62,
+  ENOSR = 63,
+  ENONET = 64,
+  ENOPKG = 65,
+  EREMOTE = 66,
+  ENOLINK = 67,
+  EADV = 68,
+  ESRMNT = 69,
+  ECOMM = 70,
+  EPROTO = 71,
+  EMULTIHOP = 72,
+  EDOTDOT = 73,
+  EBADMSG = 74,
+  EOVERFLOW = 75,
+  ENOTUNIQ = 76,
+  EBADFD = 77,
+  EREMCHG = 78,
+  ELIBACC = 79,
+  ELIBBAD = 80,
+  ELIBSCN = 81,
+  ELIBMAX = 82,
+  ELIBEXEC = 83,
+  EILSEQ = 84,
+  ERESTART = 85,
+  ESTRPIPE = 86,
+  EUSERS = 87,
+  ENOTSOCK = 88,
+  EDESTADDRREQ = 89,
+  EMSGSIZE = 90,
+  EPROTOTYPE = 91,
+  ENOPROTOOPT = 92,
+  EPROTONOSUPPORT = 93,
+  ESOCKTNOSUPPORT = 94,
+  EOPNOTSUPP = 95,
+  EPFNOSUPPORT = 96,
+  EAFNOSUPPORT = 97,
+  EADDRINUSE = 98,
+  EADDRNOTAVAIL = 99,
+  ENETDOWN = 100,
+  ENETUNREACH = 101,
+  ENETRESET = 102,
+  ECONNABORTED = 103,
+  ECONNRESET = 104,
+  ENOBUFS = 105,
+  EISCONN = 106,
+  ENOTCONN = 107,
+  ESHUTDOWN = 108,
+  ETOOMANYREFS = 109,
+  ETIMEDOUT = 110,
+  ECONNREFUSED = 111,
+  EHOSTDOWN = 112,
+  EHOSTUNREACH = 113,
+  EALREADY = 114,
+  EINPROGRESS = 115,
+  ESTALE = 116,
+  EUCLEAN = 117,
+  ENOTNAM = 118,
+  ENAVAIL = 119,
+  EISNAM = 120,
+  EREMOTEIO = 121,
+  EDQUOT = 122,
+  ENOMEDIUM = 123,
+  EMEDIUMTYPE = 124,
+  ECANCELED = 125,
+  ENOKEY = 126,
+  EKEYEXPIRED = 127,
+  EKEYREVOKED = 128,
+  EKEYREJECTED = 129,
+  EOWNERDEAD = 130,
+  ENOTRECOVERABLE = 131,
+
+}
+
+const ENUM_MIN_ERRNO: i32 = 0;
+const ENUM_MAX_ERRNO: i32 = 131;
+
+impl<'a> flatbuffers::Follow<'a> for Errno {
+  type Inner = Self;
+  #[inline]
+  fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+    flatbuffers::read_scalar_at::<Self>(buf, loc)
+  }
+}
+
+impl flatbuffers::EndianScalar for Errno {
+  #[inline]
+  fn to_little_endian(self) -> Self {
+    let n = i32::to_le(self as i32);
+    let p = &n as *const i32 as *const Errno;
+    unsafe { *p }
+  }
+  #[inline]
+  fn from_little_endian(self) -> Self {
+    let n = i32::from_le(self as i32);
+    let p = &n as *const i32 as *const Errno;
+    unsafe { *p }
+  }
+}
+
+impl flatbuffers::Push for Errno {
+    type Output = Errno;
+    #[inline]
+    fn push(&self, dst: &mut [u8], _rest: &[u8]) {
+        flatbuffers::emplace_scalar::<Errno>(dst, *self);
+    }
+}
+
+#[allow(non_camel_case_types)]
+const ENUM_VALUES_ERRNO:[Errno; 130] = [
+  Errno::UNKNOWN,
+  Errno::EPERM,
+  Errno::ENOENT,
+  Errno::ESRCH,
+  Errno::EINTR,
+  Errno::EIO,
+  Errno::ENXIO,
+  Errno::E2BIG,
+  Errno::ENOEXEC,
+  Errno::EBADF,
+  Errno::ECHILD,
+  Errno::EAGAIN,
+  Errno::ENOMEM,
+  Errno::EACCES,
+  Errno::EFAULT,
+  Errno::ENOTBLK,
+  Errno::EBUSY,
+  Errno::EEXIST,
+  Errno::EXDEV,
+  Errno::ENODEV,
+  Errno::ENOTDIR,
+  Errno::EISDIR,
+  Errno::EINVAL,
+  Errno::ENFILE,
+  Errno::EMFILE,
+  Errno::ENOTTY,
+  Errno::ETXTBSY,
+  Errno::EFBIG,
+  Errno::ENOSPC,
+  Errno::ESPIPE,
+  Errno::EROFS,
+  Errno::EMLINK,
+  Errno::EPIPE,
+  Errno::EDOM,
+  Errno::ERANGE,
+  Errno::EDEADLK,
+  Errno::ENAMETOOLONG,
+  Errno::ENOLCK,
+  Errno::ENOSYS,
+  Errno::ENOTEMPTY,
+  Errno::ELOOP,
+  Errno::ENOMSG,
+  Errno::EIDRM,
+  Errno::ECHRNG,
+  Errno::EL2NSYNC,
+  Errno::EL3HLT,
+  Errno::EL3RST,
+  Errno::ELNRNG,
+  Errno::EUNATCH,
+  Errno::ENOCSI,
+  Errno::EL2HLT,
+  Errno::EBADE,
+  Errno::EBADR,
+  Errno::EXFULL,
+  Errno::ENOANO,
+  Errno::EBADRQC,
+  Errno::EBADSLT,
+  Errno::EBFONT,
+  Errno::ENOSTR,
+  Errno::ENODATA,
+  Errno::ETIME,
+  Errno::ENOSR,
+  Errno::ENONET,
+  Errno::ENOPKG,
+  Errno::EREMOTE,
+  Errno::ENOLINK,
+  Errno::EADV,
+  Errno::ESRMNT,
+  Errno::ECOMM,
+  Errno::EPROTO,
+  Errno::EMULTIHOP,
+  Errno::EDOTDOT,
+  Errno::EBADMSG,
+  Errno::EOVERFLOW,
+  Errno::ENOTUNIQ,
+  Errno::EBADFD,
+  Errno::EREMCHG,
+  Errno::ELIBACC,
+  Errno::ELIBBAD,
+  Errno::ELIBSCN,
+  Errno::ELIBMAX,
+  Errno::ELIBEXEC,
+  Errno::EILSEQ,
+  Errno::ERESTART,
+  Errno::ESTRPIPE,
+  Errno::EUSERS,
+  Errno::ENOTSOCK,
+  Errno::EDESTADDRREQ,
+  Errno::EMSGSIZE,
+  Errno::EPROTOTYPE,
+  Errno::ENOPROTOOPT,
+  Errno::EPROTONOSUPPORT,
+  Errno::ESOCKTNOSUPPORT,
+  Errno::EOPNOTSUPP,
+  Errno::EPFNOSUPPORT,
+  Errno::EAFNOSUPPORT,
+  Errno::EADDRINUSE,
+  Errno::EADDRNOTAVAIL,
+  Errno::ENETDOWN,
+  Errno::ENETUNREACH,
+  Errno::ENETRESET,
+  Errno::ECONNABORTED,
+  Errno::ECONNRESET,
+  Errno::ENOBUFS,
+  Errno::EISCONN,
+  Errno::ENOTCONN,
+  Errno::ESHUTDOWN,
+  Errno::ETOOMANYREFS,
+  Errno::ETIMEDOUT,
+  Errno::ECONNREFUSED,
+  Errno::EHOSTDOWN,
+  Errno::EHOSTUNREACH,
+  Errno::EALREADY,
+  Errno::EINPROGRESS,
+  Errno::ESTALE,
+  Errno::EUCLEAN,
+  Errno::ENOTNAM,
+  Errno::ENAVAIL,
+  Errno::EISNAM,
+  Errno::EREMOTEIO,
+  Errno::EDQUOT,
+  Errno::ENOMEDIUM,
+  Errno::EMEDIUMTYPE,
+  Errno::ECANCELED,
+  Errno::ENOKEY,
+  Errno::EKEYEXPIRED,
+  Errno::EKEYREVOKED,
+  Errno::EKEYREJECTED,
+  Errno::EOWNERDEAD,
+  Errno::ENOTRECOVERABLE
+];
+
+#[allow(non_camel_case_types)]
+const ENUM_NAMES_ERRNO:[&'static str; 132] = [
+    "UNKNOWN",
+    "EPERM",
+    "ENOENT",
+    "ESRCH",
+    "EINTR",
+    "EIO",
+    "ENXIO",
+    "E2BIG",
+    "ENOEXEC",
+    "EBADF",
+    "ECHILD",
+    "EAGAIN",
+    "ENOMEM",
+    "EACCES",
+    "EFAULT",
+    "ENOTBLK",
+    "EBUSY",
+    "EEXIST",
+    "EXDEV",
+    "ENODEV",
+    "ENOTDIR",
+    "EISDIR",
+    "EINVAL",
+    "ENFILE",
+    "EMFILE",
+    "ENOTTY",
+    "ETXTBSY",
+    "EFBIG",
+    "ENOSPC",
+    "ESPIPE",
+    "EROFS",
+    "EMLINK",
+    "EPIPE",
+    "EDOM",
+    "ERANGE",
+    "EDEADLK",
+    "ENAMETOOLONG",
+    "ENOLCK",
+    "ENOSYS",
+    "ENOTEMPTY",
+    "ELOOP",
+    "",
+    "ENOMSG",
+    "EIDRM",
+    "ECHRNG",
+    "EL2NSYNC",
+    "EL3HLT",
+    "EL3RST",
+    "ELNRNG",
+    "EUNATCH",
+    "ENOCSI",
+    "EL2HLT",
+    "EBADE",
+    "EBADR",
+    "EXFULL",
+    "ENOANO",
+    "EBADRQC",
+    "EBADSLT",
+    "",
+    "EBFONT",
+    "ENOSTR",
+    "ENODATA",
+    "ETIME",
+    "ENOSR",
+    "ENONET",
+    "ENOPKG",
+    "EREMOTE",
+    "ENOLINK",
+    "EADV",
+    "ESRMNT",
+    "ECOMM",
+    "EPROTO",
+    "EMULTIHOP",
+    "EDOTDOT",
+    "EBADMSG",
+    "EOVERFLOW",
+    "ENOTUNIQ",
+    "EBADFD",
+    "EREMCHG",
+    "ELIBACC",
+    "ELIBBAD",
+    "ELIBSCN",
+    "ELIBMAX",
+    "ELIBEXEC",
+    "EILSEQ",
+    "ERESTART",
+    "ESTRPIPE",
+    "EUSERS",
+    "ENOTSOCK",
+    "EDESTADDRREQ",
+    "EMSGSIZE",
+    "EPROTOTYPE",
+    "ENOPROTOOPT",
+    "EPROTONOSUPPORT",
+    "ESOCKTNOSUPPORT",
+    "EOPNOTSUPP",
+    "EPFNOSUPPORT",
+    "EAFNOSUPPORT",
+    "EADDRINUSE",
+    "EADDRNOTAVAIL",
+    "ENETDOWN",
+    "ENETUNREACH",
+    "ENETRESET",
+    "ECONNABORTED",
+    "ECONNRESET",
+    "ENOBUFS",
+    "EISCONN",
+    "ENOTCONN",
+    "ESHUTDOWN",
+    "ETOOMANYREFS",
+    "ETIMEDOUT",
+    "ECONNREFUSED",
+    "EHOSTDOWN",
+    "EHOSTUNREACH",
+    "EALREADY",
+    "EINPROGRESS",
+    "ESTALE",
+    "EUCLEAN",
+    "ENOTNAM",
+    "ENAVAIL",
+    "EISNAM",
+    "EREMOTEIO",
+    "EDQUOT",
+    "ENOMEDIUM",
+    "EMEDIUMTYPE",
+    "ECANCELED",
+    "ENOKEY",
+    "EKEYEXPIRED",
+    "EKEYREVOKED",
+    "EKEYREJECTED",
+    "EOWNERDEAD",
+    "ENOTRECOVERABLE"
+];
+
+pub fn enum_name_errno(e: Errno) -> &'static str {
+  let index: usize = e as usize;
+  ENUM_NAMES_ERRNO[index]
+}
+
+#[allow(non_camel_case_types)]
 #[repr(u8)]
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Fop {
@@ -298,8 +744,8 @@ impl<'a> OpResult<'a> {
     self._tab.get::<ResultType>(OpResult::VT_RESULT, Some(ResultType::Ok)).unwrap()
   }
   #[inline]
-  pub fn errno(&'a self) -> i32 {
-    self._tab.get::<i32>(OpResult::VT_ERRNO, Some(0)).unwrap()
+  pub fn errno(&'a self) -> Errno {
+    self._tab.get::<Errno>(OpResult::VT_ERRNO, Some(Errno::UNKNOWN)).unwrap()
   }
   #[inline]
   pub fn errorMsg(&'a self) -> Option<&'a str> {
@@ -309,7 +755,7 @@ impl<'a> OpResult<'a> {
 
 pub struct OpResultArgs<'a> {
     pub result: ResultType,
-    pub errno: i32,
+    pub errno: Errno,
     pub errorMsg: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
 impl<'a> Default for OpResultArgs<'a> {
@@ -317,7 +763,7 @@ impl<'a> Default for OpResultArgs<'a> {
     fn default() -> Self {
         OpResultArgs {
             result: ResultType::Ok,
-            errno: 0,
+            errno: Errno::UNKNOWN,
             errorMsg: None,
         }
     }
@@ -332,8 +778,8 @@ impl<'a: 'b, 'b> OpResultBuilder<'a, 'b> {
     self.fbb_.push_slot::<ResultType>(OpResult::VT_RESULT, result, ResultType::Ok);
   }
   #[inline]
-  pub fn add_errno(&mut self, errno: i32) {
-    self.fbb_.push_slot::<i32>(OpResult::VT_ERRNO, errno, 0);
+  pub fn add_errno(&mut self, errno: Errno) {
+    self.fbb_.push_slot::<Errno>(OpResult::VT_ERRNO, errno, Errno::UNKNOWN);
   }
   #[inline]
   pub fn add_errorMsg(&mut self, errorMsg: flatbuffers::WIPOffset<&'b  str>) {
@@ -4458,8 +4904,8 @@ impl<'a> LockRequest<'a> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LockRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> i64 {
-    self._tab.get::<i64>(LockRequest::VT_FD, Some(0)).unwrap()
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(LockRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
   pub fn cmd(&'a self) -> u32 {
@@ -4477,7 +4923,7 @@ impl<'a> LockRequest<'a> {
 
 pub struct LockRequestArgs<'a> {
     pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
-    pub fd: i64,
+    pub fd: u64,
     pub cmd: u32,
     pub type_: u32,
     pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
@@ -4504,8 +4950,8 @@ impl<'a: 'b, 'b> LockRequestBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LockRequest::VT_RFID, rfid);
   }
   #[inline]
-  pub fn add_fd(&mut self, fd: i64) {
-    self.fbb_.push_slot::<i64>(LockRequest::VT_FD, fd, 0);
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(LockRequest::VT_FD, fd, 0);
   }
   #[inline]
   pub fn add_cmd(&mut self, cmd: u32) {
@@ -5578,8 +6024,8 @@ impl<'a> FsetxattrRequest<'a> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsetxattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> i64 {
-    self._tab.get::<i64>(FsetxattrRequest::VT_FD, Some(0)).unwrap()
+  pub fn fd(&'a self) -> u64 {
+    self._tab.get::<u64>(FsetxattrRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
   pub fn flags(&'a self) -> u32 {
@@ -5589,7 +6035,7 @@ impl<'a> FsetxattrRequest<'a> {
 
 pub struct FsetxattrRequestArgs<'a> {
     pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
-    pub fd: i64,
+    pub fd: u64,
     pub flags: u32,
 }
 impl<'a> Default for FsetxattrRequestArgs<'a> {
@@ -5612,8 +6058,8 @@ impl<'a: 'b, 'b> FsetxattrRequestBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsetxattrRequest::VT_RFID, rfid);
   }
   #[inline]
-  pub fn add_fd(&mut self, fd: i64) {
-    self.fbb_.push_slot::<i64>(FsetxattrRequest::VT_FD, fd, 0);
+  pub fn add_fd(&mut self, fd: u64) {
+    self.fbb_.push_slot::<u64>(FsetxattrRequest::VT_FD, fd, 0);
   }
   #[inline]
   pub fn add_flags(&mut self, flags: u32) {
@@ -7244,8 +7690,6 @@ impl<'a> CreateResponse<'a> {
         args: &'args CreateResponseArgs<'args>) -> flatbuffers::WIPOffset<CreateResponse<'bldr>> {
       let mut builder = CreateResponseBuilder::new(_fbb);
       builder.add_fd(args.fd);
-      if let Some(x) = args.postparent { builder.add_postparent(x); }
-      if let Some(x) = args.preparent { builder.add_preparent(x); }
       if let Some(x) = args.stat { builder.add_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
@@ -7254,8 +7698,6 @@ impl<'a> CreateResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
     pub const VT_STAT: flatbuffers::VOffsetT = 6;
     pub const VT_FD: flatbuffers::VOffsetT = 8;
-    pub const VT_PREPARENT: flatbuffers::VOffsetT = 10;
-    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 12;
 
   #[inline]
   pub fn result(&'a self) -> Option<OpResult<'a>> {
@@ -7269,22 +7711,12 @@ impl<'a> CreateResponse<'a> {
   pub fn fd(&'a self) -> u64 {
     self._tab.get::<u64>(CreateResponse::VT_FD, Some(0)).unwrap()
   }
-  #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_PREPARENT, None)
-  }
-  #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_POSTPARENT, None)
-  }
 }
 
 pub struct CreateResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
     pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
     pub fd: u64,
-    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
-    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
 }
 impl<'a> Default for CreateResponseArgs<'a> {
     #[inline]
@@ -7293,8 +7725,6 @@ impl<'a> Default for CreateResponseArgs<'a> {
             result: None,
             stat: None,
             fd: 0,
-            preparent: None,
-            postparent: None,
         }
     }
 }
@@ -7314,14 +7744,6 @@ impl<'a: 'b, 'b> CreateResponseBuilder<'a, 'b> {
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
     self.fbb_.push_slot::<u64>(CreateResponse::VT_FD, fd, 0);
-  }
-  #[inline]
-  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_PREPARENT, preparent);
-  }
-  #[inline]
-  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_POSTPARENT, postparent);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CreateResponseBuilder<'a, 'b> {
