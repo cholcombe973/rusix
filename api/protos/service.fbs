@@ -36,7 +36,7 @@ enum Errno: int32 {
  ENOTDIR =   20,  /* Not a directory */
  EISDIR  =   21,  /* Is a directory */
  EINVAL  =   22,  /* Invalid argument */
- ENFILE  =   23,  /* File table overflow */
+ ENFILE  =   23,  /* Filetable overflow */
  EMFILE  =   24,  /* Too many open files */
  ENOTTY  =   25,  /* Not a typewriter */
  ETXTBSY =   26,  /* Text file busy */
@@ -173,8 +173,6 @@ enum Fop: uint8 {
 	RENAME,
 	ENTRYLK,
 	FENTRYLK,
-
-	/* Inode read operations */
 	STAT,
 	FSTAT,
 	ACCESS,
@@ -188,8 +186,6 @@ enum Fop: uint8 {
 	FINODELK,
 	LK,
 	LEASE,
-
-	/* Inode write operations */
 	FREMOVEXATTR,
 	REMOVEXATTR,
 	SETXATTR,
@@ -257,19 +253,19 @@ table Iatt {
 	ia_ino:uint64;
 	ia_dev:uint64;
 	mode:uint32;
-	ia_nlink:uint32;
+	ia_nlink:uint64;
 	ia_uid:uint32;
 	ia_gid:uint32;
 	ia_rdev:uint64;
-	ia_size:uint64;
-	ia_blksize:uint32;
-	ia_blocks:uint64;
-	ia_atime:uint32;
-	ia_atime_nsec:uint32;
-	ia_mtime:uint32;
-	ia_mtime_nsec:uint32;
-	ia_ctime:uint32;
-	ia_ctime_nsec:uint32;
+	ia_size:int64;
+	ia_blksize:int64;
+	ia_blocks:int64;
+	ia_atime:int64;
+	ia_atime_nsec:int64;
+	ia_mtime:int64;
+	ia_mtime_nsec:int64;
+	ia_ctime:int64;
+	ia_ctime_nsec:int64;
 }
 
 
@@ -319,7 +315,7 @@ table MknodResponse {
 	postparent:Iatt;
 }
 
- table MkdirRequest {
+table MkdirRequest {
 	parent_rfid:Rfid;
 	mode:uint32;
 	umask:uint32;
@@ -340,19 +336,19 @@ table UnlinkRequest {
 	xflags:uint32;
 }
 
-table  UnlinkResponse {
+table UnlinkResponse {
 	result:OpResult;
 	preparent:Iatt;
 	postparent:Iatt;
 }
 
-table  RmdirRequest {
+table RmdirRequest {
 	parent_rfid:Rfid;
 	xflags:int32;
 	bname:string;
 }
 
-table  RmdirResponse {
+table RmdirResponse {
 	result:OpResult;
 	preparent:Iatt;
 	postparent:Iatt;
@@ -373,14 +369,14 @@ table SymlinkResponse {
 }
 
 
-table  RenameRequest {
+table RenameRequest {
 	oldrfid:Rfid;
 	newrfid:Rfid;
 	oldbname:string;
 	newbname:string;
 }
 
-table  RenameResponse {
+table RenameResponse {
 	result:OpResult;
 	stat:Iatt;
 	preoldparent:Iatt;
@@ -402,15 +398,15 @@ table LinkResponse {
 	postparent:Iatt;
 }
 
-table  TruncateRequest {
+table TruncateRequest {
 	rfid:Rfid;
 	offset:uint64;
 }
 
-table  TruncateResponse {
+table TruncateResponse {
 	result:OpResult;
-	prestat:Iatt;
-	poststat:Iatt;
+	pre_stat:Iatt;
+	post_stat:Iatt;
 }
 
 table OpenRequest {
@@ -460,8 +456,8 @@ table WriteRequest {
 
 table WriteResponse {
 	result:OpResult;
-	prestat:Iatt;
-	poststat:Iatt;
+	pre_stat:Iatt;
+	post_stat:Iatt;
 }
 
 table StatfsRequest {
@@ -473,14 +469,14 @@ table StatfsResponse {
 	statfs:Statfs;
 } 
 
- table LockRequest {
+table LockRequest {
 	rfid:Rfid;
 	fd:uint64;
 	cmd:uint32;
 	type:uint32;
 	flock:ProtoFlock;
 } 
- table LockResponse {
+table LockResponse {
 	result:OpResult;
 	flock:ProtoFlock;
 } 
@@ -530,8 +526,8 @@ table FsyncRequest {
 } 
 table FsyncResponse {
 	result:OpResult;
-	prestat:Iatt;
-	poststat:Iatt;
+	pre_stat:Iatt;
+	post_stat:Iatt;
 } 
 
 
@@ -540,28 +536,28 @@ table SetxattrRequest {
 	flags:uint32;
 } 
 
- table FsetxattrRequest {
+table FsetxattrRequest {
 	rfid:Rfid;
 	fd:uint64;
 	flags:uint32;
 } 
 
- table XattropRequest {
+table XattropRequest {
 	rfid:Rfid;
 	flags:uint32;
 } 
 
- table XattropResponse {
+table XattropResponse {
 	result:OpResult;
 } 
 
- table FxattropRequest {
+table FxattropRequest {
 	rfid:Rfid;
 	fd:uint64;
 	flags:uint32;
 } 
 
- table FxattropResponse {
+table FxattropResponse {
 	result:OpResult;
 } 
 
@@ -577,49 +573,49 @@ table GetxattrResponse {
 } 
 
 
- table FgetxattrRequest {
+table FgetxattrRequest {
 	rfid:Rfid;
 	fd:uint64;
 	namelen:uint32;
 	name:string;
 } 
- table FgetxattrResponse {
+table FgetxattrResponse {
 	result:OpResult;
 } 
 
- table RemovexattrRequest {
+table RemovexattrRequest {
 	rfid:Rfid;
 	name:string;
 } 
 
- table FremovexattrRequest {
+table FremovexattrRequest {
 	rfid:Rfid;
 	fd:uint64;
 	name:string;
 } 
 
- table OpendirRequest {
+table OpendirRequest {
 	rfid:Rfid;
 } 
- table OpendirResponse {
+table OpendirResponse {
 	result:OpResult;
 	fd:uint64;
 } 
 
 
- table FsyncdirRequest {
+table FsyncdirRequest {
 	rfid:Rfid;
 	fd:uint64;
 } 
 
- table ReaddirRequest {
+table ReaddirRequest {
 	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
 	size:uint32;
 }
 
- table ReaddirpRequest {
+table ReaddirpRequest {
 	rfid:Rfid;
 	fd:uint64;
 	offset:uint64;
@@ -630,6 +626,8 @@ table GetxattrResponse {
 table AccessRequest {
 	rfid:Rfid;
 	mask:uint32;
+    uid:uint32;
+    gid:uint32;
 } 
 
 
@@ -656,8 +654,8 @@ table FtruncateRequest {
 } 
 table FtruncateResponse {
 	result:OpResult;
-	prestat:Iatt;
-	poststat:Iatt;
+	pre_stat:Iatt;
+	post_stat:Iatt;
 } 
 
 table FstatRequest {
@@ -670,7 +668,7 @@ table FstatResponse {
 	stat:Iatt;
 } 
 
- table  EntrylkRequest {
+table EntrylkRequest {
 	rfid:Rfid;
 	cmd:uint32;
 	type:uint32;
@@ -679,7 +677,7 @@ table FstatResponse {
 	volume:string;
 }
 
- table  FentrylkRequest {
+table FentrylkRequest {
 	rfid:Rfid;
 	fd:uint64;
 	cmd:uint32;
@@ -690,29 +688,29 @@ table FstatResponse {
 }
 
 
- table SetattrRequest {
+table SetattrRequest {
 	rfid:Rfid;
 	stbuf:Iatt;
 	valid:int32;
 } 
- table SetattrResponse {
+table SetattrResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
 } 
 
- table FsetattrRequest {
+table FsetattrRequest {
 	fd:uint64;
 	stbuf:Iatt;
 	valid:int32;
 } 
- table FsetattrResponse {
+table FsetattrResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
 } 
 
- table FallocateRequest {
+table FallocateRequest {
 	rfid:Rfid;
 	fd:uint64;
 	flags:uint32;
@@ -720,13 +718,13 @@ table FstatResponse {
 	size:uint64;
 } 
 
- table FallocateResponse {
+table FallocateResponse {
 	result:OpResult;
 	statpre:Iatt;
 	statpost:Iatt;
 } 
 
- table DiscardRequest {
+table DiscardRequest {
 	rfid:Rfid;
 	fd:uint64;
 	offset:uint64	;
@@ -944,6 +942,7 @@ table SetactivelkRequest {
 }
 
 table Operation {
+	fop_type:Fop;
 	access:AccessRequest;
 	cache_invalidate:CacheInvalidationRequest;
 	compound:CompoundRequest;
@@ -1002,7 +1001,7 @@ table Operation {
 	statfs:StatfsRequest;
 	stat:StatRequest;
 	symlink:SymlinkRequest;
-	trunate:TruncateRequest;
+	truncate:TruncateRequest;
 	unlink:UnlinkRequest;
 	write:WriteRequest;
 	xattrop:XattropRequest;

@@ -22,7 +22,7 @@ api = { path = "api" }
 block-utils = {git = "https://github.com/cholcombe973/block-utils"}
 clap = "~2.32" 
 dmi = {git = "https://github.com/cholcombe973/dmi"}
-flatbuffers = "~0.4"
+flatbuffers = "~0.5"
 fstab = "~0.3" 
 futures = "~0.1"
 futures-cpupool = "~0.1"

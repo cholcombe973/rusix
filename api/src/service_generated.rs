@@ -740,15 +740,15 @@ impl<'a> OpResult<'a> {
     pub const VT_ERRORMSG: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> ResultType {
+  pub fn result(&self) -> ResultType {
     self._tab.get::<ResultType>(OpResult::VT_RESULT, Some(ResultType::Ok)).unwrap()
   }
   #[inline]
-  pub fn errno(&'a self) -> Errno {
+  pub fn errno(&self) -> Errno {
     self._tab.get::<Errno>(OpResult::VT_ERRNO, Some(Errno::UNKNOWN)).unwrap()
   }
   #[inline]
-  pub fn errorMsg(&'a self) -> Option<&'a str> {
+  pub fn errorMsg(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(OpResult::VT_ERRORMSG, None)
   }
 }
@@ -842,19 +842,19 @@ impl<'a> Rfid<'a> {
     pub const VT_D4: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn d1(&'a self) -> u32 {
+  pub fn d1(&self) -> u32 {
     self._tab.get::<u32>(Rfid::VT_D1, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d2(&'a self) -> u16 {
+  pub fn d2(&self) -> u16 {
     self._tab.get::<u16>(Rfid::VT_D2, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d3(&'a self) -> u16 {
+  pub fn d3(&self) -> u16 {
     self._tab.get::<u16>(Rfid::VT_D3, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d4(&'a self) -> Option<&'a [u8]> {
+  pub fn d4(&self) -> Option<&'a [u8]> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(Rfid::VT_D4, None).map(|v| v.safe_slice())
   }
 }
@@ -968,47 +968,47 @@ impl<'a> Statfs<'a> {
     pub const VT_NAMEMAX: flatbuffers::VOffsetT = 24;
 
   #[inline]
-  pub fn bsize(&'a self) -> u64 {
+  pub fn bsize(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_BSIZE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn frsize(&'a self) -> u64 {
+  pub fn frsize(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_FRSIZE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn blocks(&'a self) -> u64 {
+  pub fn blocks(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_BLOCKS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bfree(&'a self) -> u64 {
+  pub fn bfree(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_BFREE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bavail(&'a self) -> u64 {
+  pub fn bavail(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_BAVAIL, Some(0)).unwrap()
   }
   #[inline]
-  pub fn files(&'a self) -> u64 {
+  pub fn files(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_FILES, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ffree(&'a self) -> u64 {
+  pub fn ffree(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_FFREE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn favail(&'a self) -> u64 {
+  pub fn favail(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_FAVAIL, Some(0)).unwrap()
   }
   #[inline]
-  pub fn fsid(&'a self) -> u64 {
+  pub fn fsid(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_FSID, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flag(&'a self) -> u64 {
+  pub fn flag(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_FLAG, Some(0)).unwrap()
   }
   #[inline]
-  pub fn namemax(&'a self) -> u64 {
+  pub fn namemax(&self) -> u64 {
     self._tab.get::<u64>(Statfs::VT_NAMEMAX, Some(0)).unwrap()
   }
 }
@@ -1154,27 +1154,27 @@ impl<'a> ProtoFlock<'a> {
     pub const VT_LK_OWNER: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn type_(&'a self) -> u32 {
+  pub fn type_(&self) -> u32 {
     self._tab.get::<u32>(ProtoFlock::VT_TYPE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn whence(&'a self) -> u32 {
+  pub fn whence(&self) -> u32 {
     self._tab.get::<u32>(ProtoFlock::VT_WHENCE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn start(&'a self) -> u64 {
+  pub fn start(&self) -> u64 {
     self._tab.get::<u64>(ProtoFlock::VT_START, Some(0)).unwrap()
   }
   #[inline]
-  pub fn len(&'a self) -> u64 {
+  pub fn len(&self) -> u64 {
     self._tab.get::<u64>(ProtoFlock::VT_LEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn pid(&'a self) -> u32 {
+  pub fn pid(&self) -> u32 {
     self._tab.get::<u32>(ProtoFlock::VT_PID, Some(0)).unwrap()
   }
   #[inline]
-  pub fn lk_owner(&'a self) -> Option<&'a str> {
+  pub fn lk_owner(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtoFlock::VT_LK_OWNER, None)
   }
 }
@@ -1286,19 +1286,19 @@ impl<'a> ProtoLease<'a> {
     pub const VT_LEASE_FLAGS: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn cmd(&'a self) -> u32 {
+  pub fn cmd(&self) -> u32 {
     self._tab.get::<u32>(ProtoLease::VT_CMD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn lease_type(&'a self) -> u32 {
+  pub fn lease_type(&self) -> u32 {
     self._tab.get::<u32>(ProtoLease::VT_LEASE_TYPE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn lease_id(&'a self) -> Option<&'a str> {
+  pub fn lease_id(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ProtoLease::VT_LEASE_ID, None)
   }
   #[inline]
-  pub fn lease_flags(&'a self) -> u32 {
+  pub fn lease_flags(&self) -> u32 {
     self._tab.get::<u32>(ProtoLease::VT_LEASE_FLAGS, Some(0)).unwrap()
   }
 }
@@ -1385,21 +1385,21 @@ impl<'a> Iatt<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args IattArgs<'args>) -> flatbuffers::WIPOffset<Iatt<'bldr>> {
       let mut builder = IattBuilder::new(_fbb);
-      builder.add_ia_blocks(args.ia_blocks);
-      builder.add_ia_size(args.ia_size);
-      builder.add_ia_rdev(args.ia_rdev);
-      builder.add_ia_dev(args.ia_dev);
-      builder.add_ia_ino(args.ia_ino);
       builder.add_ia_ctime_nsec(args.ia_ctime_nsec);
       builder.add_ia_ctime(args.ia_ctime);
       builder.add_ia_mtime_nsec(args.ia_mtime_nsec);
       builder.add_ia_mtime(args.ia_mtime);
       builder.add_ia_atime_nsec(args.ia_atime_nsec);
       builder.add_ia_atime(args.ia_atime);
+      builder.add_ia_blocks(args.ia_blocks);
       builder.add_ia_blksize(args.ia_blksize);
+      builder.add_ia_size(args.ia_size);
+      builder.add_ia_rdev(args.ia_rdev);
+      builder.add_ia_nlink(args.ia_nlink);
+      builder.add_ia_dev(args.ia_dev);
+      builder.add_ia_ino(args.ia_ino);
       builder.add_ia_gid(args.ia_gid);
       builder.add_ia_uid(args.ia_uid);
-      builder.add_ia_nlink(args.ia_nlink);
       builder.add_mode(args.mode);
       if let Some(x) = args.ia_rfid { builder.add_ia_rfid(x); }
       builder.finish()
@@ -1424,72 +1424,72 @@ impl<'a> Iatt<'a> {
     pub const VT_IA_CTIME_NSEC: flatbuffers::VOffsetT = 36;
 
   #[inline]
-  pub fn ia_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn ia_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(Iatt::VT_IA_RFID, None)
   }
   #[inline]
-  pub fn ia_ino(&'a self) -> u64 {
+  pub fn ia_ino(&self) -> u64 {
     self._tab.get::<u64>(Iatt::VT_IA_INO, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_dev(&'a self) -> u64 {
+  pub fn ia_dev(&self) -> u64 {
     self._tab.get::<u64>(Iatt::VT_IA_DEV, Some(0)).unwrap()
   }
   #[inline]
-  pub fn mode(&'a self) -> u32 {
+  pub fn mode(&self) -> u32 {
     self._tab.get::<u32>(Iatt::VT_MODE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_nlink(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_NLINK, Some(0)).unwrap()
+  pub fn ia_nlink(&self) -> u64 {
+    self._tab.get::<u64>(Iatt::VT_IA_NLINK, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_uid(&'a self) -> u32 {
+  pub fn ia_uid(&self) -> u32 {
     self._tab.get::<u32>(Iatt::VT_IA_UID, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_gid(&'a self) -> u32 {
+  pub fn ia_gid(&self) -> u32 {
     self._tab.get::<u32>(Iatt::VT_IA_GID, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_rdev(&'a self) -> u64 {
+  pub fn ia_rdev(&self) -> u64 {
     self._tab.get::<u64>(Iatt::VT_IA_RDEV, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_size(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IA_SIZE, Some(0)).unwrap()
+  pub fn ia_size(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_SIZE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_blksize(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_BLKSIZE, Some(0)).unwrap()
+  pub fn ia_blksize(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_BLKSIZE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_blocks(&'a self) -> u64 {
-    self._tab.get::<u64>(Iatt::VT_IA_BLOCKS, Some(0)).unwrap()
+  pub fn ia_blocks(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_BLOCKS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_atime(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_ATIME, Some(0)).unwrap()
+  pub fn ia_atime(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_ATIME, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_atime_nsec(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_ATIME_NSEC, Some(0)).unwrap()
+  pub fn ia_atime_nsec(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_ATIME_NSEC, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_mtime(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_MTIME, Some(0)).unwrap()
+  pub fn ia_mtime(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_MTIME, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_mtime_nsec(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_MTIME_NSEC, Some(0)).unwrap()
+  pub fn ia_mtime_nsec(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_MTIME_NSEC, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_ctime(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_CTIME, Some(0)).unwrap()
+  pub fn ia_ctime(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_CTIME, Some(0)).unwrap()
   }
   #[inline]
-  pub fn ia_ctime_nsec(&'a self) -> u32 {
-    self._tab.get::<u32>(Iatt::VT_IA_CTIME_NSEC, Some(0)).unwrap()
+  pub fn ia_ctime_nsec(&self) -> i64 {
+    self._tab.get::<i64>(Iatt::VT_IA_CTIME_NSEC, Some(0)).unwrap()
   }
 }
 
@@ -1498,19 +1498,19 @@ pub struct IattArgs<'a> {
     pub ia_ino: u64,
     pub ia_dev: u64,
     pub mode: u32,
-    pub ia_nlink: u32,
+    pub ia_nlink: u64,
     pub ia_uid: u32,
     pub ia_gid: u32,
     pub ia_rdev: u64,
-    pub ia_size: u64,
-    pub ia_blksize: u32,
-    pub ia_blocks: u64,
-    pub ia_atime: u32,
-    pub ia_atime_nsec: u32,
-    pub ia_mtime: u32,
-    pub ia_mtime_nsec: u32,
-    pub ia_ctime: u32,
-    pub ia_ctime_nsec: u32,
+    pub ia_size: i64,
+    pub ia_blksize: i64,
+    pub ia_blocks: i64,
+    pub ia_atime: i64,
+    pub ia_atime_nsec: i64,
+    pub ia_mtime: i64,
+    pub ia_mtime_nsec: i64,
+    pub ia_ctime: i64,
+    pub ia_ctime_nsec: i64,
 }
 impl<'a> Default for IattArgs<'a> {
     #[inline]
@@ -1558,8 +1558,8 @@ impl<'a: 'b, 'b> IattBuilder<'a, 'b> {
     self.fbb_.push_slot::<u32>(Iatt::VT_MODE, mode, 0);
   }
   #[inline]
-  pub fn add_ia_nlink(&mut self, ia_nlink: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_NLINK, ia_nlink, 0);
+  pub fn add_ia_nlink(&mut self, ia_nlink: u64) {
+    self.fbb_.push_slot::<u64>(Iatt::VT_IA_NLINK, ia_nlink, 0);
   }
   #[inline]
   pub fn add_ia_uid(&mut self, ia_uid: u32) {
@@ -1574,40 +1574,40 @@ impl<'a: 'b, 'b> IattBuilder<'a, 'b> {
     self.fbb_.push_slot::<u64>(Iatt::VT_IA_RDEV, ia_rdev, 0);
   }
   #[inline]
-  pub fn add_ia_size(&mut self, ia_size: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IA_SIZE, ia_size, 0);
+  pub fn add_ia_size(&mut self, ia_size: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_SIZE, ia_size, 0);
   }
   #[inline]
-  pub fn add_ia_blksize(&mut self, ia_blksize: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_BLKSIZE, ia_blksize, 0);
+  pub fn add_ia_blksize(&mut self, ia_blksize: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_BLKSIZE, ia_blksize, 0);
   }
   #[inline]
-  pub fn add_ia_blocks(&mut self, ia_blocks: u64) {
-    self.fbb_.push_slot::<u64>(Iatt::VT_IA_BLOCKS, ia_blocks, 0);
+  pub fn add_ia_blocks(&mut self, ia_blocks: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_BLOCKS, ia_blocks, 0);
   }
   #[inline]
-  pub fn add_ia_atime(&mut self, ia_atime: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_ATIME, ia_atime, 0);
+  pub fn add_ia_atime(&mut self, ia_atime: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_ATIME, ia_atime, 0);
   }
   #[inline]
-  pub fn add_ia_atime_nsec(&mut self, ia_atime_nsec: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_ATIME_NSEC, ia_atime_nsec, 0);
+  pub fn add_ia_atime_nsec(&mut self, ia_atime_nsec: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_ATIME_NSEC, ia_atime_nsec, 0);
   }
   #[inline]
-  pub fn add_ia_mtime(&mut self, ia_mtime: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_MTIME, ia_mtime, 0);
+  pub fn add_ia_mtime(&mut self, ia_mtime: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_MTIME, ia_mtime, 0);
   }
   #[inline]
-  pub fn add_ia_mtime_nsec(&mut self, ia_mtime_nsec: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_MTIME_NSEC, ia_mtime_nsec, 0);
+  pub fn add_ia_mtime_nsec(&mut self, ia_mtime_nsec: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_MTIME_NSEC, ia_mtime_nsec, 0);
   }
   #[inline]
-  pub fn add_ia_ctime(&mut self, ia_ctime: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_CTIME, ia_ctime, 0);
+  pub fn add_ia_ctime(&mut self, ia_ctime: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_CTIME, ia_ctime, 0);
   }
   #[inline]
-  pub fn add_ia_ctime_nsec(&mut self, ia_ctime_nsec: u32) {
-    self.fbb_.push_slot::<u32>(Iatt::VT_IA_CTIME_NSEC, ia_ctime_nsec, 0);
+  pub fn add_ia_ctime_nsec(&mut self, ia_ctime_nsec: i64) {
+    self.fbb_.push_slot::<i64>(Iatt::VT_IA_CTIME_NSEC, ia_ctime_nsec, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> IattBuilder<'a, 'b> {
@@ -1672,31 +1672,31 @@ impl<'a> CacheInvalidationRequest<'a> {
     pub const VT_OLDPARENT_STAT: flatbuffers::VOffsetT = 16;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(CacheInvalidationRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn event_type(&'a self) -> u32 {
+  pub fn event_type(&self) -> u32 {
     self._tab.get::<u32>(CacheInvalidationRequest::VT_EVENT_TYPE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(CacheInvalidationRequest::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn expire_time_attr(&'a self) -> u32 {
+  pub fn expire_time_attr(&self) -> u32 {
     self._tab.get::<u32>(CacheInvalidationRequest::VT_EXPIRE_TIME_ATTR, Some(0)).unwrap()
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CacheInvalidationRequest::VT_STAT, None)
   }
   #[inline]
-  pub fn parent_stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn parent_stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CacheInvalidationRequest::VT_PARENT_STAT, None)
   }
   #[inline]
-  pub fn oldparent_stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn oldparent_stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CacheInvalidationRequest::VT_OLDPARENT_STAT, None)
   }
 }
@@ -1808,7 +1808,7 @@ impl<'a> StatRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(StatRequest::VT_RFID, None)
   }
 }
@@ -1886,11 +1886,11 @@ impl<'a> StatResponse<'a> {
     pub const VT_STAT: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(StatResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(StatResponse::VT_STAT, None)
   }
 }
@@ -1974,11 +1974,11 @@ impl<'a> ReadlinkRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReadlinkRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn size_(&'a self) -> u32 {
+  pub fn size_(&self) -> u32 {
     self._tab.get::<u32>(ReadlinkRequest::VT_SIZE_, Some(0)).unwrap()
   }
 }
@@ -2064,15 +2064,15 @@ impl<'a> ReadlinkResponse<'a> {
     pub const VT_PATH: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReadlinkResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn buf(&'a self) -> Option<Iatt<'a>> {
+  pub fn buf(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ReadlinkResponse::VT_BUF, None)
   }
   #[inline]
-  pub fn path(&'a self) -> Option<&'a str> {
+  pub fn path(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(ReadlinkResponse::VT_PATH, None)
   }
 }
@@ -2168,23 +2168,23 @@ impl<'a> MknodRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(MknodRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn dev(&'a self) -> u64 {
+  pub fn dev(&self) -> u64 {
     self._tab.get::<u64>(MknodRequest::VT_DEV, Some(0)).unwrap()
   }
   #[inline]
-  pub fn mode(&'a self) -> u32 {
+  pub fn mode(&self) -> u32 {
     self._tab.get::<u32>(MknodRequest::VT_MODE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn umask(&'a self) -> u32 {
+  pub fn umask(&self) -> u32 {
     self._tab.get::<u32>(MknodRequest::VT_UMASK, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MknodRequest::VT_BNAME, None)
   }
 }
@@ -2290,19 +2290,19 @@ impl<'a> MknodResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(MknodResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MknodResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MknodResponse::VT_PREPARENT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MknodResponse::VT_POSTPARENT, None)
   }
 }
@@ -2402,19 +2402,19 @@ impl<'a> MkdirRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(MkdirRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn mode(&'a self) -> u32 {
+  pub fn mode(&self) -> u32 {
     self._tab.get::<u32>(MkdirRequest::VT_MODE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn umask(&'a self) -> u32 {
+  pub fn umask(&self) -> u32 {
     self._tab.get::<u32>(MkdirRequest::VT_UMASK, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MkdirRequest::VT_BNAME, None)
   }
 }
@@ -2514,19 +2514,19 @@ impl<'a> MkdirResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(MkdirResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MkdirResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MkdirResponse::VT_PREPARENT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(MkdirResponse::VT_POSTPARENT, None)
   }
 }
@@ -2624,15 +2624,15 @@ impl<'a> UnlinkRequest<'a> {
     pub const VT_XFLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(UnlinkRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(UnlinkRequest::VT_BNAME, None)
   }
   #[inline]
-  pub fn xflags(&'a self) -> u32 {
+  pub fn xflags(&self) -> u32 {
     self._tab.get::<u32>(UnlinkRequest::VT_XFLAGS, Some(0)).unwrap()
   }
 }
@@ -2724,15 +2724,15 @@ impl<'a> UnlinkResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(UnlinkResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(UnlinkResponse::VT_PREPARENT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(UnlinkResponse::VT_POSTPARENT, None)
   }
 }
@@ -2824,15 +2824,15 @@ impl<'a> RmdirRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RmdirRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn xflags(&'a self) -> i32 {
+  pub fn xflags(&self) -> i32 {
     self._tab.get::<i32>(RmdirRequest::VT_XFLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RmdirRequest::VT_BNAME, None)
   }
 }
@@ -2924,15 +2924,15 @@ impl<'a> RmdirResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(RmdirResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RmdirResponse::VT_PREPARENT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RmdirResponse::VT_POSTPARENT, None)
   }
 }
@@ -3026,19 +3026,19 @@ impl<'a> SymlinkRequest<'a> {
     pub const VT_LINKNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SymlinkRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SymlinkRequest::VT_BNAME, None)
   }
   #[inline]
-  pub fn umask(&'a self) -> u32 {
+  pub fn umask(&self) -> u32 {
     self._tab.get::<u32>(SymlinkRequest::VT_UMASK, Some(0)).unwrap()
   }
   #[inline]
-  pub fn linkname(&'a self) -> Option<&'a str> {
+  pub fn linkname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SymlinkRequest::VT_LINKNAME, None)
   }
 }
@@ -3138,19 +3138,19 @@ impl<'a> SymlinkResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SymlinkResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SymlinkResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SymlinkResponse::VT_PREPARENT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SymlinkResponse::VT_POSTPARENT, None)
   }
 }
@@ -3250,19 +3250,19 @@ impl<'a> RenameRequest<'a> {
     pub const VT_NEWBNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn oldrfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn oldrfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RenameRequest::VT_OLDRFID, None)
   }
   #[inline]
-  pub fn newrfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn newrfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RenameRequest::VT_NEWRFID, None)
   }
   #[inline]
-  pub fn oldbname(&'a self) -> Option<&'a str> {
+  pub fn oldbname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RenameRequest::VT_OLDBNAME, None)
   }
   #[inline]
-  pub fn newbname(&'a self) -> Option<&'a str> {
+  pub fn newbname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RenameRequest::VT_NEWBNAME, None)
   }
 }
@@ -3366,27 +3366,27 @@ impl<'a> RenameResponse<'a> {
     pub const VT_POSTNEWPARENT: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(RenameResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn preoldparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preoldparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_PREOLDPARENT, None)
   }
   #[inline]
-  pub fn postoldparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postoldparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_POSTOLDPARENT, None)
   }
   #[inline]
-  pub fn prenewparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn prenewparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_PRENEWPARENT, None)
   }
   #[inline]
-  pub fn postnewparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postnewparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(RenameResponse::VT_POSTNEWPARENT, None)
   }
 }
@@ -3496,15 +3496,15 @@ impl<'a> LinkRequest<'a> {
     pub const VT_NEWBNAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn oldrfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn oldrfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LinkRequest::VT_OLDRFID, None)
   }
   #[inline]
-  pub fn newrfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn newrfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LinkRequest::VT_NEWRFID, None)
   }
   #[inline]
-  pub fn newbname(&'a self) -> Option<&'a str> {
+  pub fn newbname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LinkRequest::VT_NEWBNAME, None)
   }
 }
@@ -3598,19 +3598,19 @@ impl<'a> LinkResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LinkResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LinkResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn preparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LinkResponse::VT_PREPARENT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LinkResponse::VT_POSTPARENT, None)
   }
 }
@@ -3706,11 +3706,11 @@ impl<'a> TruncateRequest<'a> {
     pub const VT_OFFSET: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(TruncateRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(TruncateRequest::VT_OFFSET, Some(0)).unwrap()
   }
 }
@@ -3785,42 +3785,42 @@ impl<'a> TruncateResponse<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args TruncateResponseArgs<'args>) -> flatbuffers::WIPOffset<TruncateResponse<'bldr>> {
       let mut builder = TruncateResponseBuilder::new(_fbb);
-      if let Some(x) = args.poststat { builder.add_poststat(x); }
-      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.post_stat { builder.add_post_stat(x); }
+      if let Some(x) = args.pre_stat { builder.add_pre_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
     }
 
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
-    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
-    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_PRE_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POST_STAT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(TruncateResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(TruncateResponse::VT_PRESTAT, None)
+  pub fn pre_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(TruncateResponse::VT_PRE_STAT, None)
   }
   #[inline]
-  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(TruncateResponse::VT_POSTSTAT, None)
+  pub fn post_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(TruncateResponse::VT_POST_STAT, None)
   }
 }
 
 pub struct TruncateResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
-    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
-    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub pre_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub post_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
 }
 impl<'a> Default for TruncateResponseArgs<'a> {
     #[inline]
     fn default() -> Self {
         TruncateResponseArgs {
             result: None,
-            prestat: None,
-            poststat: None,
+            pre_stat: None,
+            post_stat: None,
         }
     }
 }
@@ -3834,12 +3834,12 @@ impl<'a: 'b, 'b> TruncateResponseBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(TruncateResponse::VT_RESULT, result);
   }
   #[inline]
-  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(TruncateResponse::VT_PRESTAT, prestat);
+  pub fn add_pre_stat(&mut self, pre_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(TruncateResponse::VT_PRE_STAT, pre_stat);
   }
   #[inline]
-  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(TruncateResponse::VT_POSTSTAT, poststat);
+  pub fn add_post_stat(&mut self, post_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(TruncateResponse::VT_POST_STAT, post_stat);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> TruncateResponseBuilder<'a, 'b> {
@@ -3894,11 +3894,11 @@ impl<'a> OpenRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(OpenRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(OpenRequest::VT_FLAGS, Some(0)).unwrap()
   }
 }
@@ -3982,11 +3982,11 @@ impl<'a> OpenResponse<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(OpenResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(OpenResponse::VT_FD, Some(0)).unwrap()
   }
 }
@@ -4076,23 +4076,23 @@ impl<'a> ReadRequest<'a> {
     pub const VT_FLAG: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReadRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(ReadRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(ReadRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn size_(&'a self) -> u64 {
+  pub fn size_(&self) -> u64 {
     self._tab.get::<u64>(ReadRequest::VT_SIZE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flag(&'a self) -> i32 {
+  pub fn flag(&self) -> i32 {
     self._tab.get::<i32>(ReadRequest::VT_FLAG, Some(0)).unwrap()
   }
 }
@@ -4196,15 +4196,15 @@ impl<'a> ReadResponse<'a> {
     pub const VT_DATA: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReadResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ReadResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn data(&'a self) -> Option<&'a [u8]> {
+  pub fn data(&self) -> Option<&'a [u8]> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(ReadResponse::VT_DATA, None).map(|v| v.safe_slice())
   }
 }
@@ -4298,19 +4298,19 @@ impl<'a> LookupRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LookupRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LookupRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(LookupRequest::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LookupRequest::VT_BNAME, None)
   }
 }
@@ -4408,15 +4408,15 @@ impl<'a> LookupResponse<'a> {
     pub const VT_POSTPARENT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LookupResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LookupResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn postparent(&'a self) -> Option<Iatt<'a>> {
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(LookupResponse::VT_POSTPARENT, None)
   }
 }
@@ -4512,23 +4512,23 @@ impl<'a> WriteRequest<'a> {
     pub const VT_DATA: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(WriteRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(WriteRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(WriteRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flag(&'a self) -> i32 {
+  pub fn flag(&self) -> i32 {
     self._tab.get::<i32>(WriteRequest::VT_FLAG, Some(0)).unwrap()
   }
   #[inline]
-  pub fn data(&'a self) -> Option<&'a [u8]> {
+  pub fn data(&self) -> Option<&'a [u8]> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(WriteRequest::VT_DATA, None).map(|v| v.safe_slice())
   }
 }
@@ -4621,42 +4621,42 @@ impl<'a> WriteResponse<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args WriteResponseArgs<'args>) -> flatbuffers::WIPOffset<WriteResponse<'bldr>> {
       let mut builder = WriteResponseBuilder::new(_fbb);
-      if let Some(x) = args.poststat { builder.add_poststat(x); }
-      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.post_stat { builder.add_post_stat(x); }
+      if let Some(x) = args.pre_stat { builder.add_pre_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
     }
 
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
-    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
-    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_PRE_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POST_STAT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(WriteResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(WriteResponse::VT_PRESTAT, None)
+  pub fn pre_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(WriteResponse::VT_PRE_STAT, None)
   }
   #[inline]
-  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(WriteResponse::VT_POSTSTAT, None)
+  pub fn post_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(WriteResponse::VT_POST_STAT, None)
   }
 }
 
 pub struct WriteResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
-    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
-    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub pre_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub post_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
 }
 impl<'a> Default for WriteResponseArgs<'a> {
     #[inline]
     fn default() -> Self {
         WriteResponseArgs {
             result: None,
-            prestat: None,
-            poststat: None,
+            pre_stat: None,
+            post_stat: None,
         }
     }
 }
@@ -4670,12 +4670,12 @@ impl<'a: 'b, 'b> WriteResponseBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(WriteResponse::VT_RESULT, result);
   }
   #[inline]
-  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(WriteResponse::VT_PRESTAT, prestat);
+  pub fn add_pre_stat(&mut self, pre_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(WriteResponse::VT_PRE_STAT, pre_stat);
   }
   #[inline]
-  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(WriteResponse::VT_POSTSTAT, poststat);
+  pub fn add_post_stat(&mut self, post_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(WriteResponse::VT_POST_STAT, post_stat);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> WriteResponseBuilder<'a, 'b> {
@@ -4728,7 +4728,7 @@ impl<'a> StatfsRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(StatfsRequest::VT_RFID, None)
   }
 }
@@ -4806,11 +4806,11 @@ impl<'a> StatfsResponse<'a> {
     pub const VT_STATFS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(StatfsResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn statfs(&'a self) -> Option<Statfs<'a>> {
+  pub fn statfs(&self) -> Option<Statfs<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Statfs<'a>>>(StatfsResponse::VT_STATFS, None)
   }
 }
@@ -4900,23 +4900,23 @@ impl<'a> LockRequest<'a> {
     pub const VT_FLOCK: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LockRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(LockRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn cmd(&'a self) -> u32 {
+  pub fn cmd(&self) -> u32 {
     self._tab.get::<u32>(LockRequest::VT_CMD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn type_(&'a self) -> u32 {
+  pub fn type_(&self) -> u32 {
     self._tab.get::<u32>(LockRequest::VT_TYPE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+  pub fn flock(&self) -> Option<ProtoFlock<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(LockRequest::VT_FLOCK, None)
   }
 }
@@ -5018,11 +5018,11 @@ impl<'a> LockResponse<'a> {
     pub const VT_FLOCK: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LockResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+  pub fn flock(&self) -> Option<ProtoFlock<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(LockResponse::VT_FLOCK, None)
   }
 }
@@ -5106,11 +5106,11 @@ impl<'a> LeaseRequest<'a> {
     pub const VT_LEASE: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LeaseRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn lease(&'a self) -> Option<ProtoLease<'a>> {
+  pub fn lease(&self) -> Option<ProtoLease<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoLease<'a>>>(LeaseRequest::VT_LEASE, None)
   }
 }
@@ -5194,11 +5194,11 @@ impl<'a> LeaseResponse<'a> {
     pub const VT_LEASE: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(LeaseResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn lease(&'a self) -> Option<ProtoLease<'a>> {
+  pub fn lease(&self) -> Option<ProtoLease<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoLease<'a>>>(LeaseResponse::VT_LEASE, None)
   }
 }
@@ -5284,15 +5284,15 @@ impl<'a> RecallLeaseRequest<'a> {
     pub const VT_TID: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RecallLeaseRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn lease_type(&'a self) -> u32 {
+  pub fn lease_type(&self) -> u32 {
     self._tab.get::<u32>(RecallLeaseRequest::VT_LEASE_TYPE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn tid(&'a self) -> Option<&'a str> {
+  pub fn tid(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RecallLeaseRequest::VT_TID, None)
   }
 }
@@ -5388,23 +5388,23 @@ impl<'a> InodelkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(InodelkRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn cmd(&'a self) -> u32 {
+  pub fn cmd(&self) -> u32 {
     self._tab.get::<u32>(InodelkRequest::VT_CMD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn type_(&'a self) -> u32 {
+  pub fn type_(&self) -> u32 {
     self._tab.get::<u32>(InodelkRequest::VT_TYPE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+  pub fn flock(&self) -> Option<ProtoFlock<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(InodelkRequest::VT_FLOCK, None)
   }
   #[inline]
-  pub fn volume(&'a self) -> Option<&'a str> {
+  pub fn volume(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(InodelkRequest::VT_VOLUME, None)
   }
 }
@@ -5514,27 +5514,27 @@ impl<'a> FinodelkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FinodelkRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FinodelkRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn cmd(&'a self) -> u32 {
+  pub fn cmd(&self) -> u32 {
     self._tab.get::<u32>(FinodelkRequest::VT_CMD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn type_(&'a self) -> u32 {
+  pub fn type_(&self) -> u32 {
     self._tab.get::<u32>(FinodelkRequest::VT_TYPE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+  pub fn flock(&self) -> Option<ProtoFlock<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(FinodelkRequest::VT_FLOCK, None)
   }
   #[inline]
-  pub fn volume(&'a self) -> Option<&'a str> {
+  pub fn volume(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FinodelkRequest::VT_VOLUME, None)
   }
 }
@@ -5642,11 +5642,11 @@ impl<'a> FlushRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FlushRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FlushRequest::VT_FD, Some(0)).unwrap()
   }
 }
@@ -5732,15 +5732,15 @@ impl<'a> FsyncRequest<'a> {
     pub const VT_DATA: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsyncRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FsyncRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn data(&'a self) -> u32 {
+  pub fn data(&self) -> u32 {
     self._tab.get::<u32>(FsyncRequest::VT_DATA, Some(0)).unwrap()
   }
 }
@@ -5821,42 +5821,42 @@ impl<'a> FsyncResponse<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args FsyncResponseArgs<'args>) -> flatbuffers::WIPOffset<FsyncResponse<'bldr>> {
       let mut builder = FsyncResponseBuilder::new(_fbb);
-      if let Some(x) = args.poststat { builder.add_poststat(x); }
-      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.post_stat { builder.add_post_stat(x); }
+      if let Some(x) = args.pre_stat { builder.add_pre_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
     }
 
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
-    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
-    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_PRE_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POST_STAT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FsyncResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsyncResponse::VT_PRESTAT, None)
+  pub fn pre_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsyncResponse::VT_PRE_STAT, None)
   }
   #[inline]
-  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsyncResponse::VT_POSTSTAT, None)
+  pub fn post_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsyncResponse::VT_POST_STAT, None)
   }
 }
 
 pub struct FsyncResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
-    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
-    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub pre_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub post_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
 }
 impl<'a> Default for FsyncResponseArgs<'a> {
     #[inline]
     fn default() -> Self {
         FsyncResponseArgs {
             result: None,
-            prestat: None,
-            poststat: None,
+            pre_stat: None,
+            post_stat: None,
         }
     }
 }
@@ -5870,12 +5870,12 @@ impl<'a: 'b, 'b> FsyncResponseBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FsyncResponse::VT_RESULT, result);
   }
   #[inline]
-  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsyncResponse::VT_PRESTAT, prestat);
+  pub fn add_pre_stat(&mut self, pre_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsyncResponse::VT_PRE_STAT, pre_stat);
   }
   #[inline]
-  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsyncResponse::VT_POSTSTAT, poststat);
+  pub fn add_post_stat(&mut self, post_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FsyncResponse::VT_POST_STAT, post_stat);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FsyncResponseBuilder<'a, 'b> {
@@ -5930,11 +5930,11 @@ impl<'a> SetxattrRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetxattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(SetxattrRequest::VT_FLAGS, Some(0)).unwrap()
   }
 }
@@ -6020,15 +6020,15 @@ impl<'a> FsetxattrRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsetxattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FsetxattrRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(FsetxattrRequest::VT_FLAGS, Some(0)).unwrap()
   }
 }
@@ -6118,11 +6118,11 @@ impl<'a> XattropRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(XattropRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(XattropRequest::VT_FLAGS, Some(0)).unwrap()
   }
 }
@@ -6204,7 +6204,7 @@ impl<'a> XattropResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(XattropResponse::VT_RESULT, None)
   }
 }
@@ -6284,15 +6284,15 @@ impl<'a> FxattropRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FxattropRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FxattropRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(FxattropRequest::VT_FLAGS, Some(0)).unwrap()
   }
 }
@@ -6380,7 +6380,7 @@ impl<'a> FxattropResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FxattropResponse::VT_RESULT, None)
   }
 }
@@ -6460,15 +6460,15 @@ impl<'a> GetXattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(GetXattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn namelen(&'a self) -> u32 {
+  pub fn namelen(&self) -> u32 {
     self._tab.get::<u32>(GetXattrRequest::VT_NAMELEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetXattrRequest::VT_NAME, None)
   }
 }
@@ -6556,7 +6556,7 @@ impl<'a> GetxattrResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetxattrResponse::VT_RESULT, None)
   }
 }
@@ -6638,19 +6638,19 @@ impl<'a> FgetxattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FgetxattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FgetxattrRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn namelen(&'a self) -> u32 {
+  pub fn namelen(&self) -> u32 {
     self._tab.get::<u32>(FgetxattrRequest::VT_NAMELEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FgetxattrRequest::VT_NAME, None)
   }
 }
@@ -6744,7 +6744,7 @@ impl<'a> FgetxattrResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FgetxattrResponse::VT_RESULT, None)
   }
 }
@@ -6822,11 +6822,11 @@ impl<'a> RemovexattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RemovexattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RemovexattrRequest::VT_NAME, None)
   }
 }
@@ -6912,15 +6912,15 @@ impl<'a> FremovexattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FremovexattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FremovexattrRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FremovexattrRequest::VT_NAME, None)
   }
 }
@@ -7008,7 +7008,7 @@ impl<'a> OpendirRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(OpendirRequest::VT_RFID, None)
   }
 }
@@ -7086,11 +7086,11 @@ impl<'a> OpendirResponse<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(OpendirResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(OpendirResponse::VT_FD, Some(0)).unwrap()
   }
 }
@@ -7174,11 +7174,11 @@ impl<'a> FsyncdirRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsyncdirRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FsyncdirRequest::VT_FD, Some(0)).unwrap()
   }
 }
@@ -7266,19 +7266,19 @@ impl<'a> ReaddirRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReaddirRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(ReaddirRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(ReaddirRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn size_(&'a self) -> u32 {
+  pub fn size_(&self) -> u32 {
     self._tab.get::<u32>(ReaddirRequest::VT_SIZE_, Some(0)).unwrap()
   }
 }
@@ -7378,19 +7378,19 @@ impl<'a> ReaddirpRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReaddirpRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(ReaddirpRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(ReaddirpRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn size_(&'a self) -> u32 {
+  pub fn size_(&self) -> u32 {
     self._tab.get::<u32>(ReaddirpRequest::VT_SIZE_, Some(0)).unwrap()
   }
 }
@@ -7477,6 +7477,8 @@ impl<'a> AccessRequest<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args AccessRequestArgs<'args>) -> flatbuffers::WIPOffset<AccessRequest<'bldr>> {
       let mut builder = AccessRequestBuilder::new(_fbb);
+      builder.add_gid(args.gid);
+      builder.add_uid(args.uid);
       builder.add_mask(args.mask);
       if let Some(x) = args.rfid { builder.add_rfid(x); }
       builder.finish()
@@ -7484,20 +7486,32 @@ impl<'a> AccessRequest<'a> {
 
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
     pub const VT_MASK: flatbuffers::VOffsetT = 6;
+    pub const VT_UID: flatbuffers::VOffsetT = 8;
+    pub const VT_GID: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(AccessRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn mask(&'a self) -> u32 {
+  pub fn mask(&self) -> u32 {
     self._tab.get::<u32>(AccessRequest::VT_MASK, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn uid(&self) -> u32 {
+    self._tab.get::<u32>(AccessRequest::VT_UID, Some(0)).unwrap()
+  }
+  #[inline]
+  pub fn gid(&self) -> u32 {
+    self._tab.get::<u32>(AccessRequest::VT_GID, Some(0)).unwrap()
   }
 }
 
 pub struct AccessRequestArgs<'a> {
     pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
     pub mask: u32,
+    pub uid: u32,
+    pub gid: u32,
 }
 impl<'a> Default for AccessRequestArgs<'a> {
     #[inline]
@@ -7505,6 +7519,8 @@ impl<'a> Default for AccessRequestArgs<'a> {
         AccessRequestArgs {
             rfid: None,
             mask: 0,
+            uid: 0,
+            gid: 0,
         }
     }
 }
@@ -7520,6 +7536,14 @@ impl<'a: 'b, 'b> AccessRequestBuilder<'a, 'b> {
   #[inline]
   pub fn add_mask(&mut self, mask: u32) {
     self.fbb_.push_slot::<u32>(AccessRequest::VT_MASK, mask, 0);
+  }
+  #[inline]
+  pub fn add_uid(&mut self, uid: u32) {
+    self.fbb_.push_slot::<u32>(AccessRequest::VT_UID, uid, 0);
+  }
+  #[inline]
+  pub fn add_gid(&mut self, gid: u32) {
+    self.fbb_.push_slot::<u32>(AccessRequest::VT_GID, gid, 0);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> AccessRequestBuilder<'a, 'b> {
@@ -7580,23 +7604,23 @@ impl<'a> CreateRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn parent_rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(CreateRequest::VT_PARENT_RFID, None)
   }
   #[inline]
-  pub fn flags(&'a self) -> i32 {
+  pub fn flags(&self) -> i32 {
     self._tab.get::<i32>(CreateRequest::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn mode(&'a self) -> u32 {
+  pub fn mode(&self) -> u32 {
     self._tab.get::<u32>(CreateRequest::VT_MODE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn umask(&'a self) -> u32 {
+  pub fn umask(&self) -> u32 {
     self._tab.get::<u32>(CreateRequest::VT_UMASK, Some(0)).unwrap()
   }
   #[inline]
-  pub fn bname(&'a self) -> Option<&'a str> {
+  pub fn bname(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(CreateRequest::VT_BNAME, None)
   }
 }
@@ -7700,15 +7724,15 @@ impl<'a> CreateResponse<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(CreateResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_STAT, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(CreateResponse::VT_FD, Some(0)).unwrap()
   }
 }
@@ -7800,15 +7824,15 @@ impl<'a> FtruncateRequest<'a> {
     pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FtruncateRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FtruncateRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(FtruncateRequest::VT_OFFSET, Some(0)).unwrap()
   }
 }
@@ -7889,42 +7913,42 @@ impl<'a> FtruncateResponse<'a> {
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
         args: &'args FtruncateResponseArgs<'args>) -> flatbuffers::WIPOffset<FtruncateResponse<'bldr>> {
       let mut builder = FtruncateResponseBuilder::new(_fbb);
-      if let Some(x) = args.poststat { builder.add_poststat(x); }
-      if let Some(x) = args.prestat { builder.add_prestat(x); }
+      if let Some(x) = args.post_stat { builder.add_post_stat(x); }
+      if let Some(x) = args.pre_stat { builder.add_pre_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
     }
 
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
-    pub const VT_PRESTAT: flatbuffers::VOffsetT = 6;
-    pub const VT_POSTSTAT: flatbuffers::VOffsetT = 8;
+    pub const VT_PRE_STAT: flatbuffers::VOffsetT = 6;
+    pub const VT_POST_STAT: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FtruncateResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn prestat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FtruncateResponse::VT_PRESTAT, None)
+  pub fn pre_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FtruncateResponse::VT_PRE_STAT, None)
   }
   #[inline]
-  pub fn poststat(&'a self) -> Option<Iatt<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FtruncateResponse::VT_POSTSTAT, None)
+  pub fn post_stat(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FtruncateResponse::VT_POST_STAT, None)
   }
 }
 
 pub struct FtruncateResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
-    pub prestat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
-    pub poststat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub pre_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub post_stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
 }
 impl<'a> Default for FtruncateResponseArgs<'a> {
     #[inline]
     fn default() -> Self {
         FtruncateResponseArgs {
             result: None,
-            prestat: None,
-            poststat: None,
+            pre_stat: None,
+            post_stat: None,
         }
     }
 }
@@ -7938,12 +7962,12 @@ impl<'a: 'b, 'b> FtruncateResponseBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OpResult>>(FtruncateResponse::VT_RESULT, result);
   }
   #[inline]
-  pub fn add_prestat(&mut self, prestat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FtruncateResponse::VT_PRESTAT, prestat);
+  pub fn add_pre_stat(&mut self, pre_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FtruncateResponse::VT_PRE_STAT, pre_stat);
   }
   #[inline]
-  pub fn add_poststat(&mut self, poststat: flatbuffers::WIPOffset<Iatt<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FtruncateResponse::VT_POSTSTAT, poststat);
+  pub fn add_post_stat(&mut self, post_stat: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(FtruncateResponse::VT_POST_STAT, post_stat);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FtruncateResponseBuilder<'a, 'b> {
@@ -7998,11 +8022,11 @@ impl<'a> FstatRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FstatRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FstatRequest::VT_FD, Some(0)).unwrap()
   }
 }
@@ -8086,11 +8110,11 @@ impl<'a> FstatResponse<'a> {
     pub const VT_STAT: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FstatResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FstatResponse::VT_STAT, None)
   }
 }
@@ -8182,27 +8206,27 @@ impl<'a> EntrylkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(EntrylkRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn cmd(&'a self) -> u32 {
+  pub fn cmd(&self) -> u32 {
     self._tab.get::<u32>(EntrylkRequest::VT_CMD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn type_(&'a self) -> u32 {
+  pub fn type_(&self) -> u32 {
     self._tab.get::<u32>(EntrylkRequest::VT_TYPE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn namelen(&'a self) -> u64 {
+  pub fn namelen(&self) -> u64 {
     self._tab.get::<u64>(EntrylkRequest::VT_NAMELEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EntrylkRequest::VT_NAME, None)
   }
   #[inline]
-  pub fn volume(&'a self) -> Option<&'a str> {
+  pub fn volume(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(EntrylkRequest::VT_VOLUME, None)
   }
 }
@@ -8320,31 +8344,31 @@ impl<'a> FentrylkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 16;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FentrylkRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FentrylkRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn cmd(&'a self) -> u32 {
+  pub fn cmd(&self) -> u32 {
     self._tab.get::<u32>(FentrylkRequest::VT_CMD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn type_(&'a self) -> u32 {
+  pub fn type_(&self) -> u32 {
     self._tab.get::<u32>(FentrylkRequest::VT_TYPE_, Some(0)).unwrap()
   }
   #[inline]
-  pub fn namelen(&'a self) -> u64 {
+  pub fn namelen(&self) -> u64 {
     self._tab.get::<u64>(FentrylkRequest::VT_NAMELEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FentrylkRequest::VT_NAME, None)
   }
   #[inline]
-  pub fn volume(&'a self) -> Option<&'a str> {
+  pub fn volume(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(FentrylkRequest::VT_VOLUME, None)
   }
 }
@@ -8460,15 +8484,15 @@ impl<'a> SetattrRequest<'a> {
     pub const VT_VALID: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetattrRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn stbuf(&'a self) -> Option<Iatt<'a>> {
+  pub fn stbuf(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SetattrRequest::VT_STBUF, None)
   }
   #[inline]
-  pub fn valid(&'a self) -> i32 {
+  pub fn valid(&self) -> i32 {
     self._tab.get::<i32>(SetattrRequest::VT_VALID, Some(0)).unwrap()
   }
 }
@@ -8560,15 +8584,15 @@ impl<'a> SetattrResponse<'a> {
     pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SetattrResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpre(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SetattrResponse::VT_STATPRE, None)
   }
   #[inline]
-  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpost(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(SetattrResponse::VT_STATPOST, None)
   }
 }
@@ -8660,15 +8684,15 @@ impl<'a> FsetattrRequest<'a> {
     pub const VT_VALID: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FsetattrRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn stbuf(&'a self) -> Option<Iatt<'a>> {
+  pub fn stbuf(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsetattrRequest::VT_STBUF, None)
   }
   #[inline]
-  pub fn valid(&'a self) -> i32 {
+  pub fn valid(&self) -> i32 {
     self._tab.get::<i32>(FsetattrRequest::VT_VALID, Some(0)).unwrap()
   }
 }
@@ -8760,15 +8784,15 @@ impl<'a> FsetattrResponse<'a> {
     pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FsetattrResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpre(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsetattrResponse::VT_STATPRE, None)
   }
   #[inline]
-  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpost(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FsetattrResponse::VT_STATPOST, None)
   }
 }
@@ -8864,23 +8888,23 @@ impl<'a> FallocateRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FallocateRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(FallocateRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(FallocateRequest::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(FallocateRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn size_(&'a self) -> u64 {
+  pub fn size_(&self) -> u64 {
     self._tab.get::<u64>(FallocateRequest::VT_SIZE_, Some(0)).unwrap()
   }
 }
@@ -8984,15 +9008,15 @@ impl<'a> FallocateResponse<'a> {
     pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(FallocateResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpre(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FallocateResponse::VT_STATPRE, None)
   }
   #[inline]
-  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpost(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(FallocateResponse::VT_STATPOST, None)
   }
 }
@@ -9086,19 +9110,19 @@ impl<'a> DiscardRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(DiscardRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(DiscardRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(DiscardRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn size_(&'a self) -> u64 {
+  pub fn size_(&self) -> u64 {
     self._tab.get::<u64>(DiscardRequest::VT_SIZE_, Some(0)).unwrap()
   }
 }
@@ -9196,15 +9220,15 @@ impl<'a> DiscardResponse<'a> {
     pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(DiscardResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpre(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(DiscardResponse::VT_STATPRE, None)
   }
   #[inline]
-  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpost(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(DiscardResponse::VT_STATPOST, None)
   }
 }
@@ -9298,19 +9322,19 @@ impl<'a> ZerofillRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ZerofillRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(ZerofillRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(ZerofillRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn size_(&'a self) -> u64 {
+  pub fn size_(&self) -> u64 {
     self._tab.get::<u64>(ZerofillRequest::VT_SIZE_, Some(0)).unwrap()
   }
 }
@@ -9408,15 +9432,15 @@ impl<'a> ZerofillResponse<'a> {
     pub const VT_STATPOST: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ZerofillResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn statpre(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpre(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ZerofillResponse::VT_STATPRE, None)
   }
   #[inline]
-  pub fn statpost(&'a self) -> Option<Iatt<'a>> {
+  pub fn statpost(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(ZerofillResponse::VT_STATPOST, None)
   }
 }
@@ -9508,15 +9532,15 @@ impl<'a> RchecksumRequest<'a> {
     pub const VT_LEN: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(RchecksumRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(RchecksumRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn len(&'a self) -> u32 {
+  pub fn len(&self) -> u32 {
     self._tab.get::<u32>(RchecksumRequest::VT_LEN, Some(0)).unwrap()
   }
 }
@@ -9608,15 +9632,15 @@ impl<'a> RchecksumResponse<'a> {
     pub const VT_STRONG_CHECKSUM: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(RchecksumResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn weak_checksum(&'a self) -> u32 {
+  pub fn weak_checksum(&self) -> u32 {
     self._tab.get::<u32>(RchecksumResponse::VT_WEAK_CHECKSUM, Some(0)).unwrap()
   }
   #[inline]
-  pub fn strong_checksum(&'a self) -> Option<&'a str> {
+  pub fn strong_checksum(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(RchecksumResponse::VT_STRONG_CHECKSUM, None)
   }
 }
@@ -9704,7 +9728,7 @@ impl<'a> IpcRequest<'a> {
     pub const VT_OP: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn op(&'a self) -> u32 {
+  pub fn op(&self) -> u32 {
     self._tab.get::<u32>(IpcRequest::VT_OP, Some(0)).unwrap()
   }
 }
@@ -9780,7 +9804,7 @@ impl<'a> IpcResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(IpcResponse::VT_RESULT, None)
   }
 }
@@ -9862,19 +9886,19 @@ impl<'a> SeekRequest<'a> {
     pub const VT_WHAT: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SeekRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(SeekRequest::VT_FD, Some(0)).unwrap()
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(SeekRequest::VT_OFFSET, Some(0)).unwrap()
   }
   #[inline]
-  pub fn what(&'a self) -> i32 {
+  pub fn what(&self) -> i32 {
     self._tab.get::<i32>(SeekRequest::VT_WHAT, Some(0)).unwrap()
   }
 }
@@ -9970,11 +9994,11 @@ impl<'a> SeekResponse<'a> {
     pub const VT_OFFSET: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SeekResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn offset(&'a self) -> u64 {
+  pub fn offset(&self) -> u64 {
     self._tab.get::<u64>(SeekResponse::VT_OFFSET, Some(0)).unwrap()
   }
 }
@@ -10119,7 +10143,7 @@ impl<'a> SetVolumeResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SetVolumeResponse::VT_RESULT, None)
   }
 }
@@ -10197,11 +10221,11 @@ impl<'a> GetSpecRequest<'a> {
     pub const VT_KEY: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(GetSpecRequest::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn key(&'a self) -> Option<&'a str> {
+  pub fn key(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetSpecRequest::VT_KEY, None)
   }
 }
@@ -10285,11 +10309,11 @@ impl<'a> GetSpecResponse<'a> {
     pub const VT_SPEC: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetSpecResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn spec(&'a self) -> Option<&'a str> {
+  pub fn spec(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetSpecResponse::VT_SPEC, None)
   }
 }
@@ -10436,11 +10460,11 @@ impl<'a> GetVolumeInfoResponse<'a> {
     pub const VT_OP_ERRSTR: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetVolumeInfoResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn op_errstr(&'a self) -> Option<&'a str> {
+  pub fn op_errstr(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(GetVolumeInfoResponse::VT_OP_ERRSTR, None)
   }
 }
@@ -10522,7 +10546,7 @@ impl<'a> MgmtHndskRequest<'a> {
     pub const VT_HNDSK: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn hndsk(&'a self) -> Option<&'a str> {
+  pub fn hndsk(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MgmtHndskRequest::VT_HNDSK, None)
   }
 }
@@ -10600,11 +10624,11 @@ impl<'a> MgmtHndskResponse<'a> {
     pub const VT_HNDSK: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(MgmtHndskResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn hndsk(&'a self) -> Option<&'a str> {
+  pub fn hndsk(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(MgmtHndskResponse::VT_HNDSK, None)
   }
 }
@@ -10686,7 +10710,7 @@ impl<'a> LogRequest<'a> {
     pub const VT_MSG: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn msg(&'a self) -> Option<&'a str> {
+  pub fn msg(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LogRequest::VT_MSG, None)
   }
 }
@@ -10764,11 +10788,11 @@ impl<'a> NotifyRequest<'a> {
     pub const VT_BUF: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(NotifyRequest::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn buf(&'a self) -> Option<&'a str> {
+  pub fn buf(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(NotifyRequest::VT_BUF, None)
   }
 }
@@ -10854,15 +10878,15 @@ impl<'a> NotifyResponse<'a> {
     pub const VT_BUF: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(NotifyResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn flags(&'a self) -> u32 {
+  pub fn flags(&self) -> u32 {
     self._tab.get::<u32>(NotifyResponse::VT_FLAGS, Some(0)).unwrap()
   }
   #[inline]
-  pub fn buf(&'a self) -> Option<&'a str> {
+  pub fn buf(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(NotifyResponse::VT_BUF, None)
   }
 }
@@ -10952,11 +10976,11 @@ impl<'a> ReleasedirRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReleasedirRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(ReleasedirRequest::VT_FD, Some(0)).unwrap()
   }
 }
@@ -11040,11 +11064,11 @@ impl<'a> ReleaseRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReleaseRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn fd(&'a self) -> u64 {
+  pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(ReleaseRequest::VT_FD, Some(0)).unwrap()
   }
 }
@@ -11134,23 +11158,23 @@ impl<'a> DirListEntry<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn d_ino(&'a self) -> u64 {
+  pub fn d_ino(&self) -> u64 {
     self._tab.get::<u64>(DirListEntry::VT_D_INO, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d_off(&'a self) -> u64 {
+  pub fn d_off(&self) -> u64 {
     self._tab.get::<u64>(DirListEntry::VT_D_OFF, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d_len(&'a self) -> u32 {
+  pub fn d_len(&self) -> u32 {
     self._tab.get::<u32>(DirListEntry::VT_D_LEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d_type(&'a self) -> u32 {
+  pub fn d_type(&self) -> u32 {
     self._tab.get::<u32>(DirListEntry::VT_D_TYPE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DirListEntry::VT_NAME, None)
   }
 }
@@ -11250,7 +11274,7 @@ impl<'a> DirList<'a> {
     pub const VT_ENTRY: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn entry(&'a self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirListEntry<'a>>>> {
+  pub fn entry(&self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirListEntry<'a>>>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirListEntry<'a>>>>>(DirList::VT_ENTRY, None)
   }
 }
@@ -11328,11 +11352,11 @@ impl<'a> ReaddirResponse<'a> {
     pub const VT_REPLY: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReaddirResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn reply(&'a self) -> Option<DirList<'a>> {
+  pub fn reply(&self) -> Option<DirList<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<DirList<'a>>>(ReaddirResponse::VT_REPLY, None)
   }
 }
@@ -11424,27 +11448,27 @@ impl<'a> DirPListEntry<'a> {
     pub const VT_STAT: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn d_ino(&'a self) -> u64 {
+  pub fn d_ino(&self) -> u64 {
     self._tab.get::<u64>(DirPListEntry::VT_D_INO, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d_off(&'a self) -> u64 {
+  pub fn d_off(&self) -> u64 {
     self._tab.get::<u64>(DirPListEntry::VT_D_OFF, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d_len(&'a self) -> u32 {
+  pub fn d_len(&self) -> u32 {
     self._tab.get::<u32>(DirPListEntry::VT_D_LEN, Some(0)).unwrap()
   }
   #[inline]
-  pub fn d_type(&'a self) -> u32 {
+  pub fn d_type(&self) -> u32 {
     self._tab.get::<u32>(DirPListEntry::VT_D_TYPE, Some(0)).unwrap()
   }
   #[inline]
-  pub fn name(&'a self) -> Option<&'a str> {
+  pub fn name(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(DirPListEntry::VT_NAME, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<Iatt<'a>> {
+  pub fn stat(&self) -> Option<Iatt<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(DirPListEntry::VT_STAT, None)
   }
 }
@@ -11550,7 +11574,7 @@ impl<'a> DirPList<'a> {
     pub const VT_ENTRY: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn entry(&'a self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirPListEntry<'a>>>> {
+  pub fn entry(&self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirPListEntry<'a>>>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<DirPListEntry<'a>>>>>(DirPList::VT_ENTRY, None)
   }
 }
@@ -11628,11 +11652,11 @@ impl<'a> ReaddirpResponse<'a> {
     pub const VT_REPLY: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(ReaddirpResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn reply(&'a self) -> Option<DirPList<'a>> {
+  pub fn reply(&self) -> Option<DirPList<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<DirPList<'a>>>(ReaddirpResponse::VT_REPLY, None)
   }
 }
@@ -11716,11 +11740,11 @@ impl<'a> Set_lk_verResponse<'a> {
     pub const VT_LK_VER: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(Set_lk_verResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn lk_ver(&'a self) -> i32 {
+  pub fn lk_ver(&self) -> i32 {
     self._tab.get::<i32>(Set_lk_verResponse::VT_LK_VER, Some(0)).unwrap()
   }
 }
@@ -11804,11 +11828,11 @@ impl<'a> Set_lk_verRequest<'a> {
     pub const VT_LK_VER: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn uid(&'a self) -> Option<&'a str> {
+  pub fn uid(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(Set_lk_verRequest::VT_UID, None)
   }
   #[inline]
-  pub fn lk_ver(&'a self) -> i32 {
+  pub fn lk_ver(&self) -> i32 {
     self._tab.get::<i32>(Set_lk_verRequest::VT_LK_VER, Some(0)).unwrap()
   }
 }
@@ -11890,7 +11914,7 @@ impl<'a> EventNotifyRequest<'a> {
     pub const VT_OP: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn op(&'a self) -> i32 {
+  pub fn op(&self) -> i32 {
     self._tab.get::<i32>(EventNotifyRequest::VT_OP, Some(0)).unwrap()
   }
 }
@@ -11966,7 +11990,7 @@ impl<'a> EventNotifyResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(EventNotifyResponse::VT_RESULT, None)
   }
 }
@@ -12105,7 +12129,7 @@ impl<'a> GetSnapNameUuidResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetSnapNameUuidResponse::VT_RESULT, None)
   }
 }
@@ -12183,11 +12207,11 @@ impl<'a> CompoundRequest<'a> {
     pub const VT_REQUESTS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn compound_version(&'a self) -> i32 {
+  pub fn compound_version(&self) -> i32 {
     self._tab.get::<i32>(CompoundRequest::VT_COMPOUND_VERSION, Some(0)).unwrap()
   }
   #[inline]
-  pub fn requests(&'a self) -> Option<flatbuffers::Vector<'a, Fop>> {
+  pub fn requests(&self) -> Option<flatbuffers::Vector<'a, Fop>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, Fop>>>(CompoundRequest::VT_REQUESTS, None)
   }
 }
@@ -12269,7 +12293,7 @@ impl<'a> CompoundResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(CompoundResponse::VT_RESULT, None)
   }
 }
@@ -12349,15 +12373,15 @@ impl<'a> LocklistEntry<'a> {
     pub const VT_LK_FLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn flock(&'a self) -> Option<ProtoFlock<'a>> {
+  pub fn flock(&self) -> Option<ProtoFlock<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ProtoFlock<'a>>>(LocklistEntry::VT_FLOCK, None)
   }
   #[inline]
-  pub fn client_uid(&'a self) -> Option<&'a str> {
+  pub fn client_uid(&self) -> Option<&'a str> {
     self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(LocklistEntry::VT_CLIENT_UID, None)
   }
   #[inline]
-  pub fn lk_flags(&'a self) -> u32 {
+  pub fn lk_flags(&self) -> u32 {
     self._tab.get::<u32>(LocklistEntry::VT_LK_FLAGS, Some(0)).unwrap()
   }
 }
@@ -12445,7 +12469,7 @@ impl<'a> LockList<'a> {
     pub const VT_ENTRY: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn entry(&'a self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<LocklistEntry<'a>>>> {
+  pub fn entry(&self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<LocklistEntry<'a>>>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<LocklistEntry<'a>>>>>(LockList::VT_ENTRY, None)
   }
 }
@@ -12523,11 +12547,11 @@ impl<'a> GetactivelkResponse<'a> {
     pub const VT_REPLY: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(GetactivelkResponse::VT_RESULT, None)
   }
   #[inline]
-  pub fn reply(&'a self) -> Option<LockList<'a>> {
+  pub fn reply(&self) -> Option<LockList<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LockList<'a>>>(GetactivelkResponse::VT_REPLY, None)
   }
 }
@@ -12609,7 +12633,7 @@ impl<'a> GetactivelkRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(GetactivelkRequest::VT_RFID, None)
   }
 }
@@ -12685,7 +12709,7 @@ impl<'a> SetactivelkResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn result(&'a self) -> Option<OpResult<'a>> {
+  pub fn result(&self) -> Option<OpResult<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpResult<'a>>>(SetactivelkResponse::VT_RESULT, None)
   }
 }
@@ -12763,11 +12787,11 @@ impl<'a> SetactivelkRequest<'a> {
     pub const VT_REQUEST: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&'a self) -> Option<Rfid<'a>> {
+  pub fn rfid(&self) -> Option<Rfid<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetactivelkRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn request(&'a self) -> Option<LockList<'a>> {
+  pub fn request(&self) -> Option<LockList<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LockList<'a>>>(SetactivelkRequest::VT_REQUEST, None)
   }
 }
@@ -12846,7 +12870,7 @@ impl<'a> Operation<'a> {
       if let Some(x) = args.xattrop { builder.add_xattrop(x); }
       if let Some(x) = args.write { builder.add_write(x); }
       if let Some(x) = args.unlink { builder.add_unlink(x); }
-      if let Some(x) = args.trunate { builder.add_trunate(x); }
+      if let Some(x) = args.truncate { builder.add_truncate(x); }
       if let Some(x) = args.symlink { builder.add_symlink(x); }
       if let Some(x) = args.stat { builder.add_stat(x); }
       if let Some(x) = args.statfs { builder.add_statfs(x); }
@@ -12905,328 +12929,335 @@ impl<'a> Operation<'a> {
       if let Some(x) = args.compound { builder.add_compound(x); }
       if let Some(x) = args.cache_invalidate { builder.add_cache_invalidate(x); }
       if let Some(x) = args.access { builder.add_access(x); }
+      builder.add_fop_type(args.fop_type);
       builder.finish()
     }
 
-    pub const VT_ACCESS: flatbuffers::VOffsetT = 4;
-    pub const VT_CACHE_INVALIDATE: flatbuffers::VOffsetT = 6;
-    pub const VT_COMPOUND: flatbuffers::VOffsetT = 8;
-    pub const VT_CREAT: flatbuffers::VOffsetT = 10;
-    pub const VT_DISCARD: flatbuffers::VOffsetT = 12;
-    pub const VT_ENTRYLK: flatbuffers::VOffsetT = 14;
-    pub const VT_EVENT_NOTIFY: flatbuffers::VOffsetT = 16;
-    pub const VT_FALLOCATE: flatbuffers::VOffsetT = 18;
-    pub const VT_FENTRYLK: flatbuffers::VOffsetT = 20;
-    pub const VT_FGETXATTR: flatbuffers::VOffsetT = 22;
-    pub const VT_FINODELK: flatbuffers::VOffsetT = 24;
-    pub const VT_FLUSH: flatbuffers::VOffsetT = 26;
-    pub const VT_FREMOVEXATTR: flatbuffers::VOffsetT = 28;
-    pub const VT_FSETATTR: flatbuffers::VOffsetT = 30;
-    pub const VT_FSETXATTR: flatbuffers::VOffsetT = 32;
-    pub const VT_FSTAT: flatbuffers::VOffsetT = 34;
-    pub const VT_FSYNCDIR: flatbuffers::VOffsetT = 36;
-    pub const VT_FSYNC: flatbuffers::VOffsetT = 38;
-    pub const VT_FTRUNCATE: flatbuffers::VOffsetT = 40;
-    pub const VT_FXATTROP: flatbuffers::VOffsetT = 42;
-    pub const VT_GETACTIVELK: flatbuffers::VOffsetT = 44;
-    pub const VT_GET_SNAP_NAME_UUID: flatbuffers::VOffsetT = 46;
-    pub const VT_GET_SPEC: flatbuffers::VOffsetT = 48;
-    pub const VT_GET_VOLUME_INFO: flatbuffers::VOffsetT = 50;
-    pub const VT_GETXATTR: flatbuffers::VOffsetT = 52;
-    pub const VT_INODELK: flatbuffers::VOffsetT = 54;
-    pub const VT_IPC: flatbuffers::VOffsetT = 56;
-    pub const VT_LEASE: flatbuffers::VOffsetT = 58;
-    pub const VT_LINK: flatbuffers::VOffsetT = 60;
-    pub const VT_LOCK: flatbuffers::VOffsetT = 62;
-    pub const VT_LOG: flatbuffers::VOffsetT = 64;
-    pub const VT_LOOKUP: flatbuffers::VOffsetT = 66;
-    pub const VT_MGMT_HNDSK: flatbuffers::VOffsetT = 68;
-    pub const VT_MKDIR: flatbuffers::VOffsetT = 70;
-    pub const VT_MKNOD: flatbuffers::VOffsetT = 72;
-    pub const VT_NOTIFY: flatbuffers::VOffsetT = 74;
-    pub const VT_OPENDIR: flatbuffers::VOffsetT = 76;
-    pub const VT_OPEN: flatbuffers::VOffsetT = 78;
-    pub const VT_RCHECKSUM: flatbuffers::VOffsetT = 80;
-    pub const VT_READDIRP: flatbuffers::VOffsetT = 82;
-    pub const VT_READDIR: flatbuffers::VOffsetT = 84;
-    pub const VT_READLK: flatbuffers::VOffsetT = 86;
-    pub const VT_READ: flatbuffers::VOffsetT = 88;
-    pub const VT_RECALL: flatbuffers::VOffsetT = 90;
-    pub const VT_RELEASEDIR: flatbuffers::VOffsetT = 92;
-    pub const VT_RELEASE: flatbuffers::VOffsetT = 94;
-    pub const VT_REMOVEXATTR: flatbuffers::VOffsetT = 96;
-    pub const VT_RENAME: flatbuffers::VOffsetT = 98;
-    pub const VT_RMDIR: flatbuffers::VOffsetT = 100;
-    pub const VT_SEEK: flatbuffers::VOffsetT = 102;
-    pub const VT_SETACTIVELK: flatbuffers::VOffsetT = 104;
-    pub const VT_SETATTR: flatbuffers::VOffsetT = 106;
-    pub const VT_SET_LK_VER: flatbuffers::VOffsetT = 108;
-    pub const VT_SET_VOLUME: flatbuffers::VOffsetT = 110;
-    pub const VT_SETXATTR: flatbuffers::VOffsetT = 112;
-    pub const VT_STATFS: flatbuffers::VOffsetT = 114;
-    pub const VT_STAT: flatbuffers::VOffsetT = 116;
-    pub const VT_SYMLINK: flatbuffers::VOffsetT = 118;
-    pub const VT_TRUNATE: flatbuffers::VOffsetT = 120;
-    pub const VT_UNLINK: flatbuffers::VOffsetT = 122;
-    pub const VT_WRITE: flatbuffers::VOffsetT = 124;
-    pub const VT_XATTROP: flatbuffers::VOffsetT = 126;
-    pub const VT_ZEROFILL: flatbuffers::VOffsetT = 128;
+    pub const VT_FOP_TYPE: flatbuffers::VOffsetT = 4;
+    pub const VT_ACCESS: flatbuffers::VOffsetT = 6;
+    pub const VT_CACHE_INVALIDATE: flatbuffers::VOffsetT = 8;
+    pub const VT_COMPOUND: flatbuffers::VOffsetT = 10;
+    pub const VT_CREAT: flatbuffers::VOffsetT = 12;
+    pub const VT_DISCARD: flatbuffers::VOffsetT = 14;
+    pub const VT_ENTRYLK: flatbuffers::VOffsetT = 16;
+    pub const VT_EVENT_NOTIFY: flatbuffers::VOffsetT = 18;
+    pub const VT_FALLOCATE: flatbuffers::VOffsetT = 20;
+    pub const VT_FENTRYLK: flatbuffers::VOffsetT = 22;
+    pub const VT_FGETXATTR: flatbuffers::VOffsetT = 24;
+    pub const VT_FINODELK: flatbuffers::VOffsetT = 26;
+    pub const VT_FLUSH: flatbuffers::VOffsetT = 28;
+    pub const VT_FREMOVEXATTR: flatbuffers::VOffsetT = 30;
+    pub const VT_FSETATTR: flatbuffers::VOffsetT = 32;
+    pub const VT_FSETXATTR: flatbuffers::VOffsetT = 34;
+    pub const VT_FSTAT: flatbuffers::VOffsetT = 36;
+    pub const VT_FSYNCDIR: flatbuffers::VOffsetT = 38;
+    pub const VT_FSYNC: flatbuffers::VOffsetT = 40;
+    pub const VT_FTRUNCATE: flatbuffers::VOffsetT = 42;
+    pub const VT_FXATTROP: flatbuffers::VOffsetT = 44;
+    pub const VT_GETACTIVELK: flatbuffers::VOffsetT = 46;
+    pub const VT_GET_SNAP_NAME_UUID: flatbuffers::VOffsetT = 48;
+    pub const VT_GET_SPEC: flatbuffers::VOffsetT = 50;
+    pub const VT_GET_VOLUME_INFO: flatbuffers::VOffsetT = 52;
+    pub const VT_GETXATTR: flatbuffers::VOffsetT = 54;
+    pub const VT_INODELK: flatbuffers::VOffsetT = 56;
+    pub const VT_IPC: flatbuffers::VOffsetT = 58;
+    pub const VT_LEASE: flatbuffers::VOffsetT = 60;
+    pub const VT_LINK: flatbuffers::VOffsetT = 62;
+    pub const VT_LOCK: flatbuffers::VOffsetT = 64;
+    pub const VT_LOG: flatbuffers::VOffsetT = 66;
+    pub const VT_LOOKUP: flatbuffers::VOffsetT = 68;
+    pub const VT_MGMT_HNDSK: flatbuffers::VOffsetT = 70;
+    pub const VT_MKDIR: flatbuffers::VOffsetT = 72;
+    pub const VT_MKNOD: flatbuffers::VOffsetT = 74;
+    pub const VT_NOTIFY: flatbuffers::VOffsetT = 76;
+    pub const VT_OPENDIR: flatbuffers::VOffsetT = 78;
+    pub const VT_OPEN: flatbuffers::VOffsetT = 80;
+    pub const VT_RCHECKSUM: flatbuffers::VOffsetT = 82;
+    pub const VT_READDIRP: flatbuffers::VOffsetT = 84;
+    pub const VT_READDIR: flatbuffers::VOffsetT = 86;
+    pub const VT_READLK: flatbuffers::VOffsetT = 88;
+    pub const VT_READ: flatbuffers::VOffsetT = 90;
+    pub const VT_RECALL: flatbuffers::VOffsetT = 92;
+    pub const VT_RELEASEDIR: flatbuffers::VOffsetT = 94;
+    pub const VT_RELEASE: flatbuffers::VOffsetT = 96;
+    pub const VT_REMOVEXATTR: flatbuffers::VOffsetT = 98;
+    pub const VT_RENAME: flatbuffers::VOffsetT = 100;
+    pub const VT_RMDIR: flatbuffers::VOffsetT = 102;
+    pub const VT_SEEK: flatbuffers::VOffsetT = 104;
+    pub const VT_SETACTIVELK: flatbuffers::VOffsetT = 106;
+    pub const VT_SETATTR: flatbuffers::VOffsetT = 108;
+    pub const VT_SET_LK_VER: flatbuffers::VOffsetT = 110;
+    pub const VT_SET_VOLUME: flatbuffers::VOffsetT = 112;
+    pub const VT_SETXATTR: flatbuffers::VOffsetT = 114;
+    pub const VT_STATFS: flatbuffers::VOffsetT = 116;
+    pub const VT_STAT: flatbuffers::VOffsetT = 118;
+    pub const VT_SYMLINK: flatbuffers::VOffsetT = 120;
+    pub const VT_TRUNCATE: flatbuffers::VOffsetT = 122;
+    pub const VT_UNLINK: flatbuffers::VOffsetT = 124;
+    pub const VT_WRITE: flatbuffers::VOffsetT = 126;
+    pub const VT_XATTROP: flatbuffers::VOffsetT = 128;
+    pub const VT_ZEROFILL: flatbuffers::VOffsetT = 130;
 
   #[inline]
-  pub fn access(&'a self) -> Option<AccessRequest<'a>> {
+  pub fn fop_type(&self) -> Fop {
+    self._tab.get::<Fop>(Operation::VT_FOP_TYPE, Some(Fop::IPC)).unwrap()
+  }
+  #[inline]
+  pub fn access(&self) -> Option<AccessRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<AccessRequest<'a>>>(Operation::VT_ACCESS, None)
   }
   #[inline]
-  pub fn cache_invalidate(&'a self) -> Option<CacheInvalidationRequest<'a>> {
+  pub fn cache_invalidate(&self) -> Option<CacheInvalidationRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<CacheInvalidationRequest<'a>>>(Operation::VT_CACHE_INVALIDATE, None)
   }
   #[inline]
-  pub fn compound(&'a self) -> Option<CompoundRequest<'a>> {
+  pub fn compound(&self) -> Option<CompoundRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<CompoundRequest<'a>>>(Operation::VT_COMPOUND, None)
   }
   #[inline]
-  pub fn creat(&'a self) -> Option<CreateRequest<'a>> {
+  pub fn creat(&self) -> Option<CreateRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<CreateRequest<'a>>>(Operation::VT_CREAT, None)
   }
   #[inline]
-  pub fn discard(&'a self) -> Option<DiscardRequest<'a>> {
+  pub fn discard(&self) -> Option<DiscardRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<DiscardRequest<'a>>>(Operation::VT_DISCARD, None)
   }
   #[inline]
-  pub fn entrylk(&'a self) -> Option<EntrylkRequest<'a>> {
+  pub fn entrylk(&self) -> Option<EntrylkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<EntrylkRequest<'a>>>(Operation::VT_ENTRYLK, None)
   }
   #[inline]
-  pub fn event_notify(&'a self) -> Option<EventNotifyRequest<'a>> {
+  pub fn event_notify(&self) -> Option<EventNotifyRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<EventNotifyRequest<'a>>>(Operation::VT_EVENT_NOTIFY, None)
   }
   #[inline]
-  pub fn fallocate(&'a self) -> Option<FallocateRequest<'a>> {
+  pub fn fallocate(&self) -> Option<FallocateRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FallocateRequest<'a>>>(Operation::VT_FALLOCATE, None)
   }
   #[inline]
-  pub fn fentrylk(&'a self) -> Option<FentrylkRequest<'a>> {
+  pub fn fentrylk(&self) -> Option<FentrylkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FentrylkRequest<'a>>>(Operation::VT_FENTRYLK, None)
   }
   #[inline]
-  pub fn fgetxattr(&'a self) -> Option<FgetxattrRequest<'a>> {
+  pub fn fgetxattr(&self) -> Option<FgetxattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FgetxattrRequest<'a>>>(Operation::VT_FGETXATTR, None)
   }
   #[inline]
-  pub fn finodelk(&'a self) -> Option<FinodelkRequest<'a>> {
+  pub fn finodelk(&self) -> Option<FinodelkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FinodelkRequest<'a>>>(Operation::VT_FINODELK, None)
   }
   #[inline]
-  pub fn flush(&'a self) -> Option<FlushRequest<'a>> {
+  pub fn flush(&self) -> Option<FlushRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FlushRequest<'a>>>(Operation::VT_FLUSH, None)
   }
   #[inline]
-  pub fn fremovexattr(&'a self) -> Option<FremovexattrRequest<'a>> {
+  pub fn fremovexattr(&self) -> Option<FremovexattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FremovexattrRequest<'a>>>(Operation::VT_FREMOVEXATTR, None)
   }
   #[inline]
-  pub fn fsetattr(&'a self) -> Option<FsetattrRequest<'a>> {
+  pub fn fsetattr(&self) -> Option<FsetattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FsetattrRequest<'a>>>(Operation::VT_FSETATTR, None)
   }
   #[inline]
-  pub fn fsetxattr(&'a self) -> Option<FsetxattrRequest<'a>> {
+  pub fn fsetxattr(&self) -> Option<FsetxattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FsetxattrRequest<'a>>>(Operation::VT_FSETXATTR, None)
   }
   #[inline]
-  pub fn fstat(&'a self) -> Option<FstatRequest<'a>> {
+  pub fn fstat(&self) -> Option<FstatRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FstatRequest<'a>>>(Operation::VT_FSTAT, None)
   }
   #[inline]
-  pub fn fsyncdir(&'a self) -> Option<FsyncdirRequest<'a>> {
+  pub fn fsyncdir(&self) -> Option<FsyncdirRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FsyncdirRequest<'a>>>(Operation::VT_FSYNCDIR, None)
   }
   #[inline]
-  pub fn fsync(&'a self) -> Option<FsyncRequest<'a>> {
+  pub fn fsync(&self) -> Option<FsyncRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FsyncRequest<'a>>>(Operation::VT_FSYNC, None)
   }
   #[inline]
-  pub fn ftruncate(&'a self) -> Option<FtruncateRequest<'a>> {
+  pub fn ftruncate(&self) -> Option<FtruncateRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FtruncateRequest<'a>>>(Operation::VT_FTRUNCATE, None)
   }
   #[inline]
-  pub fn fxattrop(&'a self) -> Option<FxattropRequest<'a>> {
+  pub fn fxattrop(&self) -> Option<FxattropRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<FxattropRequest<'a>>>(Operation::VT_FXATTROP, None)
   }
   #[inline]
-  pub fn getactivelk(&'a self) -> Option<GetactivelkRequest<'a>> {
+  pub fn getactivelk(&self) -> Option<GetactivelkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<GetactivelkRequest<'a>>>(Operation::VT_GETACTIVELK, None)
   }
   #[inline]
-  pub fn get_snap_name_uuid(&'a self) -> Option<GetSnapNameUuidRequest<'a>> {
+  pub fn get_snap_name_uuid(&self) -> Option<GetSnapNameUuidRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<GetSnapNameUuidRequest<'a>>>(Operation::VT_GET_SNAP_NAME_UUID, None)
   }
   #[inline]
-  pub fn get_spec(&'a self) -> Option<GetSpecRequest<'a>> {
+  pub fn get_spec(&self) -> Option<GetSpecRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<GetSpecRequest<'a>>>(Operation::VT_GET_SPEC, None)
   }
   #[inline]
-  pub fn get_volume_info(&'a self) -> Option<GetVolumeInfoRequest<'a>> {
+  pub fn get_volume_info(&self) -> Option<GetVolumeInfoRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<GetVolumeInfoRequest<'a>>>(Operation::VT_GET_VOLUME_INFO, None)
   }
   #[inline]
-  pub fn getxattr(&'a self) -> Option<GetXattrRequest<'a>> {
+  pub fn getxattr(&self) -> Option<GetXattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<GetXattrRequest<'a>>>(Operation::VT_GETXATTR, None)
   }
   #[inline]
-  pub fn inodelk(&'a self) -> Option<InodelkRequest<'a>> {
+  pub fn inodelk(&self) -> Option<InodelkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<InodelkRequest<'a>>>(Operation::VT_INODELK, None)
   }
   #[inline]
-  pub fn ipc(&'a self) -> Option<IpcRequest<'a>> {
+  pub fn ipc(&self) -> Option<IpcRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<IpcRequest<'a>>>(Operation::VT_IPC, None)
   }
   #[inline]
-  pub fn lease(&'a self) -> Option<LeaseRequest<'a>> {
+  pub fn lease(&self) -> Option<LeaseRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LeaseRequest<'a>>>(Operation::VT_LEASE, None)
   }
   #[inline]
-  pub fn link(&'a self) -> Option<LinkRequest<'a>> {
+  pub fn link(&self) -> Option<LinkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LinkRequest<'a>>>(Operation::VT_LINK, None)
   }
   #[inline]
-  pub fn lock(&'a self) -> Option<LockRequest<'a>> {
+  pub fn lock(&self) -> Option<LockRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LockRequest<'a>>>(Operation::VT_LOCK, None)
   }
   #[inline]
-  pub fn log(&'a self) -> Option<LogRequest<'a>> {
+  pub fn log(&self) -> Option<LogRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LogRequest<'a>>>(Operation::VT_LOG, None)
   }
   #[inline]
-  pub fn lookup(&'a self) -> Option<LookupRequest<'a>> {
+  pub fn lookup(&self) -> Option<LookupRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<LookupRequest<'a>>>(Operation::VT_LOOKUP, None)
   }
   #[inline]
-  pub fn mgmt_hndsk(&'a self) -> Option<MgmtHndskRequest<'a>> {
+  pub fn mgmt_hndsk(&self) -> Option<MgmtHndskRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<MgmtHndskRequest<'a>>>(Operation::VT_MGMT_HNDSK, None)
   }
   #[inline]
-  pub fn mkdir(&'a self) -> Option<MkdirRequest<'a>> {
+  pub fn mkdir(&self) -> Option<MkdirRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<MkdirRequest<'a>>>(Operation::VT_MKDIR, None)
   }
   #[inline]
-  pub fn mknod(&'a self) -> Option<MknodRequest<'a>> {
+  pub fn mknod(&self) -> Option<MknodRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<MknodRequest<'a>>>(Operation::VT_MKNOD, None)
   }
   #[inline]
-  pub fn notify(&'a self) -> Option<NotifyRequest<'a>> {
+  pub fn notify(&self) -> Option<NotifyRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<NotifyRequest<'a>>>(Operation::VT_NOTIFY, None)
   }
   #[inline]
-  pub fn opendir(&'a self) -> Option<OpendirRequest<'a>> {
+  pub fn opendir(&self) -> Option<OpendirRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpendirRequest<'a>>>(Operation::VT_OPENDIR, None)
   }
   #[inline]
-  pub fn open(&'a self) -> Option<OpenRequest<'a>> {
+  pub fn open(&self) -> Option<OpenRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<OpenRequest<'a>>>(Operation::VT_OPEN, None)
   }
   #[inline]
-  pub fn rchecksum(&'a self) -> Option<RchecksumRequest<'a>> {
+  pub fn rchecksum(&self) -> Option<RchecksumRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<RchecksumRequest<'a>>>(Operation::VT_RCHECKSUM, None)
   }
   #[inline]
-  pub fn readdirp(&'a self) -> Option<ReaddirpRequest<'a>> {
+  pub fn readdirp(&self) -> Option<ReaddirpRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ReaddirpRequest<'a>>>(Operation::VT_READDIRP, None)
   }
   #[inline]
-  pub fn readdir(&'a self) -> Option<ReaddirRequest<'a>> {
+  pub fn readdir(&self) -> Option<ReaddirRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ReaddirRequest<'a>>>(Operation::VT_READDIR, None)
   }
   #[inline]
-  pub fn readlk(&'a self) -> Option<ReadlinkRequest<'a>> {
+  pub fn readlk(&self) -> Option<ReadlinkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ReadlinkRequest<'a>>>(Operation::VT_READLK, None)
   }
   #[inline]
-  pub fn read(&'a self) -> Option<ReadRequest<'a>> {
+  pub fn read(&self) -> Option<ReadRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ReadRequest<'a>>>(Operation::VT_READ, None)
   }
   #[inline]
-  pub fn recall(&'a self) -> Option<RecallLeaseRequest<'a>> {
+  pub fn recall(&self) -> Option<RecallLeaseRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<RecallLeaseRequest<'a>>>(Operation::VT_RECALL, None)
   }
   #[inline]
-  pub fn releasedir(&'a self) -> Option<ReleasedirRequest<'a>> {
+  pub fn releasedir(&self) -> Option<ReleasedirRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ReleasedirRequest<'a>>>(Operation::VT_RELEASEDIR, None)
   }
   #[inline]
-  pub fn release(&'a self) -> Option<ReleaseRequest<'a>> {
+  pub fn release(&self) -> Option<ReleaseRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ReleaseRequest<'a>>>(Operation::VT_RELEASE, None)
   }
   #[inline]
-  pub fn removexattr(&'a self) -> Option<RemovexattrRequest<'a>> {
+  pub fn removexattr(&self) -> Option<RemovexattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<RemovexattrRequest<'a>>>(Operation::VT_REMOVEXATTR, None)
   }
   #[inline]
-  pub fn rename(&'a self) -> Option<RenameRequest<'a>> {
+  pub fn rename(&self) -> Option<RenameRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<RenameRequest<'a>>>(Operation::VT_RENAME, None)
   }
   #[inline]
-  pub fn rmdir(&'a self) -> Option<RmdirRequest<'a>> {
+  pub fn rmdir(&self) -> Option<RmdirRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<RmdirRequest<'a>>>(Operation::VT_RMDIR, None)
   }
   #[inline]
-  pub fn seek(&'a self) -> Option<SeekRequest<'a>> {
+  pub fn seek(&self) -> Option<SeekRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<SeekRequest<'a>>>(Operation::VT_SEEK, None)
   }
   #[inline]
-  pub fn setactivelk(&'a self) -> Option<SetactivelkRequest<'a>> {
+  pub fn setactivelk(&self) -> Option<SetactivelkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<SetactivelkRequest<'a>>>(Operation::VT_SETACTIVELK, None)
   }
   #[inline]
-  pub fn setattr(&'a self) -> Option<SetattrRequest<'a>> {
+  pub fn setattr(&self) -> Option<SetattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<SetattrRequest<'a>>>(Operation::VT_SETATTR, None)
   }
   #[inline]
-  pub fn set_lk_ver(&'a self) -> Option<Set_lk_verRequest<'a>> {
+  pub fn set_lk_ver(&self) -> Option<Set_lk_verRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<Set_lk_verRequest<'a>>>(Operation::VT_SET_LK_VER, None)
   }
   #[inline]
-  pub fn set_volume(&'a self) -> Option<SetVolumeRequest<'a>> {
+  pub fn set_volume(&self) -> Option<SetVolumeRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<SetVolumeRequest<'a>>>(Operation::VT_SET_VOLUME, None)
   }
   #[inline]
-  pub fn setxattr(&'a self) -> Option<SetxattrRequest<'a>> {
+  pub fn setxattr(&self) -> Option<SetxattrRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<SetxattrRequest<'a>>>(Operation::VT_SETXATTR, None)
   }
   #[inline]
-  pub fn statfs(&'a self) -> Option<StatfsRequest<'a>> {
+  pub fn statfs(&self) -> Option<StatfsRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<StatfsRequest<'a>>>(Operation::VT_STATFS, None)
   }
   #[inline]
-  pub fn stat(&'a self) -> Option<StatRequest<'a>> {
+  pub fn stat(&self) -> Option<StatRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<StatRequest<'a>>>(Operation::VT_STAT, None)
   }
   #[inline]
-  pub fn symlink(&'a self) -> Option<SymlinkRequest<'a>> {
+  pub fn symlink(&self) -> Option<SymlinkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<SymlinkRequest<'a>>>(Operation::VT_SYMLINK, None)
   }
   #[inline]
-  pub fn trunate(&'a self) -> Option<TruncateRequest<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<TruncateRequest<'a>>>(Operation::VT_TRUNATE, None)
+  pub fn truncate(&self) -> Option<TruncateRequest<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<TruncateRequest<'a>>>(Operation::VT_TRUNCATE, None)
   }
   #[inline]
-  pub fn unlink(&'a self) -> Option<UnlinkRequest<'a>> {
+  pub fn unlink(&self) -> Option<UnlinkRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<UnlinkRequest<'a>>>(Operation::VT_UNLINK, None)
   }
   #[inline]
-  pub fn write(&'a self) -> Option<WriteRequest<'a>> {
+  pub fn write(&self) -> Option<WriteRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<WriteRequest<'a>>>(Operation::VT_WRITE, None)
   }
   #[inline]
-  pub fn xattrop(&'a self) -> Option<XattropRequest<'a>> {
+  pub fn xattrop(&self) -> Option<XattropRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<XattropRequest<'a>>>(Operation::VT_XATTROP, None)
   }
   #[inline]
-  pub fn zerofill(&'a self) -> Option<ZerofillRequest<'a>> {
+  pub fn zerofill(&self) -> Option<ZerofillRequest<'a>> {
     self._tab.get::<flatbuffers::ForwardsUOffset<ZerofillRequest<'a>>>(Operation::VT_ZEROFILL, None)
   }
 }
 
 pub struct OperationArgs<'a> {
+    pub fop_type: Fop,
     pub access: Option<flatbuffers::WIPOffset<AccessRequest<'a >>>,
     pub cache_invalidate: Option<flatbuffers::WIPOffset<CacheInvalidationRequest<'a >>>,
     pub compound: Option<flatbuffers::WIPOffset<CompoundRequest<'a >>>,
@@ -13285,7 +13316,7 @@ pub struct OperationArgs<'a> {
     pub statfs: Option<flatbuffers::WIPOffset<StatfsRequest<'a >>>,
     pub stat: Option<flatbuffers::WIPOffset<StatRequest<'a >>>,
     pub symlink: Option<flatbuffers::WIPOffset<SymlinkRequest<'a >>>,
-    pub trunate: Option<flatbuffers::WIPOffset<TruncateRequest<'a >>>,
+    pub truncate: Option<flatbuffers::WIPOffset<TruncateRequest<'a >>>,
     pub unlink: Option<flatbuffers::WIPOffset<UnlinkRequest<'a >>>,
     pub write: Option<flatbuffers::WIPOffset<WriteRequest<'a >>>,
     pub xattrop: Option<flatbuffers::WIPOffset<XattropRequest<'a >>>,
@@ -13295,6 +13326,7 @@ impl<'a> Default for OperationArgs<'a> {
     #[inline]
     fn default() -> Self {
         OperationArgs {
+            fop_type: Fop::IPC,
             access: None,
             cache_invalidate: None,
             compound: None,
@@ -13353,7 +13385,7 @@ impl<'a> Default for OperationArgs<'a> {
             statfs: None,
             stat: None,
             symlink: None,
-            trunate: None,
+            truncate: None,
             unlink: None,
             write: None,
             xattrop: None,
@@ -13366,6 +13398,10 @@ pub struct OperationBuilder<'a: 'b, 'b> {
   start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
 }
 impl<'a: 'b, 'b> OperationBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_fop_type(&mut self, fop_type: Fop) {
+    self.fbb_.push_slot::<Fop>(Operation::VT_FOP_TYPE, fop_type, Fop::IPC);
+  }
   #[inline]
   pub fn add_access(&mut self, access: flatbuffers::WIPOffset<AccessRequest<'b >>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<AccessRequest>>(Operation::VT_ACCESS, access);
@@ -13599,8 +13635,8 @@ impl<'a: 'b, 'b> OperationBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SymlinkRequest>>(Operation::VT_SYMLINK, symlink);
   }
   #[inline]
-  pub fn add_trunate(&mut self, trunate: flatbuffers::WIPOffset<TruncateRequest<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<TruncateRequest>>(Operation::VT_TRUNATE, trunate);
+  pub fn add_truncate(&mut self, truncate: flatbuffers::WIPOffset<TruncateRequest<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<TruncateRequest>>(Operation::VT_TRUNCATE, truncate);
   }
   #[inline]
   pub fn add_unlink(&mut self, unlink: flatbuffers::WIPOffset<UnlinkRequest<'b >>) {
