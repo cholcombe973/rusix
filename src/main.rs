@@ -13,6 +13,8 @@ extern crate api;
 extern crate clap;
 extern crate flatbuffers;
 #[macro_use]
+extern crate lazy_static;
+#[macro_use]
 extern crate log;
 extern crate simplelog;
 #[macro_use]

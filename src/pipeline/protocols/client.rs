@@ -14,16 +14,19 @@ extern crate rayon;
 extern crate zmq;
 
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use self::api::service_generated::*;
 use self::futures_cpupool::CpuPool;
 use self::rayon::prelude::*;
+use super::super::super::lib::dht::*;
+use super::super::super::lib::fop::*;
 use super::super::Value;
 use lib::config::Peer;
 
 pub struct Client {
     pub peer_name: String,
+    dht: Dht,
     pool: CpuPool,
 }
 
@@ -32,17 +35,37 @@ impl Client {
     pub fn new(name: &str, options: &HashMap<String, Value>, subvolumes: Vec<String>) -> Self {
         let pool = CpuPool::new_num_cpus();
         Client {
+            dht: Dht::new(None),
             peer_name: name.to_string(),
             pool: pool,
         }
     }
 
+    fn mkdir(&self, parent_id: u128, basename: &str, mode: u32) -> Result<(), String> {
+        // Hash the basename
+        // Find the parent directory file
+        // Write new directory file to server where it should belong to
+        // Modify parent directory file and link in new hash
+        /*
+            client mkdir (involves 2 round trips).  Potentially slow
+                basename <-> server 1
+                link dir <-> server 2
+            
+            Could this be done in parallel?  I don't see why not as long
+            as we can reverse it if it fails
+        */
+
+        let base_server = self.dht.locate_path(&Path::new(basename), 4, 2);
+        // Send Fop to that server to make the directory
+
+        let parent_server = self.dht.locate_hash(parent_id, 4, 2);
+        // Send Fop to that server to link the directory
+
+        Ok(())
+    }
+
     // The FOP should be processed before being sent by the client
-    pub fn process_fop(
-        &self,
-        layout: Vec<(Peer, PathBuf)>,
-        data: &[u8],
-    ) -> Result<(), String> {
+    pub fn process_fop(&self, layout: Vec<(Peer, PathBuf)>, data: &[u8]) -> Result<(), String> {
         // Client is the end of the pipeline.
         // send the Fop over to the server(s)
         let context = zmq::Context::new();

@@ -9,3 +9,10 @@
 
 //! This crate contains librusix for other languages to use as bindings.
 //! Everything is exported as #repr(c)
+extern crate rusix;
+
+#[no_mangle]
+pub extern "C" fn mkdir() -> i32 {
+
+    0
+}

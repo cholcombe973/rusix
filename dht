@@ -1,0 +1,42 @@
+UUID -> hash locates node where file should be.  The problem is posix doesn’t always operate on uuid’s. Many functions operate on paths. 
+
+Meowhash is capable of hashing files at incredible speed. I wonder if it’s worth hashing the entire file or just the path and using that to locate everything. 
+opendir(path) - hash path. Ok found nodes. Directory is a file that contains the hashes of files it contains. Client then contacts those servers to grab the files.
+
+struct Directory {
+	files: Vec<Vec<u8>> // List of hashes this directory contains
+}
+
+// Symlinks and hardlinks
+struct Link {
+	oldhash: Vec<u8>,
+	newhash: Vec<u8>,	
+}
+
+// Can i find the file using only the first u64?  According to the meowhash
+// that should be unique as well.
+struct Dirent {
+   d_ino: u64,     /* Inode number */
+   d_off: u64,     /* Offset to next linux_dirent */
+   d_reclen: u16,  /* Length of this linux_dirent */
+   d_name: String,  /* Filename (null-terminated) */
+					 /* length is actually (d_reclen - 2 -
+						offsetof(struct linux_dirent, d_name)) */
+}
+
+inode id is the first 64 bits of the hash.  Should still be unique. With this
+scheme I shouldn't need a Uuid generator for the files.  Meowhash will generate
+that for me.
+
+Store the files using flatbuffers directly on disk.  Don't bother converting them.  Have a flatbuffer table for Directory, File, Symlink, etc.
+
+Directory layout should be something like 
+backend_path/00/00/rest_of_hash.  Store uid, gid, etc in the normal file attributes.
+I could probably adjust the directory layout a little depending 
+on how evenly this ends up looking.  If too many files are in a 
+directory would that be bad?  I doubt it.
+
+There shouldn't be any reason why a path -> Hash would have to go searching through the filesystem.  
+
+Does anything work with inodes? If so then I'd need a function that 
+finds the file based on the first u64 of the hash.

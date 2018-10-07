@@ -8,6 +8,7 @@
 // except according to those terms.
 
 pub mod config;
+pub mod context;
 pub mod dht;
 pub mod fop;
 pub mod layout;

@@ -1,24 +1,26 @@
 /*
     helper functions to work with the flatbuffers api
 */
+extern crate byteorder;
 extern crate flatbuffers;
 extern crate nix;
-extern crate uuid;
+extern crate uint;
 
 use std::os::unix::io::{AsRawFd, RawFd};
+use std::path::{Path, PathBuf};
 
+use self::byteorder::{LittleEndian, WriteBytesExt};
 use self::flatbuffers::{FlatBufferBuilder, WIPOffset};
 use self::nix::{
     errno::Errno as NixErr,
     fcntl::OFlag,
     sys::stat::{FileStat, Mode},
-    Result as NixResult,
 };
-use self::uuid::Uuid;
 use api::service_generated::*;
 
+/*
 pub fn create_request(
-    parent_inode: &Uuid,
+    parent_inode: u64,
     flags: OFlag,
     mode: Mode,
     umask: Mode,
@@ -44,44 +46,39 @@ pub fn create_request(
     builder.finish_minimal(operation);
     builder.finished_data().to_vec()
 }
+*/
 
-// Response's all include a OpResult field which says if they succeeded or failed
-// and why
 // TODO: How are we going to handle rusts ownership system here?  The file descriptor
 // needs to stay open and valid for the lifetime of the clients network request.
-pub fn create_response(result: NixResult<(RawFd, FileStat)>) -> Vec<u8> {
-    match result {
-        Ok(res) => {
-            let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
-            let error_msg = builder.create_string("");
-            let op_res = OpResult::create(
-                &mut builder,
-                &OpResultArgs {
-                    result: ResultType::Ok,
-                    errno: Errno::UNKNOWN,
-                    errorMsg: None,
-                },
-            );
-            let stat = filestat_to_iatt(&res.1, &mut builder);
-            let create = CreateResponse::create(
-                &mut builder,
-                &CreateResponseArgs {
-                    result: Some(op_res),
-                    stat: Some(stat),
-                    fd: res.0 as u64,
-                },
-            );
-            builder.finish_minimal(create);
-            builder.finished_data().to_vec()
-        }
-        Err(e) => {
-            let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
-            err_result(e)
-        }
-    }
+pub fn create_response(res: (RawFd, FileStat)) -> Vec<u8> {
+    let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+    let error_msg = builder.create_string("");
+    let op_res = OpResult::create(
+        &mut builder,
+        &OpResultArgs {
+            result: ResultType::Ok,
+            errno: Errno::UNKNOWN,
+            errorMsg: None,
+        },
+    );
+    let stat = filestat_to_iatt(&res.1, &mut builder);
+    let preparent = filestat_to_iatt(&res.1, &mut builder);
+    let postparent = filestat_to_iatt(&res.1, &mut builder);
+    let create = CreateResponse::create(
+        &mut builder,
+        &CreateResponseArgs {
+            result: Some(op_res),
+            stat: Some(stat),
+            preparent: Some(preparent),
+            postparent: Some(postparent),
+            fd: res.0 as u64,
+        },
+    );
+    builder.finish_minimal(create);
+    builder.finished_data().to_vec()
 }
 
-fn errno(i: NixErr, builder: &mut FlatBufferBuilder) -> Errno {
+fn errno(i: NixErr) -> Errno {
     match i {
         NixErr::UnknownErrno => Errno::UNKNOWN,
         NixErr::EPERM => Errno::EPERM,
@@ -220,7 +217,7 @@ fn errno(i: NixErr, builder: &mut FlatBufferBuilder) -> Errno {
 // An option failed to unwrap
 pub fn op_result<'a>(msg: &str, builder: &mut FlatBufferBuilder<'a>) -> Vec<u8> {
     let error_msg = builder.create_string(msg);
-    let errno = errno(NixErr::UnknownErrno, builder);
+    let errno = errno(NixErr::UnknownErrno);
     let op_res = OpResult::create(
         builder,
         &OpResultArgs {
@@ -229,15 +226,7 @@ pub fn op_result<'a>(msg: &str, builder: &mut FlatBufferBuilder<'a>) -> Vec<u8> 
             errorMsg: Some(error_msg),
         },
     );
-    let create = CreateResponse::create(
-        builder,
-        &CreateResponseArgs {
-            result: Some(op_res),
-            stat: None,
-            fd: 0,
-        },
-    );
-    builder.finish_minimal(create);
+    builder.finish_minimal(op_res);
     builder.finished_data().to_vec()
 }
 
@@ -245,10 +234,10 @@ pub fn err_result(e: nix::Error) -> Vec<u8> {
     let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
     let error_msg = builder.create_string(&e.to_string());
     let errno = match e {
-        nix::Error::Sys(err) => errno(err, &mut builder),
-        nix::Error::InvalidPath => errno(NixErr::UnknownErrno, &mut builder),
-        nix::Error::InvalidUtf8 => errno(NixErr::UnknownErrno, &mut builder),
-        nix::Error::UnsupportedOperation => errno(NixErr::UnknownErrno, &mut builder),
+        nix::Error::Sys(err) => errno(err),
+        nix::Error::InvalidPath => errno(NixErr::UnknownErrno),
+        nix::Error::InvalidUtf8 => errno(NixErr::UnknownErrno),
+        nix::Error::UnsupportedOperation => errno(NixErr::UnknownErrno),
     };
     let op_res = OpResult::create(
         &mut builder,
@@ -258,19 +247,14 @@ pub fn err_result(e: nix::Error) -> Vec<u8> {
             errorMsg: Some(error_msg),
         },
     );
-    let create = CreateResponse::create(
-        &mut builder,
-        &CreateResponseArgs {
-            result: Some(op_res),
-            stat: None,
-            fd: 0,
-        },
-    );
-    builder.finish_minimal(create);
+    builder.finish_minimal(op_res);
     builder.finished_data().to_vec()
 }
 
-fn filestat_to_iatt<'a>(s: &FileStat, builder: &mut FlatBufferBuilder<'a>) -> WIPOffset<Iatt<'a>> {
+pub fn filestat_to_iatt<'a>(
+    s: &FileStat,
+    builder: &mut FlatBufferBuilder<'a>,
+) -> WIPOffset<Iatt<'a>> {
     Iatt::create(
         builder,
         &IattArgs {
@@ -296,6 +280,36 @@ fn filestat_to_iatt<'a>(s: &FileStat, builder: &mut FlatBufferBuilder<'a>) -> WI
     )
 }
 
+pub fn mkdir_request(parent_inode: u64, mode: Mode, mask: u32, name: &str) -> Vec<u8> {
+    let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+    let mut tmp = vec![];
+    tmp.write_u64::<LittleEndian>(parent_inode).unwrap();
+    let hash_data = builder.create_vector(&tmp);
+    let rfid = FileHash::create(
+        &mut builder,
+        &FileHashArgs {
+            hash: Some(hash_data),
+        },
+    );
+    let bname = builder.create_string(name);
+
+    let mkdir = MkdirRequest::create(
+        &mut builder,
+        &MkdirRequestArgs {
+            parent_rfid: Some(rfid),
+            mode: mode.bits(),
+            umask: mask,
+            bname: Some(bname),
+        },
+    );
+    let mut args = OperationArgs::default();
+    args.mkdir = Some(mkdir);
+    let operation = Operation::create(&mut builder, &args);
+    builder.finish_minimal(operation);
+    builder.finished_data().to_vec()
+}
+
+/*
 pub fn stat_request(inode: &Uuid) -> Vec<u8> {
     let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
     let rfid = uuid_to_rfid(&inode, &mut builder);
@@ -328,7 +342,25 @@ pub fn read_request<'a>(inode: &Uuid, flags: OFlag, offset: u64, size: u64) -> V
     builder.finish_minimal(operation);
     builder.finished_data().to_vec()
 }
+*/
+/*
 
+*/
+pub fn resolve_rfid_to_path(
+    rfid: &FileHash,
+    backend_path: &Path,
+    bname: Option<&str>,
+) -> Result<PathBuf, String> {
+    let rusix_backend = backend_path.join("/.rusix");
+    let hash = rfid
+        .hash()
+        .ok_or("hash field of FileHash is missing".to_string())?;
+    let h = uint::U512::from_little_endian(hash);
+
+    Ok(rusix_backend.join(&format!("{:x}/{:x}/{}", hash[0], hash[1], h.as_usize())))
+}
+
+/*
 pub fn write_request(inode: &Uuid, flags: OFlag, offset: u64, data: &[u8]) -> Vec<u8> {
     let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
     let data = builder.create_vector(data);
@@ -350,40 +382,34 @@ pub fn write_request(inode: &Uuid, flags: OFlag, offset: u64, data: &[u8]) -> Ve
     builder.finish_minimal(operation);
     builder.finished_data().to_vec()
 }
+*/
 
-pub fn write_response(result: NixResult<(FileStat, FileStat)>) -> Vec<u8> {
-    match result {
-        Ok(res) => {
-            let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
-            let error_msg = builder.create_string("");
-            let op_res = OpResult::create(
-                &mut builder,
-                &OpResultArgs {
-                    result: ResultType::Ok,
-                    errno: Errno::UNKNOWN,
-                    errorMsg: None,
-                },
-            );
-            let pre_stat = filestat_to_iatt(&res.0, &mut builder);
-            let post_stat = filestat_to_iatt(&res.1, &mut builder);
-            let write = WriteResponse::create(
-                &mut builder,
-                &WriteResponseArgs {
-                    result: Some(op_res),
-                    pre_stat: Some(pre_stat),
-                    post_stat: Some(post_stat),
-                },
-            );
-            builder.finish_minimal(write);
-            builder.finished_data().to_vec()
-        }
-        Err(e) => {
-            let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
-            err_result(e)
-        }
-    }
+pub fn write_response(res: (FileStat, FileStat)) -> Vec<u8> {
+    let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+    let error_msg = builder.create_string("");
+    let op_res = OpResult::create(
+        &mut builder,
+        &OpResultArgs {
+            result: ResultType::Ok,
+            errno: Errno::UNKNOWN,
+            errorMsg: None,
+        },
+    );
+    let pre_stat = filestat_to_iatt(&res.0, &mut builder);
+    let post_stat = filestat_to_iatt(&res.1, &mut builder);
+    let write = WriteResponse::create(
+        &mut builder,
+        &WriteResponseArgs {
+            result: Some(op_res),
+            pre_stat: Some(pre_stat),
+            post_stat: Some(post_stat),
+        },
+    );
+    builder.finish_minimal(write);
+    builder.finished_data().to_vec()
 }
 
+/*
 fn uuid_to_rfid<'a>(inode: &Uuid, builder: &mut FlatBufferBuilder<'a>) -> WIPOffset<Rfid<'a>> {
     let d4 = builder.create_vector(inode.as_fields().3);
 
@@ -397,3 +423,4 @@ fn uuid_to_rfid<'a>(inode: &Uuid, builder: &mut FlatBufferBuilder<'a>) -> WIPOff
         },
     )
 }
+*/

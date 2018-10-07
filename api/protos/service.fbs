@@ -209,13 +209,45 @@ table OpResult {
 	errorMsg:string;
 }
 
-// Rusix Uuid
-table Rfid {
-	d1:uint32;
-	d2:uint16;
-	d3:uint16;
-	// Must be 8 bytes long
-	d4:[ubyte];
+// A block file type
+table Block {
+	
+}
+
+// A Character file type
+table Character {
+	
+}
+
+// A directory file type
+table Directory {
+	// Hashes of files in this virtual directory
+	files: [FileHash];
+}
+
+// A Named Pipe file type
+table Fifo {
+	
+}
+
+// A Link file type
+table Link {
+}
+
+// A Regular file type
+table File {
+	filename:string;
+	contents:[ubyte];
+}
+
+// A Unix Domain Socket file type
+table Socket {
+	
+}
+
+table FileHash {
+	//u512 hash
+	hash:[ubyte];
 }
 
 table Statfs {
@@ -249,7 +281,7 @@ table ProtoLease {
 } 
 
 table Iatt {
-	ia_rfid:Rfid;
+	ia_rfid:FileHash;
 	ia_ino:uint64;
 	ia_dev:uint64;
 	mode:uint32;
@@ -270,7 +302,7 @@ table Iatt {
 
 
 table CacheInvalidationRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	event_type:uint32;
 	flags:uint32;
 	expire_time_attr:uint32;
@@ -280,7 +312,7 @@ table CacheInvalidationRequest {
 }
 
 table StatRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 }
 
 table StatResponse {
@@ -289,7 +321,7 @@ table StatResponse {
 }
 
 table ReadlinkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	size:uint32;
 }
 
@@ -299,9 +331,8 @@ table ReadlinkResponse {
 	path:string;
 } 
 
-
 table MknodRequest {
-	parent_rfid:Rfid;
+	parent_rfid:FileHash;
 	dev:uint64;
 	mode:uint32;
 	umask:uint32;
@@ -316,7 +347,7 @@ table MknodResponse {
 }
 
 table MkdirRequest {
-	parent_rfid:Rfid;
+	parent_rfid:FileHash;
 	mode:uint32;
 	umask:uint32;
 	bname:string;
@@ -331,7 +362,7 @@ table MkdirResponse {
 
 
 table UnlinkRequest {
-	parent_rfid:Rfid;
+	parent_rfid:FileHash;
 	bname:string;
 	xflags:uint32;
 }
@@ -343,7 +374,7 @@ table UnlinkResponse {
 }
 
 table RmdirRequest {
-	parent_rfid:Rfid;
+	parent_rfid:FileHash;
 	xflags:int32;
 	bname:string;
 }
@@ -355,7 +386,7 @@ table RmdirResponse {
 }
 
 table SymlinkRequest {
-	parent_rfid:Rfid;
+	parent_rfid:FileHash;
 	bname:string;
 	umask:uint32;
 	linkname:string;
@@ -370,8 +401,8 @@ table SymlinkResponse {
 
 
 table RenameRequest {
-	oldrfid:Rfid;
-	newrfid:Rfid;
+	oldrfid:FileHash;
+	newrfid:FileHash;
 	oldbname:string;
 	newbname:string;
 }
@@ -386,8 +417,8 @@ table RenameResponse {
 }
 
 table LinkRequest {
-	oldrfid:Rfid;
-	newrfid:Rfid;
+	oldrfid:FileHash;
+	newrfid:FileHash;
 	newbname:string;
 }
 
@@ -399,7 +430,7 @@ table LinkResponse {
 }
 
 table TruncateRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	offset:uint64;
 }
 
@@ -410,7 +441,7 @@ table TruncateResponse {
 }
 
 table OpenRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	flags:uint32;
 }
 
@@ -420,7 +451,7 @@ table OpenResponse {
 }
 
 table ReadRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 	size:uint64;
@@ -434,8 +465,8 @@ table ReadResponse {
 }
 
 table LookupRequest {
-	rfid:Rfid;
-	parent_rfid:Rfid;
+	rfid:FileHash;
+	parent_rfid:FileHash;
 	flags:uint32;
 	bname:string;
 }
@@ -447,7 +478,7 @@ table LookupResponse {
 }
 
 table WriteRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 	flag:int32;
@@ -461,7 +492,7 @@ table WriteResponse {
 }
 
 table StatfsRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 } 
 
 table StatfsResponse {
@@ -470,7 +501,7 @@ table StatfsResponse {
 } 
 
 table LockRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	cmd:uint32;
 	type:uint32;
@@ -482,7 +513,7 @@ table LockResponse {
 } 
 
 table LeaseRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	lease:ProtoLease;
 } 
 
@@ -492,13 +523,13 @@ table LeaseResponse {
 } 
 
 table RecallLeaseRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	lease_type:uint32;
 	tid:string;
 } 
 
 table InodelkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	cmd:uint32;
 	type:uint32;
 	flock:ProtoFlock;
@@ -506,7 +537,7 @@ table InodelkRequest {
 } 
 
 table FinodelkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	cmd:uint32;
 	type:uint32;
@@ -515,12 +546,12 @@ table FinodelkRequest {
 } 
 
 table FlushRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 } 
 
 table FsyncRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	data:uint32;
 } 
@@ -532,18 +563,18 @@ table FsyncResponse {
 
 
 table SetxattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	flags:uint32;
 } 
 
 table FsetxattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	flags:uint32;
 } 
 
 table XattropRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	flags:uint32;
 } 
 
@@ -552,7 +583,7 @@ table XattropResponse {
 } 
 
 table FxattropRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	flags:uint32;
 } 
@@ -563,7 +594,7 @@ table FxattropResponse {
 
 
 table GetXattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	namelen:uint32;
 	name:string;
 } 
@@ -574,7 +605,7 @@ table GetxattrResponse {
 
 
 table FgetxattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	namelen:uint32;
 	name:string;
@@ -584,18 +615,18 @@ table FgetxattrResponse {
 } 
 
 table RemovexattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	name:string;
 } 
 
 table FremovexattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	name:string;
 } 
 
 table OpendirRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 } 
 table OpendirResponse {
 	result:OpResult;
@@ -604,19 +635,19 @@ table OpendirResponse {
 
 
 table FsyncdirRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 } 
 
 table ReaddirRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 	size:uint32;
 }
 
 table ReaddirpRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 	size:uint32;
@@ -624,7 +655,7 @@ table ReaddirpRequest {
 
 
 table AccessRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	mask:uint32;
     uid:uint32;
     gid:uint32;
@@ -632,7 +663,7 @@ table AccessRequest {
 
 
 table CreateRequest {
-	parent_rfid:Rfid;
+	parent_rfid:FileHash;
 	flags:int32;
 	mode:uint32;
 	umask:uint32;
@@ -643,12 +674,12 @@ table CreateResponse {
 	result:OpResult;
 	stat:Iatt;
 	fd:uint64;
-	//preparent:Iatt;
-	//postparent:Iatt;
+	preparent:Iatt;
+	postparent:Iatt;
 } 
 
 table FtruncateRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 } 
@@ -659,7 +690,7 @@ table FtruncateResponse {
 } 
 
 table FstatRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 } 
 
@@ -669,7 +700,7 @@ table FstatResponse {
 } 
 
 table EntrylkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	cmd:uint32;
 	type:uint32;
 	namelen:uint64;
@@ -678,7 +709,7 @@ table EntrylkRequest {
 }
 
 table FentrylkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	cmd:uint32;
 	type:uint32;
@@ -689,7 +720,7 @@ table FentrylkRequest {
 
 
 table SetattrRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	stbuf:Iatt;
 	valid:int32;
 } 
@@ -711,7 +742,7 @@ table FsetattrResponse {
 } 
 
 table FallocateRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	flags:uint32;
 	offset:uint64;
@@ -725,7 +756,7 @@ table FallocateResponse {
 } 
 
 table DiscardRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64	;
 	size:uint64	;
@@ -738,7 +769,7 @@ table DiscardResponse {
 } 
 
 table ZerofillRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 	size:uint64;
@@ -774,7 +805,7 @@ table IpcResponse {
 
 
 table SeekRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 	offset:uint64;
 	what:int32;
@@ -835,12 +866,12 @@ table NotifyResponse {
 } 
 
 table ReleasedirRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 } 
 
 table ReleaseRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	fd:uint64;
 } 
 
@@ -929,7 +960,7 @@ table GetactivelkResponse {
 }
 
 table GetactivelkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 }
 
 table SetactivelkResponse {
@@ -937,7 +968,7 @@ table SetactivelkResponse {
 }
 
 table SetactivelkRequest {
-	rfid:Rfid;
+	rfid:FileHash;
 	request:LockList;
 }
 

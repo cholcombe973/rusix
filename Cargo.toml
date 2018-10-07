@@ -17,19 +17,39 @@ assets = [
 
 [workspace]
 
+[[bin]]
+name = "cli"
+path = "src/cli.rs"
+
+[[bin]]
+name = "heal"
+path = "src/heal.rs"
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
+
+[lib]
+name = "librusix"
+path = "lib/src/lib.rs"
+
 [dependencies]
 api = { path = "api" }
 block-utils = {git = "https://github.com/cholcombe973/block-utils"}
+byteorder = {version = "~1.2", features = ["i128"]}
 clap = "~2.32" 
+digest = "~0.8"
 dmi = {git = "https://github.com/cholcombe973/dmi"}
 flatbuffers = "~0.5"
 fstab = "~0.3" 
 futures = "~0.1"
 futures-cpupool = "~0.1"
 init-daemon = "~0.1" 
+lazy_static = "~1.1"
 libatasmart = "*" 
 libc = "~0.2" 
 log = "~0.4" 
+meowhash = "~0.1"
 nix = "~0.11"
 petgraph = "~0.4"
 rayon = "~1.0"
@@ -40,7 +60,7 @@ serde_json = "~1.0"
 simplelog = "~0.5" 
 tempdir = "~0.3" 
 toml = "~0.4"
-twox-hash = "~1.1"
 uname = "~0.1" 
+uint = "~0.4"
 uuid = { version="~0.7", features = ["v4"]}
 zmq = {version="~0.8"}

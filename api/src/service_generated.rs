@@ -800,15 +800,15 @@ impl<'a: 'b, 'b> OpResultBuilder<'a, 'b> {
   }
 }
 
-pub enum RfidOffset {}
+pub enum BlockOffset {}
 #[derive(Copy, Clone, Debug, PartialEq)]
 
-pub struct Rfid<'a> {
+pub struct Block<'a> {
   pub _tab: flatbuffers::Table<'a>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for Rfid<'a> {
-    type Inner = Rfid<'a>;
+impl<'a> flatbuffers::Follow<'a> for Block<'a> {
+    type Inner = Block<'a>;
     #[inline]
     fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
         Self {
@@ -817,96 +817,539 @@ impl<'a> flatbuffers::Follow<'a> for Rfid<'a> {
     }
 }
 
-impl<'a> Rfid<'a> {
+impl<'a> Block<'a> {
     #[inline]
     pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
-        Rfid {
+        Block {
             _tab: table,
         }
     }
     #[allow(unused_mut)]
     pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
         _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
-        args: &'args RfidArgs<'args>) -> flatbuffers::WIPOffset<Rfid<'bldr>> {
-      let mut builder = RfidBuilder::new(_fbb);
-      if let Some(x) = args.d4 { builder.add_d4(x); }
-      builder.add_d1(args.d1);
-      builder.add_d3(args.d3);
-      builder.add_d2(args.d2);
+        _args: &'args BlockArgs) -> flatbuffers::WIPOffset<Block<'bldr>> {
+      let mut builder = BlockBuilder::new(_fbb);
       builder.finish()
     }
 
-    pub const VT_D1: flatbuffers::VOffsetT = 4;
-    pub const VT_D2: flatbuffers::VOffsetT = 6;
-    pub const VT_D3: flatbuffers::VOffsetT = 8;
-    pub const VT_D4: flatbuffers::VOffsetT = 10;
-
-  #[inline]
-  pub fn d1(&self) -> u32 {
-    self._tab.get::<u32>(Rfid::VT_D1, Some(0)).unwrap()
-  }
-  #[inline]
-  pub fn d2(&self) -> u16 {
-    self._tab.get::<u16>(Rfid::VT_D2, Some(0)).unwrap()
-  }
-  #[inline]
-  pub fn d3(&self) -> u16 {
-    self._tab.get::<u16>(Rfid::VT_D3, Some(0)).unwrap()
-  }
-  #[inline]
-  pub fn d4(&self) -> Option<&'a [u8]> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(Rfid::VT_D4, None).map(|v| v.safe_slice())
-  }
 }
 
-pub struct RfidArgs<'a> {
-    pub d1: u32,
-    pub d2: u16,
-    pub d3: u16,
-    pub d4: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  u8>>>,
+pub struct BlockArgs {
 }
-impl<'a> Default for RfidArgs<'a> {
+impl<'a> Default for BlockArgs {
     #[inline]
     fn default() -> Self {
-        RfidArgs {
-            d1: 0,
-            d2: 0,
-            d3: 0,
-            d4: None,
+        BlockArgs {
         }
     }
 }
-pub struct RfidBuilder<'a: 'b, 'b> {
+pub struct BlockBuilder<'a: 'b, 'b> {
   fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
   start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
 }
-impl<'a: 'b, 'b> RfidBuilder<'a, 'b> {
+impl<'a: 'b, 'b> BlockBuilder<'a, 'b> {
   #[inline]
-  pub fn add_d1(&mut self, d1: u32) {
-    self.fbb_.push_slot::<u32>(Rfid::VT_D1, d1, 0);
-  }
-  #[inline]
-  pub fn add_d2(&mut self, d2: u16) {
-    self.fbb_.push_slot::<u16>(Rfid::VT_D2, d2, 0);
-  }
-  #[inline]
-  pub fn add_d3(&mut self, d3: u16) {
-    self.fbb_.push_slot::<u16>(Rfid::VT_D3, d3, 0);
-  }
-  #[inline]
-  pub fn add_d4(&mut self, d4: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Rfid::VT_D4, d4);
-  }
-  #[inline]
-  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> RfidBuilder<'a, 'b> {
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> BlockBuilder<'a, 'b> {
     let start = _fbb.start_table();
-    RfidBuilder {
+    BlockBuilder {
       fbb_: _fbb,
       start_: start,
     }
   }
   #[inline]
-  pub fn finish(self) -> flatbuffers::WIPOffset<Rfid<'a>> {
+  pub fn finish(self) -> flatbuffers::WIPOffset<Block<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum CharacterOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Character<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Character<'a> {
+    type Inner = Character<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Character<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Character {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args CharacterArgs) -> flatbuffers::WIPOffset<Character<'bldr>> {
+      let mut builder = CharacterBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct CharacterArgs {
+}
+impl<'a> Default for CharacterArgs {
+    #[inline]
+    fn default() -> Self {
+        CharacterArgs {
+        }
+    }
+}
+pub struct CharacterBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> CharacterBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CharacterBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    CharacterBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Character<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum DirectoryOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Directory<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Directory<'a> {
+    type Inner = Directory<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Directory<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Directory {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args DirectoryArgs<'args>) -> flatbuffers::WIPOffset<Directory<'bldr>> {
+      let mut builder = DirectoryBuilder::new(_fbb);
+      if let Some(x) = args.files { builder.add_files(x); }
+      builder.finish()
+    }
+
+    pub const VT_FILES: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn files(&self) -> Option<flatbuffers::Vector<flatbuffers::ForwardsUOffset<FileHash<'a>>>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<flatbuffers::ForwardsUOffset<FileHash<'a>>>>>(Directory::VT_FILES, None)
+  }
+}
+
+pub struct DirectoryArgs<'a> {
+    pub files: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a , flatbuffers::ForwardsUOffset<FileHash<'a >>>>>,
+}
+impl<'a> Default for DirectoryArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        DirectoryArgs {
+            files: None,
+        }
+    }
+}
+pub struct DirectoryBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> DirectoryBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_files(&mut self, files: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<FileHash<'b >>>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(Directory::VT_FILES, files);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> DirectoryBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    DirectoryBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Directory<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FifoOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Fifo<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Fifo<'a> {
+    type Inner = Fifo<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Fifo<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Fifo {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args FifoArgs) -> flatbuffers::WIPOffset<Fifo<'bldr>> {
+      let mut builder = FifoBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct FifoArgs {
+}
+impl<'a> Default for FifoArgs {
+    #[inline]
+    fn default() -> Self {
+        FifoArgs {
+        }
+    }
+}
+pub struct FifoBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FifoBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FifoBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FifoBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Fifo<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum LinkOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Link<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Link<'a> {
+    type Inner = Link<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Link<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Link {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args LinkArgs) -> flatbuffers::WIPOffset<Link<'bldr>> {
+      let mut builder = LinkBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct LinkArgs {
+}
+impl<'a> Default for LinkArgs {
+    #[inline]
+    fn default() -> Self {
+        LinkArgs {
+        }
+    }
+}
+pub struct LinkBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> LinkBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> LinkBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    LinkBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Link<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FileOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct File<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for File<'a> {
+    type Inner = File<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> File<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        File {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FileArgs<'args>) -> flatbuffers::WIPOffset<File<'bldr>> {
+      let mut builder = FileBuilder::new(_fbb);
+      if let Some(x) = args.contents { builder.add_contents(x); }
+      if let Some(x) = args.filename { builder.add_filename(x); }
+      builder.finish()
+    }
+
+    pub const VT_FILENAME: flatbuffers::VOffsetT = 4;
+    pub const VT_CONTENTS: flatbuffers::VOffsetT = 6;
+
+  #[inline]
+  pub fn filename(&self) -> Option<&'a str> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(File::VT_FILENAME, None)
+  }
+  #[inline]
+  pub fn contents(&self) -> Option<&'a [u8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(File::VT_CONTENTS, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FileArgs<'a> {
+    pub filename: Option<flatbuffers::WIPOffset<&'a  str>>,
+    pub contents: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  u8>>>,
+}
+impl<'a> Default for FileArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FileArgs {
+            filename: None,
+            contents: None,
+        }
+    }
+}
+pub struct FileBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FileBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_filename(&mut self, filename: flatbuffers::WIPOffset<&'b  str>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(File::VT_FILENAME, filename);
+  }
+  #[inline]
+  pub fn add_contents(&mut self, contents: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(File::VT_CONTENTS, contents);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FileBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FileBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<File<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum SocketOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct Socket<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for Socket<'a> {
+    type Inner = Socket<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> Socket<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        Socket {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        _args: &'args SocketArgs) -> flatbuffers::WIPOffset<Socket<'bldr>> {
+      let mut builder = SocketBuilder::new(_fbb);
+      builder.finish()
+    }
+
+}
+
+pub struct SocketArgs {
+}
+impl<'a> Default for SocketArgs {
+    #[inline]
+    fn default() -> Self {
+        SocketArgs {
+        }
+    }
+}
+pub struct SocketBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> SocketBuilder<'a, 'b> {
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SocketBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    SocketBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<Socket<'a>> {
+    let o = self.fbb_.end_table(self.start_);
+    flatbuffers::WIPOffset::new(o.value())
+  }
+}
+
+pub enum FileHashOffset {}
+#[derive(Copy, Clone, Debug, PartialEq)]
+
+pub struct FileHash<'a> {
+  pub _tab: flatbuffers::Table<'a>,
+}
+
+impl<'a> flatbuffers::Follow<'a> for FileHash<'a> {
+    type Inner = FileHash<'a>;
+    #[inline]
+    fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
+        Self {
+            _tab: flatbuffers::Table { buf: buf, loc: loc },
+        }
+    }
+}
+
+impl<'a> FileHash<'a> {
+    #[inline]
+    pub fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
+        FileHash {
+            _tab: table,
+        }
+    }
+    #[allow(unused_mut)]
+    pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
+        _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
+        args: &'args FileHashArgs<'args>) -> flatbuffers::WIPOffset<FileHash<'bldr>> {
+      let mut builder = FileHashBuilder::new(_fbb);
+      if let Some(x) = args.hash { builder.add_hash(x); }
+      builder.finish()
+    }
+
+    pub const VT_HASH: flatbuffers::VOffsetT = 4;
+
+  #[inline]
+  pub fn hash(&self) -> Option<&'a [u8]> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, u8>>>(FileHash::VT_HASH, None).map(|v| v.safe_slice())
+  }
+}
+
+pub struct FileHashArgs<'a> {
+    pub hash: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a ,  u8>>>,
+}
+impl<'a> Default for FileHashArgs<'a> {
+    #[inline]
+    fn default() -> Self {
+        FileHashArgs {
+            hash: None,
+        }
+    }
+}
+pub struct FileHashBuilder<'a: 'b, 'b> {
+  fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
+  start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
+}
+impl<'a: 'b, 'b> FileHashBuilder<'a, 'b> {
+  #[inline]
+  pub fn add_hash(&mut self, hash: flatbuffers::WIPOffset<flatbuffers::Vector<'b , u8>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(FileHash::VT_HASH, hash);
+  }
+  #[inline]
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> FileHashBuilder<'a, 'b> {
+    let start = _fbb.start_table();
+    FileHashBuilder {
+      fbb_: _fbb,
+      start_: start,
+    }
+  }
+  #[inline]
+  pub fn finish(self) -> flatbuffers::WIPOffset<FileHash<'a>> {
     let o = self.fbb_.end_table(self.start_);
     flatbuffers::WIPOffset::new(o.value())
   }
@@ -1424,8 +1867,8 @@ impl<'a> Iatt<'a> {
     pub const VT_IA_CTIME_NSEC: flatbuffers::VOffsetT = 36;
 
   #[inline]
-  pub fn ia_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(Iatt::VT_IA_RFID, None)
+  pub fn ia_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(Iatt::VT_IA_RFID, None)
   }
   #[inline]
   pub fn ia_ino(&self) -> u64 {
@@ -1494,7 +1937,7 @@ impl<'a> Iatt<'a> {
 }
 
 pub struct IattArgs<'a> {
-    pub ia_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub ia_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub ia_ino: u64,
     pub ia_dev: u64,
     pub mode: u32,
@@ -1542,8 +1985,8 @@ pub struct IattBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> IattBuilder<'a, 'b> {
   #[inline]
-  pub fn add_ia_rfid(&mut self, ia_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(Iatt::VT_IA_RFID, ia_rfid);
+  pub fn add_ia_rfid(&mut self, ia_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(Iatt::VT_IA_RFID, ia_rfid);
   }
   #[inline]
   pub fn add_ia_ino(&mut self, ia_ino: u64) {
@@ -1672,8 +2115,8 @@ impl<'a> CacheInvalidationRequest<'a> {
     pub const VT_OLDPARENT_STAT: flatbuffers::VOffsetT = 16;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(CacheInvalidationRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(CacheInvalidationRequest::VT_RFID, None)
   }
   #[inline]
   pub fn event_type(&self) -> u32 {
@@ -1702,7 +2145,7 @@ impl<'a> CacheInvalidationRequest<'a> {
 }
 
 pub struct CacheInvalidationRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub event_type: u32,
     pub flags: u32,
     pub expire_time_attr: u32,
@@ -1730,8 +2173,8 @@ pub struct CacheInvalidationRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> CacheInvalidationRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(CacheInvalidationRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(CacheInvalidationRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_event_type(&mut self, event_type: u32) {
@@ -1808,13 +2251,13 @@ impl<'a> StatRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(StatRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(StatRequest::VT_RFID, None)
   }
 }
 
 pub struct StatRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
 }
 impl<'a> Default for StatRequestArgs<'a> {
     #[inline]
@@ -1830,8 +2273,8 @@ pub struct StatRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> StatRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(StatRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(StatRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatRequestBuilder<'a, 'b> {
@@ -1974,8 +2417,8 @@ impl<'a> ReadlinkRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReadlinkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ReadlinkRequest::VT_RFID, None)
   }
   #[inline]
   pub fn size_(&self) -> u32 {
@@ -1984,7 +2427,7 @@ impl<'a> ReadlinkRequest<'a> {
 }
 
 pub struct ReadlinkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub size_: u32,
 }
 impl<'a> Default for ReadlinkRequestArgs<'a> {
@@ -2002,8 +2445,8 @@ pub struct ReadlinkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ReadlinkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReadlinkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ReadlinkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_size_(&mut self, size_: u32) {
@@ -2168,8 +2611,8 @@ impl<'a> MknodRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(MknodRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(MknodRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn dev(&self) -> u64 {
@@ -2190,7 +2633,7 @@ impl<'a> MknodRequest<'a> {
 }
 
 pub struct MknodRequestArgs<'a> {
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub dev: u64,
     pub mode: u32,
     pub umask: u32,
@@ -2214,8 +2657,8 @@ pub struct MknodRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> MknodRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(MknodRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(MknodRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_dev(&mut self, dev: u64) {
@@ -2402,8 +2845,8 @@ impl<'a> MkdirRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(MkdirRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(MkdirRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn mode(&self) -> u32 {
@@ -2420,7 +2863,7 @@ impl<'a> MkdirRequest<'a> {
 }
 
 pub struct MkdirRequestArgs<'a> {
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub mode: u32,
     pub umask: u32,
     pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
@@ -2442,8 +2885,8 @@ pub struct MkdirRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> MkdirRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(MkdirRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(MkdirRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_mode(&mut self, mode: u32) {
@@ -2624,8 +3067,8 @@ impl<'a> UnlinkRequest<'a> {
     pub const VT_XFLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(UnlinkRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(UnlinkRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn bname(&self) -> Option<&'a str> {
@@ -2638,7 +3081,7 @@ impl<'a> UnlinkRequest<'a> {
 }
 
 pub struct UnlinkRequestArgs<'a> {
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
     pub xflags: u32,
 }
@@ -2658,8 +3101,8 @@ pub struct UnlinkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> UnlinkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(UnlinkRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(UnlinkRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
@@ -2824,8 +3267,8 @@ impl<'a> RmdirRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RmdirRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(RmdirRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn xflags(&self) -> i32 {
@@ -2838,7 +3281,7 @@ impl<'a> RmdirRequest<'a> {
 }
 
 pub struct RmdirRequestArgs<'a> {
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub xflags: i32,
     pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
@@ -2858,8 +3301,8 @@ pub struct RmdirRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> RmdirRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RmdirRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(RmdirRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_xflags(&mut self, xflags: i32) {
@@ -3026,8 +3469,8 @@ impl<'a> SymlinkRequest<'a> {
     pub const VT_LINKNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SymlinkRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(SymlinkRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn bname(&self) -> Option<&'a str> {
@@ -3044,7 +3487,7 @@ impl<'a> SymlinkRequest<'a> {
 }
 
 pub struct SymlinkRequestArgs<'a> {
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
     pub umask: u32,
     pub linkname: Option<flatbuffers::WIPOffset<&'a  str>>,
@@ -3066,8 +3509,8 @@ pub struct SymlinkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> SymlinkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SymlinkRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(SymlinkRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_bname(&mut self, bname: flatbuffers::WIPOffset<&'b  str>) {
@@ -3250,12 +3693,12 @@ impl<'a> RenameRequest<'a> {
     pub const VT_NEWBNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn oldrfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RenameRequest::VT_OLDRFID, None)
+  pub fn oldrfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(RenameRequest::VT_OLDRFID, None)
   }
   #[inline]
-  pub fn newrfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RenameRequest::VT_NEWRFID, None)
+  pub fn newrfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(RenameRequest::VT_NEWRFID, None)
   }
   #[inline]
   pub fn oldbname(&self) -> Option<&'a str> {
@@ -3268,8 +3711,8 @@ impl<'a> RenameRequest<'a> {
 }
 
 pub struct RenameRequestArgs<'a> {
-    pub oldrfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
-    pub newrfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub oldrfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
+    pub newrfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub oldbname: Option<flatbuffers::WIPOffset<&'a  str>>,
     pub newbname: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
@@ -3290,12 +3733,12 @@ pub struct RenameRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> RenameRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_oldrfid(&mut self, oldrfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RenameRequest::VT_OLDRFID, oldrfid);
+  pub fn add_oldrfid(&mut self, oldrfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(RenameRequest::VT_OLDRFID, oldrfid);
   }
   #[inline]
-  pub fn add_newrfid(&mut self, newrfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RenameRequest::VT_NEWRFID, newrfid);
+  pub fn add_newrfid(&mut self, newrfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(RenameRequest::VT_NEWRFID, newrfid);
   }
   #[inline]
   pub fn add_oldbname(&mut self, oldbname: flatbuffers::WIPOffset<&'b  str>) {
@@ -3496,12 +3939,12 @@ impl<'a> LinkRequest<'a> {
     pub const VT_NEWBNAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn oldrfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LinkRequest::VT_OLDRFID, None)
+  pub fn oldrfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(LinkRequest::VT_OLDRFID, None)
   }
   #[inline]
-  pub fn newrfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LinkRequest::VT_NEWRFID, None)
+  pub fn newrfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(LinkRequest::VT_NEWRFID, None)
   }
   #[inline]
   pub fn newbname(&self) -> Option<&'a str> {
@@ -3510,8 +3953,8 @@ impl<'a> LinkRequest<'a> {
 }
 
 pub struct LinkRequestArgs<'a> {
-    pub oldrfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
-    pub newrfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub oldrfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
+    pub newrfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub newbname: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
 impl<'a> Default for LinkRequestArgs<'a> {
@@ -3530,12 +3973,12 @@ pub struct LinkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> LinkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_oldrfid(&mut self, oldrfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LinkRequest::VT_OLDRFID, oldrfid);
+  pub fn add_oldrfid(&mut self, oldrfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(LinkRequest::VT_OLDRFID, oldrfid);
   }
   #[inline]
-  pub fn add_newrfid(&mut self, newrfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LinkRequest::VT_NEWRFID, newrfid);
+  pub fn add_newrfid(&mut self, newrfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(LinkRequest::VT_NEWRFID, newrfid);
   }
   #[inline]
   pub fn add_newbname(&mut self, newbname: flatbuffers::WIPOffset<&'b  str>) {
@@ -3706,8 +4149,8 @@ impl<'a> TruncateRequest<'a> {
     pub const VT_OFFSET: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(TruncateRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(TruncateRequest::VT_RFID, None)
   }
   #[inline]
   pub fn offset(&self) -> u64 {
@@ -3716,7 +4159,7 @@ impl<'a> TruncateRequest<'a> {
 }
 
 pub struct TruncateRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub offset: u64,
 }
 impl<'a> Default for TruncateRequestArgs<'a> {
@@ -3734,8 +4177,8 @@ pub struct TruncateRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> TruncateRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(TruncateRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(TruncateRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_offset(&mut self, offset: u64) {
@@ -3894,8 +4337,8 @@ impl<'a> OpenRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(OpenRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(OpenRequest::VT_RFID, None)
   }
   #[inline]
   pub fn flags(&self) -> u32 {
@@ -3904,7 +4347,7 @@ impl<'a> OpenRequest<'a> {
 }
 
 pub struct OpenRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub flags: u32,
 }
 impl<'a> Default for OpenRequestArgs<'a> {
@@ -3922,8 +4365,8 @@ pub struct OpenRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> OpenRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(OpenRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(OpenRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_flags(&mut self, flags: u32) {
@@ -4076,8 +4519,8 @@ impl<'a> ReadRequest<'a> {
     pub const VT_FLAG: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReadRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ReadRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -4098,7 +4541,7 @@ impl<'a> ReadRequest<'a> {
 }
 
 pub struct ReadRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub size_: u64,
@@ -4122,8 +4565,8 @@ pub struct ReadRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ReadRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReadRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ReadRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -4298,12 +4741,12 @@ impl<'a> LookupRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LookupRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(LookupRequest::VT_RFID, None)
   }
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LookupRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(LookupRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn flags(&self) -> u32 {
@@ -4316,8 +4759,8 @@ impl<'a> LookupRequest<'a> {
 }
 
 pub struct LookupRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub flags: u32,
     pub bname: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
@@ -4338,12 +4781,12 @@ pub struct LookupRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> LookupRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LookupRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(LookupRequest::VT_RFID, rfid);
   }
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LookupRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(LookupRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_flags(&mut self, flags: u32) {
@@ -4512,8 +4955,8 @@ impl<'a> WriteRequest<'a> {
     pub const VT_DATA: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(WriteRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(WriteRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -4534,7 +4977,7 @@ impl<'a> WriteRequest<'a> {
 }
 
 pub struct WriteRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub flag: i32,
@@ -4558,8 +5001,8 @@ pub struct WriteRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> WriteRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(WriteRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(WriteRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -4728,13 +5171,13 @@ impl<'a> StatfsRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(StatfsRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(StatfsRequest::VT_RFID, None)
   }
 }
 
 pub struct StatfsRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
 }
 impl<'a> Default for StatfsRequestArgs<'a> {
     #[inline]
@@ -4750,8 +5193,8 @@ pub struct StatfsRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> StatfsRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(StatfsRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(StatfsRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> StatfsRequestBuilder<'a, 'b> {
@@ -4900,8 +5343,8 @@ impl<'a> LockRequest<'a> {
     pub const VT_FLOCK: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LockRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(LockRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -4922,7 +5365,7 @@ impl<'a> LockRequest<'a> {
 }
 
 pub struct LockRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub cmd: u32,
     pub type_: u32,
@@ -4946,8 +5389,8 @@ pub struct LockRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> LockRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LockRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(LockRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -5106,8 +5549,8 @@ impl<'a> LeaseRequest<'a> {
     pub const VT_LEASE: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(LeaseRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(LeaseRequest::VT_RFID, None)
   }
   #[inline]
   pub fn lease(&self) -> Option<ProtoLease<'a>> {
@@ -5116,7 +5559,7 @@ impl<'a> LeaseRequest<'a> {
 }
 
 pub struct LeaseRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub lease: Option<flatbuffers::WIPOffset<ProtoLease<'a >>>,
 }
 impl<'a> Default for LeaseRequestArgs<'a> {
@@ -5134,8 +5577,8 @@ pub struct LeaseRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> LeaseRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(LeaseRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(LeaseRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_lease(&mut self, lease: flatbuffers::WIPOffset<ProtoLease<'b >>) {
@@ -5284,8 +5727,8 @@ impl<'a> RecallLeaseRequest<'a> {
     pub const VT_TID: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RecallLeaseRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(RecallLeaseRequest::VT_RFID, None)
   }
   #[inline]
   pub fn lease_type(&self) -> u32 {
@@ -5298,7 +5741,7 @@ impl<'a> RecallLeaseRequest<'a> {
 }
 
 pub struct RecallLeaseRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub lease_type: u32,
     pub tid: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
@@ -5318,8 +5761,8 @@ pub struct RecallLeaseRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> RecallLeaseRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RecallLeaseRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(RecallLeaseRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_lease_type(&mut self, lease_type: u32) {
@@ -5388,8 +5831,8 @@ impl<'a> InodelkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(InodelkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(InodelkRequest::VT_RFID, None)
   }
   #[inline]
   pub fn cmd(&self) -> u32 {
@@ -5410,7 +5853,7 @@ impl<'a> InodelkRequest<'a> {
 }
 
 pub struct InodelkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub cmd: u32,
     pub type_: u32,
     pub flock: Option<flatbuffers::WIPOffset<ProtoFlock<'a >>>,
@@ -5434,8 +5877,8 @@ pub struct InodelkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> InodelkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(InodelkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(InodelkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_cmd(&mut self, cmd: u32) {
@@ -5514,8 +5957,8 @@ impl<'a> FinodelkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FinodelkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FinodelkRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -5540,7 +5983,7 @@ impl<'a> FinodelkRequest<'a> {
 }
 
 pub struct FinodelkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub cmd: u32,
     pub type_: u32,
@@ -5566,8 +6009,8 @@ pub struct FinodelkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FinodelkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FinodelkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FinodelkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -5642,8 +6085,8 @@ impl<'a> FlushRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FlushRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FlushRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -5652,7 +6095,7 @@ impl<'a> FlushRequest<'a> {
 }
 
 pub struct FlushRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
 }
 impl<'a> Default for FlushRequestArgs<'a> {
@@ -5670,8 +6113,8 @@ pub struct FlushRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FlushRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FlushRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FlushRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -5732,8 +6175,8 @@ impl<'a> FsyncRequest<'a> {
     pub const VT_DATA: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsyncRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FsyncRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -5746,7 +6189,7 @@ impl<'a> FsyncRequest<'a> {
 }
 
 pub struct FsyncRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub data: u32,
 }
@@ -5766,8 +6209,8 @@ pub struct FsyncRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FsyncRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsyncRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FsyncRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -5930,8 +6373,8 @@ impl<'a> SetxattrRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetxattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(SetxattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn flags(&self) -> u32 {
@@ -5940,7 +6383,7 @@ impl<'a> SetxattrRequest<'a> {
 }
 
 pub struct SetxattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub flags: u32,
 }
 impl<'a> Default for SetxattrRequestArgs<'a> {
@@ -5958,8 +6401,8 @@ pub struct SetxattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> SetxattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SetxattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(SetxattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_flags(&mut self, flags: u32) {
@@ -6020,8 +6463,8 @@ impl<'a> FsetxattrRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsetxattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FsetxattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -6034,7 +6477,7 @@ impl<'a> FsetxattrRequest<'a> {
 }
 
 pub struct FsetxattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub flags: u32,
 }
@@ -6054,8 +6497,8 @@ pub struct FsetxattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FsetxattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsetxattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FsetxattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -6118,8 +6561,8 @@ impl<'a> XattropRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(XattropRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(XattropRequest::VT_RFID, None)
   }
   #[inline]
   pub fn flags(&self) -> u32 {
@@ -6128,7 +6571,7 @@ impl<'a> XattropRequest<'a> {
 }
 
 pub struct XattropRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub flags: u32,
 }
 impl<'a> Default for XattropRequestArgs<'a> {
@@ -6146,8 +6589,8 @@ pub struct XattropRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> XattropRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(XattropRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(XattropRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_flags(&mut self, flags: u32) {
@@ -6284,8 +6727,8 @@ impl<'a> FxattropRequest<'a> {
     pub const VT_FLAGS: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FxattropRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FxattropRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -6298,7 +6741,7 @@ impl<'a> FxattropRequest<'a> {
 }
 
 pub struct FxattropRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub flags: u32,
 }
@@ -6318,8 +6761,8 @@ pub struct FxattropRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FxattropRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FxattropRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FxattropRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -6460,8 +6903,8 @@ impl<'a> GetXattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(GetXattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(GetXattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn namelen(&self) -> u32 {
@@ -6474,7 +6917,7 @@ impl<'a> GetXattrRequest<'a> {
 }
 
 pub struct GetXattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub namelen: u32,
     pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
@@ -6494,8 +6937,8 @@ pub struct GetXattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> GetXattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(GetXattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(GetXattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_namelen(&mut self, namelen: u32) {
@@ -6638,8 +7081,8 @@ impl<'a> FgetxattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FgetxattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FgetxattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -6656,7 +7099,7 @@ impl<'a> FgetxattrRequest<'a> {
 }
 
 pub struct FgetxattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub namelen: u32,
     pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
@@ -6678,8 +7121,8 @@ pub struct FgetxattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FgetxattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FgetxattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FgetxattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -6822,8 +7265,8 @@ impl<'a> RemovexattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(RemovexattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(RemovexattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn name(&self) -> Option<&'a str> {
@@ -6832,7 +7275,7 @@ impl<'a> RemovexattrRequest<'a> {
 }
 
 pub struct RemovexattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
 impl<'a> Default for RemovexattrRequestArgs<'a> {
@@ -6850,8 +7293,8 @@ pub struct RemovexattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> RemovexattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(RemovexattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(RemovexattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_name(&mut self, name: flatbuffers::WIPOffset<&'b  str>) {
@@ -6912,8 +7355,8 @@ impl<'a> FremovexattrRequest<'a> {
     pub const VT_NAME: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FremovexattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FremovexattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -6926,7 +7369,7 @@ impl<'a> FremovexattrRequest<'a> {
 }
 
 pub struct FremovexattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub name: Option<flatbuffers::WIPOffset<&'a  str>>,
 }
@@ -6946,8 +7389,8 @@ pub struct FremovexattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FremovexattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FremovexattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FremovexattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -7008,13 +7451,13 @@ impl<'a> OpendirRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(OpendirRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(OpendirRequest::VT_RFID, None)
   }
 }
 
 pub struct OpendirRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
 }
 impl<'a> Default for OpendirRequestArgs<'a> {
     #[inline]
@@ -7030,8 +7473,8 @@ pub struct OpendirRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> OpendirRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(OpendirRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(OpendirRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> OpendirRequestBuilder<'a, 'b> {
@@ -7174,8 +7617,8 @@ impl<'a> FsyncdirRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FsyncdirRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FsyncdirRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -7184,7 +7627,7 @@ impl<'a> FsyncdirRequest<'a> {
 }
 
 pub struct FsyncdirRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
 }
 impl<'a> Default for FsyncdirRequestArgs<'a> {
@@ -7202,8 +7645,8 @@ pub struct FsyncdirRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FsyncdirRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FsyncdirRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FsyncdirRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -7266,8 +7709,8 @@ impl<'a> ReaddirRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReaddirRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ReaddirRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -7284,7 +7727,7 @@ impl<'a> ReaddirRequest<'a> {
 }
 
 pub struct ReaddirRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub size_: u32,
@@ -7306,8 +7749,8 @@ pub struct ReaddirRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ReaddirRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReaddirRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ReaddirRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -7378,8 +7821,8 @@ impl<'a> ReaddirpRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReaddirpRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ReaddirpRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -7396,7 +7839,7 @@ impl<'a> ReaddirpRequest<'a> {
 }
 
 pub struct ReaddirpRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub size_: u32,
@@ -7418,8 +7861,8 @@ pub struct ReaddirpRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ReaddirpRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReaddirpRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ReaddirpRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -7490,8 +7933,8 @@ impl<'a> AccessRequest<'a> {
     pub const VT_GID: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(AccessRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(AccessRequest::VT_RFID, None)
   }
   #[inline]
   pub fn mask(&self) -> u32 {
@@ -7508,7 +7951,7 @@ impl<'a> AccessRequest<'a> {
 }
 
 pub struct AccessRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub mask: u32,
     pub uid: u32,
     pub gid: u32,
@@ -7530,8 +7973,8 @@ pub struct AccessRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> AccessRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(AccessRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(AccessRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_mask(&mut self, mask: u32) {
@@ -7604,8 +8047,8 @@ impl<'a> CreateRequest<'a> {
     pub const VT_BNAME: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn parent_rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(CreateRequest::VT_PARENT_RFID, None)
+  pub fn parent_rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(CreateRequest::VT_PARENT_RFID, None)
   }
   #[inline]
   pub fn flags(&self) -> i32 {
@@ -7626,7 +8069,7 @@ impl<'a> CreateRequest<'a> {
 }
 
 pub struct CreateRequestArgs<'a> {
-    pub parent_rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub parent_rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub flags: i32,
     pub mode: u32,
     pub umask: u32,
@@ -7650,8 +8093,8 @@ pub struct CreateRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> CreateRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(CreateRequest::VT_PARENT_RFID, parent_rfid);
+  pub fn add_parent_rfid(&mut self, parent_rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(CreateRequest::VT_PARENT_RFID, parent_rfid);
   }
   #[inline]
   pub fn add_flags(&mut self, flags: i32) {
@@ -7714,6 +8157,8 @@ impl<'a> CreateResponse<'a> {
         args: &'args CreateResponseArgs<'args>) -> flatbuffers::WIPOffset<CreateResponse<'bldr>> {
       let mut builder = CreateResponseBuilder::new(_fbb);
       builder.add_fd(args.fd);
+      if let Some(x) = args.postparent { builder.add_postparent(x); }
+      if let Some(x) = args.preparent { builder.add_preparent(x); }
       if let Some(x) = args.stat { builder.add_stat(x); }
       if let Some(x) = args.result { builder.add_result(x); }
       builder.finish()
@@ -7722,6 +8167,8 @@ impl<'a> CreateResponse<'a> {
     pub const VT_RESULT: flatbuffers::VOffsetT = 4;
     pub const VT_STAT: flatbuffers::VOffsetT = 6;
     pub const VT_FD: flatbuffers::VOffsetT = 8;
+    pub const VT_PREPARENT: flatbuffers::VOffsetT = 10;
+    pub const VT_POSTPARENT: flatbuffers::VOffsetT = 12;
 
   #[inline]
   pub fn result(&self) -> Option<OpResult<'a>> {
@@ -7735,12 +8182,22 @@ impl<'a> CreateResponse<'a> {
   pub fn fd(&self) -> u64 {
     self._tab.get::<u64>(CreateResponse::VT_FD, Some(0)).unwrap()
   }
+  #[inline]
+  pub fn preparent(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_PREPARENT, None)
+  }
+  #[inline]
+  pub fn postparent(&self) -> Option<Iatt<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<Iatt<'a>>>(CreateResponse::VT_POSTPARENT, None)
+  }
 }
 
 pub struct CreateResponseArgs<'a> {
     pub result: Option<flatbuffers::WIPOffset<OpResult<'a >>>,
     pub stat: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
     pub fd: u64,
+    pub preparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
+    pub postparent: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
 }
 impl<'a> Default for CreateResponseArgs<'a> {
     #[inline]
@@ -7749,6 +8206,8 @@ impl<'a> Default for CreateResponseArgs<'a> {
             result: None,
             stat: None,
             fd: 0,
+            preparent: None,
+            postparent: None,
         }
     }
 }
@@ -7768,6 +8227,14 @@ impl<'a: 'b, 'b> CreateResponseBuilder<'a, 'b> {
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
     self.fbb_.push_slot::<u64>(CreateResponse::VT_FD, fd, 0);
+  }
+  #[inline]
+  pub fn add_preparent(&mut self, preparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_PREPARENT, preparent);
+  }
+  #[inline]
+  pub fn add_postparent(&mut self, postparent: flatbuffers::WIPOffset<Iatt<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Iatt>>(CreateResponse::VT_POSTPARENT, postparent);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> CreateResponseBuilder<'a, 'b> {
@@ -7824,8 +8291,8 @@ impl<'a> FtruncateRequest<'a> {
     pub const VT_OFFSET: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FtruncateRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FtruncateRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -7838,7 +8305,7 @@ impl<'a> FtruncateRequest<'a> {
 }
 
 pub struct FtruncateRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
 }
@@ -7858,8 +8325,8 @@ pub struct FtruncateRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FtruncateRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FtruncateRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FtruncateRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -8022,8 +8489,8 @@ impl<'a> FstatRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FstatRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FstatRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -8032,7 +8499,7 @@ impl<'a> FstatRequest<'a> {
 }
 
 pub struct FstatRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
 }
 impl<'a> Default for FstatRequestArgs<'a> {
@@ -8050,8 +8517,8 @@ pub struct FstatRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FstatRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FstatRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FstatRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -8206,8 +8673,8 @@ impl<'a> EntrylkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 14;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(EntrylkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(EntrylkRequest::VT_RFID, None)
   }
   #[inline]
   pub fn cmd(&self) -> u32 {
@@ -8232,7 +8699,7 @@ impl<'a> EntrylkRequest<'a> {
 }
 
 pub struct EntrylkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub cmd: u32,
     pub type_: u32,
     pub namelen: u64,
@@ -8258,8 +8725,8 @@ pub struct EntrylkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> EntrylkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(EntrylkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(EntrylkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_cmd(&mut self, cmd: u32) {
@@ -8344,8 +8811,8 @@ impl<'a> FentrylkRequest<'a> {
     pub const VT_VOLUME: flatbuffers::VOffsetT = 16;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FentrylkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FentrylkRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -8374,7 +8841,7 @@ impl<'a> FentrylkRequest<'a> {
 }
 
 pub struct FentrylkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub cmd: u32,
     pub type_: u32,
@@ -8402,8 +8869,8 @@ pub struct FentrylkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FentrylkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FentrylkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FentrylkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -8484,8 +8951,8 @@ impl<'a> SetattrRequest<'a> {
     pub const VT_VALID: flatbuffers::VOffsetT = 8;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetattrRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(SetattrRequest::VT_RFID, None)
   }
   #[inline]
   pub fn stbuf(&self) -> Option<Iatt<'a>> {
@@ -8498,7 +8965,7 @@ impl<'a> SetattrRequest<'a> {
 }
 
 pub struct SetattrRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub stbuf: Option<flatbuffers::WIPOffset<Iatt<'a >>>,
     pub valid: i32,
 }
@@ -8518,8 +8985,8 @@ pub struct SetattrRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> SetattrRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SetattrRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(SetattrRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_stbuf(&mut self, stbuf: flatbuffers::WIPOffset<Iatt<'b >>) {
@@ -8888,8 +9355,8 @@ impl<'a> FallocateRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 12;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(FallocateRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(FallocateRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -8910,7 +9377,7 @@ impl<'a> FallocateRequest<'a> {
 }
 
 pub struct FallocateRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub flags: u32,
     pub offset: u64,
@@ -8934,8 +9401,8 @@ pub struct FallocateRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> FallocateRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(FallocateRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(FallocateRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -9110,8 +9577,8 @@ impl<'a> DiscardRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(DiscardRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(DiscardRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -9128,7 +9595,7 @@ impl<'a> DiscardRequest<'a> {
 }
 
 pub struct DiscardRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub size_: u64,
@@ -9150,8 +9617,8 @@ pub struct DiscardRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> DiscardRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(DiscardRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(DiscardRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -9322,8 +9789,8 @@ impl<'a> ZerofillRequest<'a> {
     pub const VT_SIZE_: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ZerofillRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ZerofillRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -9340,7 +9807,7 @@ impl<'a> ZerofillRequest<'a> {
 }
 
 pub struct ZerofillRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub size_: u64,
@@ -9362,8 +9829,8 @@ pub struct ZerofillRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ZerofillRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ZerofillRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ZerofillRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -9886,8 +10353,8 @@ impl<'a> SeekRequest<'a> {
     pub const VT_WHAT: flatbuffers::VOffsetT = 10;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SeekRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(SeekRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -9904,7 +10371,7 @@ impl<'a> SeekRequest<'a> {
 }
 
 pub struct SeekRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
     pub offset: u64,
     pub what: i32,
@@ -9926,8 +10393,8 @@ pub struct SeekRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> SeekRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SeekRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(SeekRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -10976,8 +11443,8 @@ impl<'a> ReleasedirRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReleasedirRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ReleasedirRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -10986,7 +11453,7 @@ impl<'a> ReleasedirRequest<'a> {
 }
 
 pub struct ReleasedirRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
 }
 impl<'a> Default for ReleasedirRequestArgs<'a> {
@@ -11004,8 +11471,8 @@ pub struct ReleasedirRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ReleasedirRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReleasedirRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ReleasedirRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -11064,8 +11531,8 @@ impl<'a> ReleaseRequest<'a> {
     pub const VT_FD: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(ReleaseRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(ReleaseRequest::VT_RFID, None)
   }
   #[inline]
   pub fn fd(&self) -> u64 {
@@ -11074,7 +11541,7 @@ impl<'a> ReleaseRequest<'a> {
 }
 
 pub struct ReleaseRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub fd: u64,
 }
 impl<'a> Default for ReleaseRequestArgs<'a> {
@@ -11092,8 +11559,8 @@ pub struct ReleaseRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> ReleaseRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(ReleaseRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(ReleaseRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_fd(&mut self, fd: u64) {
@@ -12633,13 +13100,13 @@ impl<'a> GetactivelkRequest<'a> {
     pub const VT_RFID: flatbuffers::VOffsetT = 4;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(GetactivelkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(GetactivelkRequest::VT_RFID, None)
   }
 }
 
 pub struct GetactivelkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
 }
 impl<'a> Default for GetactivelkRequestArgs<'a> {
     #[inline]
@@ -12655,8 +13122,8 @@ pub struct GetactivelkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> GetactivelkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(GetactivelkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(GetactivelkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> GetactivelkRequestBuilder<'a, 'b> {
@@ -12787,8 +13254,8 @@ impl<'a> SetactivelkRequest<'a> {
     pub const VT_REQUEST: flatbuffers::VOffsetT = 6;
 
   #[inline]
-  pub fn rfid(&self) -> Option<Rfid<'a>> {
-    self._tab.get::<flatbuffers::ForwardsUOffset<Rfid<'a>>>(SetactivelkRequest::VT_RFID, None)
+  pub fn rfid(&self) -> Option<FileHash<'a>> {
+    self._tab.get::<flatbuffers::ForwardsUOffset<FileHash<'a>>>(SetactivelkRequest::VT_RFID, None)
   }
   #[inline]
   pub fn request(&self) -> Option<LockList<'a>> {
@@ -12797,7 +13264,7 @@ impl<'a> SetactivelkRequest<'a> {
 }
 
 pub struct SetactivelkRequestArgs<'a> {
-    pub rfid: Option<flatbuffers::WIPOffset<Rfid<'a >>>,
+    pub rfid: Option<flatbuffers::WIPOffset<FileHash<'a >>>,
     pub request: Option<flatbuffers::WIPOffset<LockList<'a >>>,
 }
 impl<'a> Default for SetactivelkRequestArgs<'a> {
@@ -12815,8 +13282,8 @@ pub struct SetactivelkRequestBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> SetactivelkRequestBuilder<'a, 'b> {
   #[inline]
-  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<Rfid<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<Rfid>>(SetactivelkRequest::VT_RFID, rfid);
+  pub fn add_rfid(&mut self, rfid: flatbuffers::WIPOffset<FileHash<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<FileHash>>(SetactivelkRequest::VT_RFID, rfid);
   }
   #[inline]
   pub fn add_request(&mut self, request: flatbuffers::WIPOffset<LockList<'b >>) {
