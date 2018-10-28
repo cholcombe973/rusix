@@ -41,7 +41,32 @@ impl Client {
         }
     }
 
-    fn mkdir(&self, parent_id: u128, basename: &str, mode: u32) -> Result<(), String> {
+    pub fn mkdir(&self, parent_servers: &[Bucket], base_servers: &[Bucket], base_name: &str, mode: u32) -> Result<(), String>{
+        // Issue parallel requests to all the parent and base servers to create the directory and link it
+        let context = zmq::Context::new();
+        let parent_sockets: Vec<Socket> = for s in parent_servers{
+            let c = context.socket(zmq::REQ).map_err(|e| e.to_string())?;
+            c.connect(&format!("tcp://{}", s.display())).map_err(|e| e.to_string())?;
+            c
+        };
+        let base_sockets: Vec<Socket> = for s in base_servers{
+            let c = context.socket(zmq::REQ).map_err(|e| e.to_string())?;
+            c.connect(&format!("tcp://{}", s.display())).map_err(|e| e.to_string())?;
+            c
+        };
+
+        for p in parent_sockets {
+            self.pool.spawn(|| {
+                // send dir link request to the parent server 
+            })
+        }
+
+        for b in base_servers {
+            self.pool.spawn(|| {
+                // send mkdir request to the base server 
+            })
+        }
+
         // Hash the basename
         // Find the parent directory file
         // Write new directory file to server where it should belong to

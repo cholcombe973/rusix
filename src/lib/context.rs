@@ -17,7 +17,7 @@ pub struct Context {
 impl Context {
     pub fn new() -> Self {
         Context {
-            current_location: PathBuf::from(""),
+            current_location: PathBuf::from("/"),
             log_level: LevelFilter::Error,
         }
     }

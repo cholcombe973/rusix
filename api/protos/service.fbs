@@ -331,6 +331,11 @@ table ReadlinkResponse {
 	path:string;
 } 
 
+table LinkParentRequest{
+	parent_rfid:FileHash;
+	child_rfid:FileHash;
+}
+
 table MknodRequest {
 	parent_rfid:FileHash;
 	dev:uint64;
@@ -347,7 +352,7 @@ table MknodResponse {
 }
 
 table MkdirRequest {
-	parent_rfid:FileHash;
+	//parent_rfid:FileHash;
 	mode:uint32;
 	umask:uint32;
 	bname:string;
@@ -356,8 +361,8 @@ table MkdirRequest {
 table MkdirResponse {
 	result:OpResult;
 	stat:Iatt;
-	preparent:Iatt;
-	postparent:Iatt;
+	//preparent:Iatt;
+	//postparent:Iatt;
 } 
 
 

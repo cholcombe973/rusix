@@ -280,7 +280,28 @@ pub fn filestat_to_iatt<'a>(
     )
 }
 
-pub fn mkdir_request(parent_inode: u64, mode: Mode, mask: u32, name: &str) -> Vec<u8> {
+pub fn link_parent_dir_request(parent_hash: u128, child_hash: u128) -> Vec<u8> {
+    let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+
+    let mut tmp = vec![];
+    tmp.write_u64::<LittleEndian>(parent_hash).unwrap();
+    let parent_hash_data = builder.create_vector(&tmp);
+
+    tmp.clear();
+    tmp.write_u64::<LittleEndian>(child_hash).unwrap();
+    let child_hash_data = builder.create_vector(&tmp);
+
+    let parent_hash = FileHash::create(
+        &mut builder,
+        &FileHashArgs {
+            parent_hash: Some(parent_hash_data),
+            child_hash: Some(child_hash_data),
+        },
+    );
+    vec![]
+}
+
+pub fn mkdir_request(mode: Mode, mask: u32, name: &str) -> Vec<u8> {
     let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
     let mut tmp = vec![];
     tmp.write_u64::<LittleEndian>(parent_inode).unwrap();
@@ -296,7 +317,7 @@ pub fn mkdir_request(parent_inode: u64, mode: Mode, mask: u32, name: &str) -> Ve
     let mkdir = MkdirRequest::create(
         &mut builder,
         &MkdirRequestArgs {
-            parent_rfid: Some(rfid),
+            //parent_rfid: Some(rfid),
             mode: mode.bits(),
             umask: mask,
             bname: Some(bname),

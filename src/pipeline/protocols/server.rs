@@ -15,6 +15,7 @@ extern crate nix;
 extern crate zmq;
 
 use std::collections::HashMap;
+use std::fs::OpenOptions;
 use std::time::Instant;
 
 use api::service_generated::*;
@@ -97,9 +98,9 @@ macro_rules! generic_response {
 
 pub struct Server {
     // Worker pool
-// pool: CpuPool,
-//frontend: Socket,
-//backend: Socket,
+    // pool: CpuPool,
+    //frontend: Socket,
+    //backend: Socket,
 }
 
 fn map_option<'a, T, E, F: FnOnce(&str, &mut FlatBufferBuilder) -> E>(
@@ -310,6 +311,42 @@ impl Server {
             stat,
             poststat
         ))
+    }
+
+    fn handle_link_parent_dir_req<'a> (&self, w: LinkParentRequest) -> Result<Vec<u8>, Vec<u8>>{
+        let backend_path = Path::new("/.rusix");
+        let parent_hash = map_option(w.parent_rfid(), op_result, "missing parent rfid", builder)?;
+        let child_hash = map_option(w.child_rfid(), op_result, "missing child rfid", builder)?;
+        let parent_location = resolve_rfid_to_path(&w.parent_rfid.unwrap(), &backend_path, None);
+
+        let mut dir_file = if !parent_location.exists() {
+            File::create(parent_location)?
+        }else {
+            OpenOptions::new().read(true).write(true).open(parent_location)?
+        };
+        let mut buffer = Vec::new();
+        dir_file.read_to_end(&mut buffer)?;
+        // What happens if buffer is empty?
+        let mut directory = flatbuffers::get_root::<Directory<'a>>(buffer);
+        let files = match directory.files(){
+            Some(mut files) => {
+                files.push(child_hash);
+                files
+            }
+            None => {
+                vec![child_hash]
+            }
+        };
+        let mut builder = flatbuffers::FlatBufferBuilder::new_with_capacity(100);
+        let files_data = builder.create_vector(&files);
+        let flat_dir = Directory::create(
+            &mut builder,
+            &DirectoryArgs {
+                files: Some(files_data),
+            },
+        );
+        builder.finish_minimal(flat_dir);
+        dir_file.write_all(&builder.finished_data().to_vec());
     }
 
     fn handle_lock_req<'a>(
